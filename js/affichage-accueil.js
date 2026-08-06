@@ -87,6 +87,7 @@ fetch("matchs.json")
         let equipe2 =
             match.equipe2.trim();
 
+            console.log("Fonction image :", typeof trouverImageEquipe);
 
         if (typeof trouverImageEquipe === "function") {
 
