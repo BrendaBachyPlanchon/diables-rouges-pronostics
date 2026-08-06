@@ -5,7 +5,7 @@
 console.log("✅ affichage-accueil.js serveur actif");
 
 
-fetch("matchs.php")
+fetch("matchs.json")
 
     .then(function(reponse) {
 
