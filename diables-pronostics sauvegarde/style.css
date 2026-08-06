@@ -1,0 +1,183 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #111111;
+    color: white;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #ffcc00;
+    font-size: 40px;
+}
+
+h2 {
+    color: #ffcc00;
+}
+
+h3 {
+    color: #e30613;
+}
+
+p {
+    font-size: 18px;
+}
+
+button {
+    background-color: #e30613;
+    color: white;
+    border: 2px solid #ffcc00;
+    padding: 15px 35px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #ffcc00;
+    color: black;
+    transform: scale(1.05);
+}
+
+button:hover {
+    background-color: #ffcc00;
+    color: black;
+}
+
+input {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+a {
+    color: #ffcc00;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+a:hover {
+    color: #e30613;
+}
+
+header {
+    background-color: #000000;
+    border-bottom: 5px solid #ffcc00;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    color: #ffcc00;
+    margin: 0;
+}
+
+header p {
+    color: white;
+    font-size: 20px;
+}
+
+nav {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-bottom: 2px solid #e30613;
+}
+
+.match {
+    width: 450px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #1b1b1b;
+    border: 3px solid #ffcc00;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
+}
+
+.match h2 {
+    color: #ffcc00;
+    margin-bottom: 15px;
+}
+
+.match p {
+    margin: 8px 0;
+    font-size: 18px;
+}
+
+nav {
+    background-color: #1b1b1b;
+    padding: 15px;
+    border: 2px solid #ffcc00;
+    border-radius: 10px;
+    width: 80%;
+    margin: auto;
+}
+
+nav a {
+    color: #ffcc00;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0 15px;
+}
+
+nav a:hover {
+    color: white;
+}
+
+.presentation {
+    width: 70%;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #1b1b1b;
+    border-left: 5px solid #e30613;
+    border-right: 5px solid #ffcc00;
+    border-radius: 15px;
+}
+
+.presentation h3 {
+    color: #ffcc00;
+}
+
+.formulaire {
+    width: 450px;
+    margin: 30px auto;
+    padding: 25px;
+    background-color: #1b1b1b;
+    border: 3px solid #e30613;
+    border-radius: 15px;
+}
+
+.formulaire label {
+    color: #ffcc00;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.formulaire input {
+    width: 80%;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.competition {
+    width: 70%;
+    margin: 30px auto;
+}
+
+.competition a {
+    display: block;
+    background-color: #1b1b1b;
+    border: 2px solid #ffcc00;
+    border-radius: 12px;
+    padding: 15px;
+    margin: 15px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.competition a:hover {
+    background-color: #e30613;
+    color: white;
+}

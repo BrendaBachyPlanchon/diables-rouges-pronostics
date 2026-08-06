@@ -1,0 +1,1228 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #202020;
+    color: white;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #ffcc00;
+    font-size: 40px;
+}
+
+h2 {
+    color: #ffcc00;
+}
+
+h3 {
+    color: #e30613;
+}
+
+p {
+    font-size: 18px;
+}
+
+button {
+    background-color: #e30613;
+    color: white;
+    border: 2px solid #ffcc00;
+    padding: 15px 35px;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background-color: #ffcc00;
+    color: black;
+    transform: scale(1.05);
+}
+
+input {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+a {
+    color: #ffcc00;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+a:hover {
+    color: #e30613;
+}
+
+header {
+    background-color: #000000;
+    border-bottom: 5px solid #ffcc00;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+header h1 {
+    color: #ffcc00;
+    margin: 0;
+}
+
+header p {
+    color: white;
+    font-size: 20px;
+}
+
+.match {
+    width: 450px;
+    margin: 30px auto;
+    padding: 30px;
+    background: linear-gradient(145deg, #2b2b2b, #000000);
+    border: 3px solid #e30613;
+    border-top: 5px solid #ffcc00;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(227, 6, 19, 0.5);
+    text-align: center;
+    transition: 0.3s;
+}
+
+.match:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 40px rgba(255, 204, 0, 0.7);
+}
+
+.match h3 {
+    color: #ffcc00;
+    font-size: 28px;
+    text-transform: uppercase;
+}
+
+.match .equipes {
+    margin: 30px 0;
+}
+
+.match .equipe img {
+    width: 90px;
+    height: 90px;
+}
+
+.match .equipe h2 {
+    color: white;
+    font-size: 26px;
+}
+
+.match .versus h1 {
+    color: #ffcc00;
+    font-size: 45px;
+}
+
+.match p {
+    font-size: 18px;
+    color: white;
+}
+
+.match h2 {
+    color: #ffcc00;
+    margin-bottom: 15px;
+}
+
+.match h3 {
+    font-size: 26px;
+    color: #ffcc00;
+    text-transform: uppercase;
+}
+
+.match p {
+    margin: 8px 0;
+    font-size: 18px;
+}
+
+nav {
+    background-color: #1b1b1b;
+    padding: 15px;
+    border: 2px solid #ffcc00;
+    border-radius: 10px;
+    width: 80%;
+    margin: 0 auto 20px auto;
+}
+
+nav a {
+    display: inline-block;
+    background-color: #e30613;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 5px;
+    border: 2px solid #ffcc00;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    background-color: #ffcc00;
+    color: black;
+    transform: translateY(-3px);
+}
+
+
+.presentation {
+    width: 70%;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #1b1b1b;
+    border-left: 5px solid #e30613;
+    border-right: 5px solid #ffcc00;
+    border-radius: 15px;
+}
+
+.presentation h3 {
+    color: #ffcc00;
+}
+
+.formulaire {
+    width: 450px;
+    margin: 30px auto;
+    padding: 25px;
+    background-color: #1b1b1b;
+    border: 3px solid #e30613;
+    border-radius: 15px;
+}
+
+.formulaire label {
+    color: #ffcc00;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.formulaire input {
+    width: 80%;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.competition {
+    width: 70%;
+    margin: 30px auto;
+}
+
+.competition a {
+    display: block;
+    background-color: #1b1b1b;
+    border: 2px solid #ffcc00;
+    border-radius: 12px;
+    padding: 15px;
+    margin: 15px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.competition a:hover {
+    background-color: #e30613;
+    color: white;
+}
+
+.titre-site img {
+    vertical-align: middle;
+    margin: 0 15px;
+}
+
+.competition {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+
+.carte {
+    width: 90%;
+    max-width: 1000px;
+    box-sizing: border-box;
+    margin: 30px auto;
+    padding: 25px;
+    background: linear-gradient(145deg, #2b2b2b, #111111);
+    border: 3px solid #e30613;
+    border-top: 5px solid #ffcc00;
+    border-radius: 20px;
+    box-shadow: 0 0 25px rgba(227, 6, 19, 0.5);
+    text-align: center;
+    transition: 0.3s;
+}
+
+.carte table {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.carte:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 0 35px rgba(255, 204, 0, 0.7);
+}
+
+.carte h3 {
+    color: #ffcc00;
+    font-size: 24px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.carte h2 {
+    color: white;
+    font-size: 28px;
+    margin: 20px 0;
+}
+
+.carte p {
+    color: white;
+    font-size: 18px;
+    margin: 10px;
+}
+
+.carte a {
+    display: inline-block;
+    background: #e30613;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 12px;
+    border: 2px solid #ffcc00;
+    font-weight: bold;
+    margin-top: 15px;
+    transition: 0.3s;
+}
+
+.carte a:hover {
+    background: #ffcc00;
+    color: black;
+    transform: scale(1.08);
+}
+
+
+.carte h2 {
+    color: #ffcc00;
+}
+
+
+.carte p {
+    color: white;
+}
+
+
+.carte a {
+    display: inline-block;
+    background-color: #e30613;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+}
+
+
+.carte a:hover {
+    background-color: #ffcc00;
+    color: black;
+}
+
+#compte-a-rebours {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.temps {
+    background-color: #1b1b1b;
+    border: 3px solid #ffcc00;
+    border-radius: 12px;
+    padding: 15px;
+    width: 90px;
+    text-align: center;
+}
+
+.temps span {
+    font-size: 30px;
+    color: #ffcc00;
+    font-weight: bold;
+}
+
+.temps p {
+    margin: 5px;
+    color: white;
+}
+
+table {
+    width: 90%;
+    max-width: 900px;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+th {
+    background-color: #e30613;
+    color: white;
+    padding: 10px;
+}
+
+td {
+    border: 2px solid #ffcc00;
+    padding: 10px;
+    color: white;
+}
+
+.stats-container{
+display:flex;
+justify-content:center;
+gap:20px;
+flex-wrap:wrap;
+margin-top:20px;
+}
+
+.stat-box{
+background:#1b1b1b;
+border:3px solid #ffcc00;
+border-radius:15px;
+padding:20px;
+width:180px;
+text-align:center;
+transition:0.3s;
+}
+
+.stat-box:hover{
+transform:scale(1.05);
+}
+
+.stat-emoji{
+font-size:40px;
+margin-bottom:10px;
+}
+
+.stat-number{
+font-size:28px;
+font-weight:bold;
+color:#ffcc00;
+margin-bottom:10px;
+}
+
+.stat-label{
+font-size:18px;
+color:white;
+}
+
+.premier td {
+    background-color: gold;
+    color: black;
+}
+
+.deuxieme td {
+    background-color: silver;
+    color: black;
+}
+
+.troisieme td {
+    background-color: #cd7f32;
+    color: white;
+}
+
+.hero {
+    padding: 30px;
+}
+
+.hero h2 {
+    color: white;
+    font-size: 24px;
+}
+
+.hero p {
+    color: #ffcc00;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.titre-site {
+    background: linear-gradient(#1b1b1b, #000000);
+    border: 3px solid #ffcc00;
+    border-radius: 20px;
+    padding: 25px;
+    width: 80%;
+    margin: 20px auto;
+    box-shadow: 0 0 20px rgba(255,204,0,0.4);
+}
+
+.equipe {
+    width: 220px;
+    min-height: 160px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.versus {
+    width: 80px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.versus h1 {
+    color: #ffcc00;
+    font-size: 35px;
+}
+
+.score-match {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    margin: 30px auto;
+}
+
+.score-equipe {
+    text-align: center;
+    background-color: #1b1b1b;
+    border: 2px solid #ffcc00;
+    border-radius: 15px;
+    padding: 15px;
+    width: 220px;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.score-equipe h2 {
+    font-size: 22px;
+    min-height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.score-equipe input {
+    width: 60px;
+    font-size: 25px;
+    text-align: center;
+}
+
+.score-separation h1 {
+    color: #ffcc00;
+    font-size: 40px;
+}
+
+select {
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 8px;
+    border: 2px solid #ffcc00;
+    background-color: #1b1b1b;
+    color: white;
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+.equipe img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 4px solid #ffcc00;
+    padding: 8px;
+    background-color: white;
+    transition: 0.3s;
+}
+
+.equipe img {
+    outline: 1px solid black;
+}
+
+.equipe img:hover {
+    transform: scale(1.1);
+}
+
+.equipes {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 45px;
+    margin: 35px 0;
+}
+
+.equipe h2 {
+    width: 100%;
+    min-height: 60px;
+    font-size: 26px;
+    color: white;
+    text-transform: uppercase;
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.versus h1 {
+    font-size: 55px;
+    color: #ffcc00;
+    margin: 0 15px;
+}
+
+#badge-supporter {
+
+    display: inline-block;
+
+    margin-top: 15px;
+
+    padding: 12px 20px;
+
+    border-radius: 12px;
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+    background: #444;
+
+    color: white;
+
+}
+
+td, th {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+td:last-child {
+    white-space: nowrap;
+}
+
+td button {
+    padding: 10px 15px;
+    font-size: 16px;
+    margin: 3px;
+}
+
+/* Tableau administration */
+.admin-table {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.admin-table table {
+    width: 100%;
+    min-width: 750px;
+}
+
+.admin-matchs {
+    width: 90%;
+    max-width: 900px;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+
+    nav {
+        width: 95%;
+    }
+
+    .presentation,
+    .competition,
+    .titre-site,
+    .match,
+    .formulaire,
+    .carte {
+        width: 95%;
+        box-sizing: border-box;
+    }
+
+    .equipes {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .score-match {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+
+    .stat-box {
+        width: 90%;
+    }
+
+}
+
+/* Adaptation mobile */
+
+@media screen and (max-width: 600px) {
+
+    body {
+        padding: 10px;
+    }
+
+
+    h1 {
+        font-size: 30px;
+    }
+
+
+    h2 {
+        font-size: 22px;
+    }
+
+
+    nav {
+        width: 95%;
+        padding: 10px;
+    }
+
+
+    nav a {
+        display: block;
+        margin: 8px auto;
+        width: 80%;
+    }
+
+
+    .titre-site,
+    .presentation,
+    .competition,
+    .carte,
+    .match,
+    .formulaire {
+        width: 95%;
+        box-sizing: border-box;
+    }
+
+
+    .equipes {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+
+    .versus h1 {
+        font-size: 35px;
+    }
+
+
+    .score-match {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+
+    .score-equipe {
+        width: 80%;
+    }
+
+
+    table {
+        width: 100%;
+        font-size: 14px;
+    }
+
+
+    th,
+    td {
+        padding: 6px;
+    }
+
+
+    button {
+        width: 90%;
+        font-size: 18px;
+    }
+
+}
+
+@media screen and (max-width: 600px) {
+
+    .hero {
+        padding: 15px;
+    }
+
+    .titre-site {
+        padding: 15px;
+        margin: 10px auto;
+    }
+
+    .carte,
+    .presentation,
+    .match {
+        margin: 15px auto;
+        padding: 15px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+}
+
+/* Menu mobile */
+
+.menu-mobile {
+    display: inline-block;
+    background-color: #e30613;
+    color: white;
+    border: 2px solid #ffcc00;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+
+nav {
+    display: none;
+}
+
+
+nav.menu-ouvert {
+    display: block;
+    margin-top: 15px;
+}
+
+nav.menu-ouvert a {
+    display: block;
+    margin: 8px auto;
+    width: 85%;
+}
+
+nav.menu-ouvert a {
+    display: block;
+    padding: 12px;
+    margin: 6px auto;
+    width: 85%;
+    border-radius: 10px;
+}
+
+/* Sous-menu Plus */
+
+#menu-plus {
+    display: none;
+}
+
+#menu-plus.ouvert {
+    display: block;
+}
+
+.plus-mobile {
+    display: block;
+    width: 85%;
+    margin: 10px auto;
+    padding: 12px;
+    background-color: #444;
+    color: white;
+    border: 2px solid #ffcc00;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.resultat-match {
+    padding: 15px;
+    margin: 10px auto;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.resultat-match strong {
+    font-size: 22px;
+    margin: 0 10px;
+}
+
+.resultat-match img {
+    vertical-align: middle;
+}
+
+#accueil-competition {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: #e30613;
+    color: white;
+    border: 2px solid #ffcc00;
+    border-radius: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    box-shadow: 0 0 15px rgba(255, 204, 0, 0.4);
+}
+
+#accueil-statut {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 20px;
+    background: #222;
+    color: white;
+    border: 2px solid #ffcc00;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#match-compteur {
+    font-size: 26px;
+    font-weight: bold;
+    color: #ffcc00;
+    margin: 15px;
+}
+
+#match-compteur {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    font-size: 26px;
+    font-weight: bold;
+    color: #ffcc00;
+    margin: 20px;
+}
+
+#match-compteur img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 2px solid #ffcc00;
+    background: white;
+}
+
+/* Carte prochain match */
+
+.match {
+    position: relative;
+    overflow: hidden;
+
+    background:
+    linear-gradient(
+        rgba(20,20,20,0.55),
+        rgba(20,20,20,0.55)
+    ),
+    url("images/stade.png");
+
+    background-size: cover;
+    background-position: center;
+
+    border: 3px solid #ffcc00;
+    border-radius: 20px;
+    padding: 25px;
+    width: 90%;
+    max-width: 650px;
+    margin: 25px auto;
+
+    box-shadow: 0 0 20px rgba(255,204,0,0.25);
+}
+
+.match h3 {
+    color: #ffcc00;
+    font-size: 30px;
+    margin-bottom: 25px;
+}
+
+
+/* Informations date heure compétition */
+
+#accueil-date,
+#accueil-heure,
+#accueil-competition,
+#accueil-statut,
+#accueil-stade {
+
+    display: inline-block;
+    background: #111;
+    border: 2px solid #333;
+    border-radius: 12px;
+    padding: 10px 18px;
+    margin: 8px;
+    font-size: 18px;
+}
+
+
+/* Badge compétition */
+
+#accueil-competition {
+    border-color: #ffcc00;
+    color: #ffcc00;
+    font-weight: bold;
+}
+
+
+/* Badge statut */
+
+#accueil-statut {
+    border-color: #00cc44;
+    color: #00ff66;
+    font-weight: bold;
+}
+
+/* Badge compétition prochain match */
+
+#badge-competition {
+
+    display: inline-block;
+
+    background: #ffcc00;
+
+    color: #111;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    padding: 12px 25px;
+
+    border-radius: 30px;
+
+    margin-bottom: 20px;
+
+    box-shadow: 0 0 15px rgba(255,204,0,0.6);
+
+}
+
+/* Badge stade */
+
+#badge-stade {
+
+    display: inline-block;
+
+    background: #111;
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    padding: 10px 20px;
+
+    border-radius: 30px;
+
+    margin: 10px;
+
+    border: 2px solid #ffcc00;
+
+}
+
+/* Compte à rebours prochain match */
+
+#match-compteur {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 20px auto;
+    font-size: 24px;
+    font-weight: bold;
+    color: #ffcc00;
+    flex-wrap: nowrap;
+
+}
+
+
+#match-compteur img {
+
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 3px solid #ffcc00;
+    background: white;
+    padding: 4px;
+
+}
+
+
+#compte-a-rebours {
+
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+
+}
+
+
+#compte-a-rebours .temps {
+
+    background: #111;
+    border: 2px solid #ffcc00;
+    border-radius: 15px;
+    width: 100px;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(255,204,0,0.3);
+
+}
+
+
+#compte-a-rebours .temps span {
+
+    font-size: 35px;
+    color: #ffcc00;
+    font-weight: bold;
+
+}
+
+
+#compte-a-rebours .temps p {
+
+    margin: 5px 0 0;
+    color: white;
+    font-size: 16px;
+
+}
+
+/* Écran prochain match compteur */
+
+#match-compteur {
+
+    background: linear-gradient(145deg, #111, #222);
+    border: 2px solid #ffcc00;
+    border-radius: 20px;
+    padding: 20px;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 550px;
+    box-shadow: 0 0 20px rgba(255,204,0,0.35);
+
+}
+
+
+#match-compteur span {
+
+    font-size: 28px;
+    color: white;
+    font-weight: bold;
+
+}
+
+
+#match-compteur img {
+
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 3px solid #ffcc00;
+    background: white;
+    padding: 5px;
+
+}
+
+
+/* Bloc temps */
+
+#compte-a-rebours {
+
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 25px;
+    flex-wrap: wrap;
+
+}
+
+
+#compte-a-rebours .temps {
+
+    background: #000;
+    border: 2px solid #e30613;
+    border-radius: 15px;
+    width: 90px;
+    padding: 15px;
+    box-shadow: 0 0 12px rgba(227,6,19,0.5);
+
+}
+
+
+#compte-a-rebours .temps span {
+
+    font-size: 38px;
+    color: #ffcc00;
+    font-weight: bold;
+
+}
+
+
+#compte-a-rebours .temps p {
+
+    color: white;
+    margin: 5px 0 0;
+    font-size: 15px;
+
+}
+
+/* Correction compteur match */
+
+#match-compteur {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin: 20px auto;
+    flex-wrap: nowrap;
+    width: 100%;
+    box-sizing: border-box;
+
+}
+
+
+#match-compteur img {
+
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    border-radius: 50%;
+    border: 3px solid #ffcc00;
+    background: white;
+    padding: 4px;
+    box-sizing: border-box;
+
+}
+
+
+#match-compteur span {
+
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+
+}
+
+#drapeau-domicile,
+#drapeau-exterieur {
+
+    border: 1px solid #111;
+    background: white;
+    padding: 3px;
+    border-radius: 50%;
+    object-fit: contain;
+
+}
+
+#drapeau-domicile,
+#drapeau-exterieur {
+    border: 1px solid black !important;
+    background-color: white;
+    padding: 3px;
+    border-radius: 50%;
+}

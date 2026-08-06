@@ -1,0 +1,1561 @@
+/* =========================================================
+   DIABLES ROUGES PRONOSTICS
+   STYLE PRINCIPAL DU SITE
+   ========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    color: white;
+
+    background:
+        linear-gradient(
+            rgba(25, 25, 25, 0.55),
+            rgba(55, 15, 15, 0.68)
+        ),
+        url("images/stade.png");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   TEXTES
+   ========================================================= */
+
+h1,
+h2,
+h3,
+p {
+    margin-top: 0;
+}
+
+h1 {
+    color: #ffcc00;
+    font-size: 40px;
+}
+
+h2 {
+    color: #ffcc00;
+}
+
+h3 {
+    color: #ffcc00;
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   BOUTONS
+   ========================================================= */
+
+button {
+    background: linear-gradient(145deg, #e30613, #a8000b);
+    color: white;
+    border: 2px solid #ffcc00;
+    padding: 14px 28px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+button:hover {
+    background: linear-gradient(145deg, #ffcc00, #d9a900);
+    color: black;
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 20px rgba(255, 204, 0, 0.35);
+}
+
+
+/* =========================================================
+   LIENS
+   ========================================================= */
+
+a {
+    color: #ffcc00;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+a:hover {
+    color: white;
+}
+
+
+/* =========================================================
+   MENU MOBILE
+   ========================================================= */
+
+.menu-mobile {
+    display: inline-block;
+    margin: 15px auto;
+    background: linear-gradient(145deg, #e30613, #a8000b);
+    color: white;
+    border: 2px solid #ffcc00;
+    padding: 12px 22px;
+    border-radius: 12px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+nav {
+    display: none;
+    width: 90%;
+    max-width: 1100px;
+    margin: 10px auto 25px;
+    padding: 15px;
+
+    background: rgba(10, 10, 10, 0.94);
+    border: 2px solid #ffcc00;
+    border-radius: 16px;
+
+    box-shadow:
+        0 0 25px rgba(0, 0, 0, 0.7),
+        0 0 15px rgba(255, 204, 0, 0.15);
+}
+
+nav.menu-ouvert {
+    display: block;
+}
+
+nav a {
+    display: inline-block;
+
+    background: linear-gradient(145deg, #e30613, #a8000b);
+    color: white;
+
+    padding: 11px 18px;
+    margin: 5px;
+
+    border-radius: 10px;
+    border: 2px solid #ffcc00;
+
+    font-size: 17px;
+    font-weight: bold;
+
+    transition: 0.3s ease;
+}
+
+nav a:hover {
+    background: #ffcc00;
+    color: black;
+    transform: translateY(-3px);
+}
+
+
+/* =========================================================
+   SOUS-MENU PLUS
+   ========================================================= */
+
+#menu-plus {
+    display: none;
+}
+
+#menu-plus.ouvert {
+    display: block;
+}
+
+.plus-mobile {
+    display: block;
+    width: 85%;
+    max-width: 400px;
+    margin: 12px auto;
+
+    padding: 12px;
+
+    background: #333;
+    color: white;
+
+    border: 2px solid #ffcc00;
+    border-radius: 10px;
+
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   HEADER / HERO
+   ========================================================= */
+
+.hero {
+    width: 100%;
+    padding: 25px 15px;
+}
+
+.titre-site {
+    position: relative;
+
+    width: 90%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+    padding: 35px 25px;
+
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.72),
+            rgba(35, 0, 0, 0.85)
+        ),
+        url("images/stade.png");
+
+    background-size: cover;
+    background-position: center;
+
+    border: 3px solid #ffcc00;
+    border-top: 6px solid #e30613;
+    border-radius: 24px;
+
+    box-shadow:
+        0 0 30px rgba(0, 0, 0, 0.8),
+        0 0 25px rgba(255, 204, 0, 0.18);
+}
+
+.titre-site h1 {
+    margin-bottom: 15px;
+    font-size: 42px;
+    text-transform: uppercase;
+    text-shadow: 0 3px 8px black;
+}
+
+.titre-site h2 {
+    color: white;
+    font-size: 23px;
+    margin-bottom: 15px;
+}
+
+.titre-site p {
+    color: #ffcc00;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   PRESENTATION
+   ========================================================= */
+
+.presentation {
+    width: 90%;
+    max-width: 1000px;
+
+    margin: 30px auto;
+    padding: 25px;
+
+    background: rgba(15, 15, 15, 0.92);
+
+    border-left: 6px solid #e30613;
+    border-right: 6px solid #ffcc00;
+
+    border-radius: 18px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+}
+
+.presentation h3 {
+    font-size: 25px;
+}
+
+.presentation p {
+    margin-bottom: 10px;
+}
+
+
+/* =========================================================
+   CARTES GENERALES
+   ========================================================= */
+
+.carte {
+    width: 90%;
+    max-width: 1000px;
+
+    margin: 30px auto;
+    padding: 30px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(40, 40, 40, 0.96),
+            rgba(5, 5, 5, 0.96)
+        );
+
+    border: 2px solid #e30613;
+    border-top: 5px solid #ffcc00;
+
+    border-radius: 22px;
+
+    box-shadow:
+        0 12px 30px rgba(0, 0, 0, 0.65),
+        0 0 20px rgba(227, 6, 19, 0.12);
+
+    transition: 0.3s ease;
+}
+
+.carte:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 15px 35px rgba(0, 0, 0, 0.7),
+        0 0 25px rgba(255, 204, 0, 0.18);
+}
+
+.carte h2 {
+    color: #ffcc00;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.carte p {
+    color: white;
+}
+
+
+/* =========================================================
+   CARTE PROCHAIN MATCH
+   ========================================================= */
+
+.match {
+    position: relative;
+    overflow: hidden;
+
+    width: 90%;
+    max-width: 850px;
+
+    margin: 40px auto;
+    padding: 35px 25px;
+
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.55),
+            rgba(20, 0, 0, 0.78)
+        ),
+        url("images/stade.png");
+
+    background-size: cover;
+    background-position: center;
+
+    border: 3px solid #ffcc00;
+    border-top: 7px solid #e30613;
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.8),
+        0 0 25px rgba(255, 204, 0, 0.15);
+
+    transition: 0.3s ease;
+}
+
+.match:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 18px 45px rgba(0, 0, 0, 0.85),
+        0 0 35px rgba(255, 204, 0, 0.25);
+}
+
+.match h3 {
+    color: #ffcc00;
+    font-size: 32px;
+    text-transform: uppercase;
+    margin-bottom: 30px;
+}
+
+
+/* =========================================================
+   EQUIPES
+   ========================================================= */
+
+.equipes {
+    display: flex;
+    flex-direction: row;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 45px;
+
+    margin: 30px 0;
+}
+
+.equipe {
+    width: 220px;
+    min-height: 190px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+}
+
+.equipe img {
+    width: 105px;
+    height: 105px;
+
+    object-fit: contain;
+
+    border-radius: 50%;
+
+    border: 4px solid #ffcc00;
+
+    padding: 8px;
+
+    background: white;
+
+    outline: 1px solid black;
+
+    box-shadow:
+        0 5px 15px rgba(0, 0, 0, 0.6);
+
+    transition: 0.3s ease;
+}
+
+.equipe img:hover {
+    transform: scale(1.08);
+}
+
+.equipe h2 {
+    width: 100%;
+    min-height: 60px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+
+    font-size: 25px;
+    text-transform: uppercase;
+
+    margin-top: 15px;
+}
+
+.versus {
+    width: 90px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.versus h1 {
+    color: #ffcc00;
+    font-size: 48px;
+
+    margin: 0;
+
+    text-shadow: 0 3px 8px black;
+}
+
+
+/* =========================================================
+   INFORMATIONS MATCH
+   ========================================================= */
+
+#accueil-date,
+#accueil-heure,
+#accueil-competition,
+#accueil-statut,
+#accueil-stade {
+    display: inline-block;
+
+    margin: 7px;
+    padding: 10px 17px;
+
+    background: rgba(10, 10, 10, 0.9);
+
+    border: 2px solid #333;
+    border-radius: 12px;
+
+    font-size: 17px;
+    font-weight: bold;
+}
+
+#accueil-competition {
+    border-color: #ffcc00;
+    color: #ffcc00;
+}
+
+#accueil-statut {
+    border-color: #00cc44;
+    color: #00ff66;
+}
+
+#badge-competition {
+    display: inline-block;
+
+    margin: 15px 5px;
+
+    padding: 12px 25px;
+
+    background: #ffcc00;
+    color: #111;
+
+    border-radius: 30px;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    box-shadow: 0 0 18px rgba(255, 204, 0, 0.35);
+}
+
+#badge-stade {
+    display: inline-block;
+
+    background: #111;
+    color: white;
+
+    padding: 10px 20px;
+
+    margin: 10px;
+
+    border: 2px solid #ffcc00;
+    border-radius: 30px;
+
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   COMPTEUR PROCHAIN MATCH
+   ========================================================= */
+
+#match-compteur {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 12px;
+
+    width: 100%;
+
+    margin: 20px auto;
+    padding: 18px;
+
+    background:
+        linear-gradient(145deg, #151515, #050505);
+
+    border: 2px solid #ffcc00;
+    border-radius: 18px;
+
+    box-shadow: 0 0 20px rgba(255, 204, 0, 0.12);
+}
+
+#match-compteur span {
+    color: white;
+    font-size: 23px;
+    font-weight: bold;
+}
+
+#match-compteur img {
+    width: 55px;
+    height: 55px;
+
+    object-fit: contain;
+
+    border-radius: 50%;
+
+    border: 3px solid #ffcc00;
+
+    background: white;
+    padding: 4px;
+}
+
+
+/* =========================================================
+   COMPTE A REBOURS
+   ========================================================= */
+
+#compte-a-rebours {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 15px;
+
+    margin: 25px auto 5px;
+
+    flex-wrap: wrap;
+}
+
+.temps {
+    width: 100px;
+
+    padding: 16px;
+
+    background:
+        linear-gradient(145deg, #111, #000);
+
+    border: 2px solid #e30613;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 0 15px rgba(227, 6, 19, 0.25);
+}
+
+.temps span {
+    display: block;
+
+    color: #ffcc00;
+
+    font-size: 38px;
+    font-weight: bold;
+}
+
+.temps p {
+    color: white;
+
+    font-size: 15px;
+
+    margin: 5px 0 0;
+}
+
+
+/* =========================================================
+   STATISTIQUES
+   ========================================================= */
+
+.stats-container {
+    display: flex;
+
+    justify-content: center;
+    align-items: stretch;
+
+    gap: 20px;
+
+    flex-wrap: wrap;
+
+    margin-top: 20px;
+}
+
+.stat-box {
+    width: 190px;
+
+    padding: 22px;
+
+    background:
+        linear-gradient(145deg, #242424, #0b0b0b);
+
+    border: 2px solid #ffcc00;
+
+    border-radius: 18px;
+
+    text-align: center;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.45);
+
+    transition: 0.3s ease;
+}
+
+.stat-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(255, 204, 0, 0.15);
+}
+
+.stat-emoji {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.stat-number {
+    color: #ffcc00;
+
+    font-size: 28px;
+    font-weight: bold;
+
+    margin-bottom: 8px;
+}
+
+.stat-label {
+    color: white;
+    font-size: 17px;
+}
+
+
+/* =========================================================
+   COMPETITIONS
+   ========================================================= */
+
+.competition {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 15px;
+
+    width: 100%;
+}
+
+.competition a {
+    display: block;
+
+    width: 90%;
+    max-width: 750px;
+
+    padding: 18px;
+
+    margin: 0;
+
+    background:
+        linear-gradient(145deg, #242424, #0b0b0b);
+
+    border: 2px solid #ffcc00;
+
+    border-radius: 15px;
+
+    color: white;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    transition: 0.3s ease;
+}
+
+.competition a:hover {
+    background: linear-gradient(145deg, #e30613, #8e0009);
+
+    color: white;
+
+    transform: translateX(5px);
+
+    box-shadow: 0 8px 20px rgba(227, 6, 19, 0.25);
+}
+
+
+/* =========================================================
+   RESULTATS
+   ========================================================= */
+
+.resultat-match {
+    padding: 15px;
+    margin: 10px auto;
+
+    border: 1px solid #333;
+    border-radius: 12px;
+
+    background: #111;
+
+    text-align: center;
+}
+
+.resultat-match strong {
+    font-size: 22px;
+    margin: 0 10px;
+}
+
+.resultat-match img {
+    vertical-align: middle;
+}
+
+
+/* =========================================================
+   ACTUALITES
+   ========================================================= */
+
+.actualites {
+    overflow: hidden;
+}
+
+.actu {
+    width: 90%;
+    max-width: 750px;
+
+    margin: 20px auto;
+    padding: 20px;
+
+    background:
+        linear-gradient(145deg, #252525, #0d0d0d);
+
+    border-left: 5px solid #e30613;
+    border-right: 3px solid #ffcc00;
+
+    border-radius: 15px;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.actu h3 {
+    color: #ffcc00;
+    font-size: 23px;
+}
+
+.actu a {
+    display: inline-block;
+
+    padding: 10px 20px;
+
+    background: #e30613;
+
+    border: 2px solid #ffcc00;
+    border-radius: 10px;
+
+    color: white;
+    font-weight: bold;
+
+    transition: 0.3s ease;
+}
+
+.actu a:hover {
+    background: #ffcc00;
+    color: black;
+}
+
+
+/* =========================================================
+   FORMULAIRES
+   ========================================================= */
+
+.formulaire {
+    width: 90%;
+    max-width: 500px;
+
+    margin: 30px auto;
+    padding: 25px;
+
+    background: rgba(20, 20, 20, 0.95);
+
+    border: 3px solid #e30613;
+
+    border-radius: 18px;
+}
+
+.formulaire label {
+    display: block;
+
+    color: #ffcc00;
+
+    font-size: 18px;
+    font-weight: bold;
+
+    margin-bottom: 5px;
+}
+
+.formulaire input {
+    width: 80%;
+
+    margin-top: 5px;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   INPUTS / SELECT
+   ========================================================= */
+
+input {
+    padding: 9px;
+
+    font-size: 16px;
+
+    border-radius: 7px;
+
+    border: 2px solid #ffcc00;
+
+    background: #111;
+
+    color: white;
+}
+
+select {
+    width: 90%;
+    max-width: 400px;
+
+    padding: 10px;
+
+    font-size: 18px;
+
+    border-radius: 8px;
+
+    border: 2px solid #ffcc00;
+
+    background: #1b1b1b;
+
+    color: white;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   TABLEAUX
+   ========================================================= */
+
+table {
+    width: 90%;
+    max-width: 1000px;
+
+    margin: 20px auto;
+
+    border-collapse: collapse;
+
+    background: rgba(10, 10, 10, 0.92);
+}
+
+th {
+    background: #e30613;
+
+    color: white;
+
+    padding: 12px;
+
+    border: 1px solid #ffcc00;
+}
+
+td {
+    padding: 11px;
+
+    color: white;
+
+    border: 1px solid #ffcc00;
+
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+td:last-child {
+    white-space: nowrap;
+}
+
+td button {
+    padding: 9px 14px;
+    font-size: 15px;
+    margin: 3px;
+}
+
+
+/* =========================================================
+   CLASSEMENT PODIUM
+   ========================================================= */
+
+.premier td {
+    background-color: gold;
+    color: black;
+}
+
+.deuxieme td {
+    background-color: silver;
+    color: black;
+}
+
+.troisieme td {
+    background-color: #cd7f32;
+    color: white;
+}
+
+
+/* =========================================================
+   TABLEAU ADMINISTRATION
+   ========================================================= */
+
+.admin-table {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.admin-table table {
+    width: 100%;
+    min-width: 750px;
+}
+
+.admin-matchs {
+    width: 90%;
+    max-width: 900px;
+}
+
+
+/* =========================================================
+   SCORE MATCH
+   ========================================================= */
+
+.score-match {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 30px;
+
+    margin: 30px auto;
+}
+
+.score-equipe {
+    width: 220px;
+    min-height: 150px;
+
+    padding: 15px;
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    background: #1b1b1b;
+
+    border: 2px solid #ffcc00;
+    border-radius: 15px;
+}
+
+.score-equipe h2 {
+    min-height: 55px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 22px;
+    text-align: center;
+}
+
+.score-equipe input {
+    width: 60px;
+
+    font-size: 25px;
+
+    text-align: center;
+}
+
+.score-separation h1 {
+    color: #ffcc00;
+    font-size: 40px;
+}
+
+
+/* =========================================================
+   BADGE SUPPORTER
+   ========================================================= */
+
+#badge-supporter {
+    display: inline-block;
+
+    margin-top: 15px;
+    padding: 12px 20px;
+
+    border-radius: 12px;
+
+    font-size: 22px;
+    font-weight: bold;
+
+    background: #444;
+    color: white;
+
+    border: 2px solid #ffcc00;
+}
+
+
+/* =========================================================
+   ACCUEIL COMPETITION / STATUT
+   ========================================================= */
+
+#accueil-competition {
+    display: inline-block;
+
+    margin-top: 15px;
+
+    padding: 10px 20px;
+
+    background: #e30613;
+
+    color: white;
+
+    border: 2px solid #ffcc00;
+
+    border-radius: 15px;
+
+    font-size: 20px;
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   DRAPEAUX
+   ========================================================= */
+
+#drapeau-domicile,
+#drapeau-exterieur {
+    border: 1px solid black !important;
+
+    background-color: white;
+
+    padding: 3px;
+
+    border-radius: 50%;
+
+    object-fit: contain;
+}
+
+
+/* =========================================================
+   RESPONSIVE TABLETTE
+   ========================================================= */
+
+@media screen and (max-width: 768px) {
+
+    body {
+        background-attachment: scroll;
+    }
+
+    nav {
+        width: 95%;
+    }
+
+    .titre-site,
+    .presentation,
+    .competition,
+    .carte,
+    .match,
+    .formulaire {
+        width: 95%;
+    }
+
+    .titre-site h1 {
+        font-size: 34px;
+    }
+
+    .equipes {
+        gap: 20px;
+    }
+
+    .equipe {
+        width: 190px;
+    }
+
+    .stat-box {
+        width: 180px;
+    }
+
+    table {
+        font-size: 14px;
+    }
+}
+
+
+/* =========================================================
+   RESPONSIVE TELEPHONE
+   ========================================================= */
+
+@media screen and (max-width: 600px) {
+
+    body {
+        padding: 0 8px;
+    }
+
+    h1 {
+        font-size: 30px;
+    }
+
+    h2 {
+        font-size: 22px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    .menu-mobile {
+        width: 90%;
+        margin-top: 15px;
+    }
+
+    nav {
+        width: 96%;
+        padding: 10px;
+    }
+
+    nav a {
+        display: block;
+
+        width: 90%;
+
+        margin: 7px auto;
+
+        font-size: 17px;
+    }
+
+    nav.menu-ouvert a {
+        display: block;
+        width: 90%;
+    }
+
+    .titre-site {
+        padding: 25px 15px;
+        margin-top: 10px;
+    }
+
+    .titre-site h1 {
+        font-size: 27px;
+        line-height: 1.4;
+    }
+
+    .titre-site h1 img {
+        width: 40px;
+        margin: 0 5px;
+    }
+
+    .titre-site h2 {
+        font-size: 18px;
+    }
+
+    .titre-site p {
+        font-size: 17px;
+    }
+
+    .presentation,
+    .carte,
+    .match {
+        width: 96%;
+
+        margin: 20px auto;
+
+        padding: 20px 14px;
+    }
+
+    .match h3 {
+        font-size: 25px;
+    }
+
+    .equipes {
+        flex-direction: column;
+
+        gap: 5px;
+
+        margin: 20px 0;
+    }
+
+    .equipe {
+        width: 100%;
+        min-height: auto;
+    }
+
+    .equipe img {
+        width: 90px;
+        height: 90px;
+    }
+
+    .equipe h2 {
+        font-size: 22px;
+        min-height: auto;
+    }
+
+    .versus {
+        height: 45px;
+    }
+
+    .versus h1 {
+        font-size: 32px;
+    }
+
+    #match-compteur {
+        flex-wrap: wrap;
+        gap: 8px;
+
+        padding: 15px;
+    }
+
+    #match-compteur img {
+        width: 42px;
+        height: 42px;
+    }
+
+    #match-compteur span {
+        font-size: 18px;
+    }
+
+    #compte-a-rebours {
+        gap: 8px;
+    }
+
+    .temps {
+        width: 75px;
+        padding: 10px 5px;
+    }
+
+    .temps span {
+        font-size: 28px;
+    }
+
+    .temps p {
+        font-size: 13px;
+    }
+
+    .stat-box {
+        width: 85%;
+        max-width: 300px;
+    }
+
+    .competition a {
+        width: 95%;
+        font-size: 17px;
+    }
+
+    .actu {
+        width: 95%;
+        padding: 15px;
+    }
+
+    button {
+        width: 90%;
+        font-size: 17px;
+    }
+
+    .score-match {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .score-equipe {
+        width: 80%;
+    }
+
+    table {
+        width: 100%;
+        font-size: 13px;
+    }
+
+    th,
+    td {
+        padding: 6px;
+    }
+
+    .admin-table {
+        overflow-x: auto;
+    }
+}
+
+
+/* =========================================================
+   TRES PETITS ECRANS
+   ========================================================= */
+
+@media screen and (max-width: 400px) {
+
+    .titre-site h1 {
+        font-size: 23px;
+    }
+
+    .match,
+    .carte,
+    .presentation {
+        padding: 15px 10px;
+    }
+
+    .temps {
+        width: 68px;
+    }
+
+    .temps span {
+        font-size: 24px;
+    }
+
+    .temps p {
+        font-size: 12px;
+    }
+}
+
+/* ==========================================
+   ALIGNEMENT TABLEAU DES RÉSULTATS
+   ========================================== */
+
+#table-resultats {
+    width: 95%;
+    max-width: 1100px;
+    margin: 20px auto;
+    border-collapse: collapse;
+    vertical-align: middle;
+}
+
+#table-resultats th {
+    text-align: center;
+    vertical-align: middle;
+    padding: 12px;
+}
+
+#table-resultats td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px;
+}
+
+/* Colonne des matchs */
+#table-resultats td:first-child {
+    text-align: left;
+    min-width: 280px;
+}
+
+/* Logos et drapeaux */
+#table-resultats td img {
+    width: 35px !important;
+    height: 35px !important;
+    object-fit: contain;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+/* Séparation entre les deux équipes */
+#table-resultats td:first-child img {
+    margin-left: 0;
+}
+
+/* Résultat */
+#table-resultats td:last-child {
+    min-width: 150px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+/* ==========================================
+   TABLEAU RÉSULTATS - STYLE FOOTBALL
+   ========================================== */
+
+#table-resultats {
+    width: 96%;
+    max-width: 1200px;
+    margin: 30px auto;
+    border-collapse: separate;
+    border-spacing: 0 10px;
+}
+
+/* En-tête */
+
+#table-resultats th {
+    background: #e30613;
+    color: white;
+    padding: 14px 10px;
+    text-align: center;
+    font-weight: bold;
+    border: none;
+}
+
+#table-resultats th:first-child {
+    border-radius: 10px 0 0 10px;
+}
+
+#table-resultats th:last-child {
+    border-radius: 0 10px 10px 0;
+}
+
+/* Lignes */
+
+#table-resultats tr:not(:first-child) {
+    background: #1c1c1c;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.35);
+}
+
+/* Cellules */
+
+#table-resultats td {
+    padding: 12px 10px;
+    text-align: center;
+    vertical-align: middle;
+    border: none;
+}
+
+/* Première colonne = match */
+
+#table-resultats td:first-child {
+    text-align: left;
+    min-width: 300px;
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* Logos et drapeaux */
+
+#table-resultats td img {
+    width: 38px !important;
+    height: 38px !important;
+    object-fit: contain;
+    vertical-align: middle;
+    margin-right: 8px;
+}
+
+/* Compétition */
+
+#table-resultats td:nth-child(4) {
+    font-weight: bold;
+}
+
+/* Statut */
+
+#table-resultats td:nth-child(5) {
+    font-weight: bold;
+    white-space: nowrap;
+}
+
+/* Résultat */
+
+#table-resultats td:last-child {
+    min-width: 160px;
+    font-weight: bold;
+    line-height: 1.6;
+}
+
+/* Effet au passage de la souris */
+
+#table-resultats tr:not(:first-child):hover {
+    transform: scale(1.01);
+    transition: 0.2s;
+    box-shadow: 0 5px 18px rgba(255,255,255,0.12);
+}
+
+/* ==========================================
+   MOBILE
+   ========================================== */
+
+@media (max-width: 700px) {
+
+    #table-resultats {
+        width: 100%;
+        font-size: 13px;
+    }
+
+    #table-resultats th,
+    #table-resultats td {
+        padding: 8px 5px;
+    }
+
+    #table-resultats td:first-child {
+        min-width: 220px;
+    }
+
+    #table-resultats td img {
+        width: 30px !important;
+        height: 30px !important;
+    }
+
+}

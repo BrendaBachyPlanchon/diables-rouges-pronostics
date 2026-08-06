@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+<meta charset="UTF-8">
+<title>Mon profil supporter - Diables Rouges Pronostics</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<button id="bouton-menu" class="menu-mobile">
+☰ Menu
+</button>
+
+<nav>
+
+    <a href="index.html">🏠 Accueil</a>
+    <a href="pronostic.html">⚽ Pronostics</a>
+    <a href="classement.html">🏆 Classement</a>
+    <a href="resultats.html">📋 Résultats</a>
+    <a href="profil.html">👤 Mon profil</a>
+
+    <button class="plus-mobile">
+        ☰ Plus
+    </button>
+
+    <div id="menu-plus">
+
+        <a href="competitions.html">🌍 Compétitions</a>
+        <a href="regles.html">📖 Règles</a>
+        <a href="admin.html">⚙️ Administration</a>
+        <a href="a-propos.html">ℹ️ À propos</a>
+
+    </div>
+
+</nav>
+
+
+<h1>👤 Mon profil supporter 🇧🇪</h1>
+
+
+<div class="carte">
+
+    <img id="avatar-profil" src="images/avatar-supporter.png" width="120">
+
+<h2 id="pseudo-profil">Bienvenue</h2>
+
+<p id="message-profil"></p>
+
+<h3 id="badge-supporter">🏅 Nouveau supporter</h3>
+
+<p>📝 Pronostics joués : <span id="profil-pronostics">0</span></p>
+
+<p>🎯 Scores exacts : <span id="profil-exacts">0</span></p>
+
+<p>⭐ Points : <span id="profil-points">0</span></p>
+
+<p>🏆 Classement : <span id="profil-position">À venir</span></p>
+
+</div>
+
+
+<h2>⚽ Mes pronostics</h2>
+
+<table id="mes-pronostics" border="1" align="center" cellpadding="10">
+
+<tr>
+<th>Match</th>
+<th>Pronostic</th>
+</tr>
+
+</table>
+
+
+<script src="script.js"></script>
+
+<script src="js/resultats-officiels.js"></script>
+<script src="js/classement.js"></script>
+<script src="js/profil.js"></script>
+
+</body>
+
+</html>

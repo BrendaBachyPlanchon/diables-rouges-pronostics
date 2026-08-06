@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Faire mon pronostic - Diables Rouges Pronostics</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<button id="bouton-menu" class="menu-mobile">
+☰ Menu
+</button>
+
+<nav>
+
+    <a href="index.html">🏠 Accueil</a>
+    <a href="pronostic.html">⚽ Pronostics</a>
+    <a href="classement.html">🏆 Classement</a>
+    <a href="resultats.html">📋 Résultats</a>
+    <a href="profil.html">👤 Mon profil</a>
+
+    <button class="plus-mobile">
+        ☰ Plus
+    </button>
+
+    <div id="menu-plus">
+
+        <a href="competitions.html">🌍 Compétitions</a>
+        <a href="regles.html">📖 Règles</a>
+        <a href="admin.html">⚙️ Administration</a>
+        <a href="a-propos.html">ℹ️ À propos</a>
+
+    </div>
+
+</nav>
+
+<br>
+
+<h1>🇧🇪 Diables Rouges Pronostics 🇧🇪</h1>
+
+<h2>Faire mon pronostic</h2>
+
+<div class="match">
+
+<h3>🔥 PROCHAIN MATCH À PRONOSTIQUER 🔥</h3>
+
+<div class="equipes">
+
+    <div class="equipe">
+        <img id="drapeau-domicile"src="images/pays/italie.png" width="80">
+        <h2 id="equipe-domicile">Italie 🇮🇹</h2>
+    </div>
+
+    <div class="versus">
+        <h1>🆚</h1>
+    </div>
+
+    <div class="equipe">
+        <img id="drapeau-exterieur" src="images/pays/belgique.png" width="80">
+        <h2 id="equipe-exterieur">Belgique 🇧🇪</h2>
+    </div>
+
+</div>
+<p id="date-match">📅 Date : Vendredi 25 septembre 2026</p>
+<p id="heure-match">🕘 Heure : 20h45</p>
+<p id="competition-match">🏆 Compétition : Ligue des Nations</p>
+
+</div>
+
+<div class="score-match">
+
+    <div class="score-equipe">
+    <h2 id="score-domicile">Italie 🇮🇹</h2>
+    <input type="number" min="0" placeholder="0">
+</div>
+
+    <div class="score-separation">
+        <h1>-</h1>
+    </div>
+
+    <div class="score-equipe">
+    <h2 id="score-exterieur">Belgique 🇧🇪</h2>
+    <input type="number" min="0" placeholder="0">
+</div>
+
+</div>
+
+<h3>🎯 Choisis ton score</h3>
+<p>Entre le nombre de buts pour chaque équipe</p>
+
+<div class="formulaire">
+
+<form id="form-pronostic">
+
+<label>Choisir le match :</label>
+<br>
+
+<select id="choix-match">
+    <option value="">⚽ Sélectionner un match</option>
+</select>
+
+<br><br>
+
+<label>Ton prénom ou pseudo :</label>
+<br>
+<input type="text" placeholder="Exemple : DiableRouge1990">
+<br><br>
+
+<button type="button" id="envoyer-pronostic">Envoyer mon pronostic</button>
+
+</form>
+
+</div>
+
+<br>
+
+<a href="index.html">⬅ Retour à l'accueil</a>
+
+<script src="script.js"></script>
+
+<script src="js/resultats-officiels.js"></script>
+<script src="js/matchs.js"></script>
+
+<script src="js/chargement-matchs-admin.js"></script>
+<script src="js/changement-match.js"></script>
+<script src="js/fermeture-pronostics.js"></script>
+
+<script src="js/pronostics.js"></script>
+<script src="js/classement.js"></script>
+<script src="js/statistiques.js"></script>
+<script src="js/affichage-matchs.js"></script>
+
+</body>
+</html>

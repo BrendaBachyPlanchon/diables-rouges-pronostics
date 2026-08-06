@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Administration - Diables Rouges Pronostics</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<button id="bouton-menu" class="menu-mobile">
+☰ Menu
+</button>
+
+<nav>
+
+    <a href="index.html">🏠 Accueil</a>
+    <a href="classement.html">🏆 Classement</a>
+
+    <button class="plus-mobile">
+        ☰ Plus
+    </button>
+
+    <div id="menu-plus">
+
+        <a href="competitions.html">🌍 Compétitions</a>
+        <a href="classements-competitions.html">🏆 Classements équipes</a>
+        <a href="resultats.html">📋 Résultats</a>
+        <a href="participants.html">👥 Participants</a>
+        <a href="admin.html">⚙️ Administration</a>
+        <a href="#" onclick="deconnexionAdmin()">🚪 Déconnexion</a>
+
+    </div>
+
+</nav>
+
+<div class="titre-site">
+
+<h1>
+<img src="images/pays/belgique.png" width="50">
+Administration
+<img src="images/pays/belgique.png" width="50">
+</h1>
+
+<p>Tableau de bord administrateur</p>
+
+</div>
+
+<div class="competition">
+
+<div class="carte">
+
+<h2>⚽ Ajouter un match</h2>
+
+<label>Équipe domicile :</label><br>
+<input type="text" id="equipe1-admin" placeholder="Belgique">
+
+<br><br>
+
+<label>Équipe extérieure :</label><br>
+<input type="text" id="equipe2-admin" placeholder="France">
+
+<br><br>
+
+<label>Date du match :</label><br>
+<input type="date" id="date-admin">
+
+<br><br>
+
+<label>Heure :</label><br>
+<input type="time" id="heure-admin">
+
+<br><br>
+
+<label>Compétition :</label><br>
+
+<select id="competition-admin">
+
+    <option value="">🏆 Choisir une compétition</option>
+
+    <option value="Coupe du Monde">🌍 Coupe du Monde</option>
+
+    <option value="Euro">🏆 Euro</option>
+
+    <option value="Ligue des Nations">🏆🇪🇺 Ligue des Nations</option>
+
+    <option value="Jupiler Pro League">🇧🇪 Jupiler Pro League</option>
+
+    <option value="Ligue des Champions">⭐ Ligue des Champions</option>
+
+    <option value="Europa League">🟠 Europa League</option>
+
+    <option value="Conference League">🟢 Conference League</option>
+
+    <option value="Autre">⚽ Autre</option>
+
+</select>
+<br><br>
+
+<label>Statut :</label><br>
+
+<select id="statut-admin">
+
+    <option value="À venir">⏳ À venir</option>
+
+    <option value="En cours">🔴 En cours</option>
+
+    <option value="Terminé">✅ Terminé</option>
+
+</select>
+
+<br><br>
+
+<label>Score domicile :</label><br>
+<input type="number" id="score1-admin" min="0" placeholder="0">
+
+<br><br>
+
+<label>Score extérieur :</label><br>
+<input type="number" id="score2-admin" min="0" placeholder="0">
+
+<br><br>
+
+<button id="ajouter-match-admin">
+➕ Ajouter le match
+</button>
+
+</div>
+
+<div class="carte">
+
+<h2>📥 Importer les matchs</h2>
+
+<p>Ajouter plusieurs matchs automatiquement</p>
+
+<textarea id="import-matchs" rows="10" placeholder="Belgique;France;2026-09-25;20:45;Ligue des Nations"></textarea>
+
+<br><br>
+
+<button id="importer-matchs-admin">
+📥 Importer les matchs
+</button>
+
+</div>
+
+<div class="carte admin-matchs">
+
+<h3>📋 Matchs enregistrés</h3>
+
+<label>🏆 Filtrer par compétition :</label>
+
+<select id="filtre-competition-admin">
+
+    <option value="Toutes">🌍 Toutes les compétitions</option>
+
+    <option value="Ligue des Nations">🏆🇪🇺 Ligue des Nations</option>
+
+    <option value="Jupiler Pro League">🇧🇪 Jupiler Pro League</option>
+
+    <option value="Ligue des Champions">⭐ Ligue des Champions</option>
+
+    <option value="Europa League">🟠 Europa League</option>
+
+    <option value="Conference League">🟢 Conference League</option>
+
+    <option value="Euro">🏆 Euro</option>
+
+    <option value="Coupe du Monde">🌍 Coupe du Monde</option>
+
+</select>
+
+<br><br>
+
+<table border="1" align="center" cellpadding="10" id="table-matchs-admin">
+
+<tr>
+<th>Match</th>
+<th>Date</th>
+<th>Heure</th>
+<th>Compétition</th>
+<th>Statut</th>
+<th>Score</th>
+<th>Action</th>
+</tr>
+
+</table>
+
+</div>
+
+<div class="carte">
+<h2>🏆 Gérer les compétitions</h2>
+<p>Ajouter ou modifier une compétition.</p>
+</div>
+
+<div class="carte">
+
+<h2>👥 Participants</h2>
+
+<p>Voir la liste des participants.</p>
+
+<a href="participants.html">
+<button>👥 Ouvrir les participants</button>
+</a>
+
+</div>
+
+<div class="carte">
+
+<h2>📊 Classement</h2>
+
+<p>Voir le classement des supporters.</p>
+
+<a href="classement.html">
+<button>🏆 Ouvrir le classement</button>
+</a>
+
+</div>
+
+<div class="carte">
+<h2>⚙️ Paramètres</h2>
+<p>Configurer le site.</p>
+</div>
+
+<div class="carte">
+
+<h2>📋 Résultats</h2>
+
+<p>Consulter les résultats des matchs.</p>
+
+<a href="resultats.html">
+<button>📋 Voir les résultats</button>
+</a>
+
+</div>
+
+</div>
+
+<br>
+
+<a href="index.html">⬅ Retour à l'accueil</a>
+
+<script src="script.js"></script>
+
+<script src="js/protection-admin.js"></script>
+<script src="js/admin.js"></script>
+<script src="js/deconnexion-admin.js"></script>
+
+</body>
+</html>

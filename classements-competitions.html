@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Classements des compétitions - Diables Rouges Pronostics</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<button id="bouton-menu" class="menu-mobile">
+☰ Menu
+</button>
+
+<nav>
+
+    <a href="index.html">🏠 Accueil</a>
+    <a href="classement.html">👥 Classement supporters</a>
+
+    <button class="plus-mobile">
+        ☰ Plus
+    </button>
+
+    <div id="menu-plus">
+
+        <a href="competitions.html">🌍 Compétitions</a>
+        <a href="classements-competitions.html">🏆 Classements équipes</a>
+        <a href="resultats.html">📋 Résultats</a>
+        <a href="participants.html">👥 Participants</a>
+        <a href="admin.html">⚙️ Administration</a>
+        <a href="#" onclick="deconnexionAdmin()">🚪 Déconnexion</a>
+
+    </div>
+
+</nav>
+
+<div class="titre-site">
+
+    <h1>
+        <img src="images/belgique.png" width="50">
+        🏆 Classements des compétitions
+        <img src="images/belgique.png" width="50">
+    </h1>
+
+    <p>Classements des équipes par compétition</p>
+
+</div>
+
+<div class="competition">
+
+    <div class="carte">
+
+        <h2>🏆 Choisir une compétition</h2>
+
+        <select id="choix-competition-classement">
+
+            <option value="">🏆 Sélectionner une compétition</option>
+
+            <option value="Ligue des Nations">
+                🏆🇪🇺 Ligue des Nations
+            </option>
+
+            <option value="Jupiler Pro League">
+                🇧🇪 Jupiler Pro League
+            </option>
+
+            <option value="Coupe du Monde">
+                🌍 Coupe du Monde
+            </option>
+
+            <option value="Euro">
+                🏆 Euro
+            </option>
+
+            <option value="Ligue des Champions">
+                ⭐ Ligue des Champions
+            </option>
+
+            <option value="Europa League">
+                🟠 Europa League
+            </option>
+
+            <option value="Conference League">
+                🟢 Conference League
+            </option>
+
+        </select>
+
+    </div>
+
+    <div id="zone-classements"></div>
+
+</div>
+
+<br>
+
+<a href="index.html">⬅ Retour à l'accueil</a>
+
+<script src="script.js"></script>
+<script src="js/classements-competitions.js"></script>
+
+</body>
+
+</html>

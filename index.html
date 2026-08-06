@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Diables Rouges Pronostics</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <button id="bouton-menu" class="menu-mobile">
+☰ Menu
+</button>
+
+<nav>
+
+    <a href="index.html">🏠 Accueil</a>
+    <a href="pronostic.html">⚽ Pronostics</a>
+    <a href="classement.html">🏆 Classement</a>
+    <a href="resultats.html">📋 Résultats</a>
+    <a href="profil.html">👤 Mon profil</a>
+
+    <button class="plus-mobile" onclick="ouvrirPlus()">
+        ☰ Plus
+    </button>
+
+    <div id="menu-plus">
+
+        <a href="competitions.html">🌍 Compétitions</a>
+        <a href="classements-competitions.html">🏆 Classements équipes</a>
+        <a href="regles.html">📖 Règles</a>
+        <a href="admin.html">⚙️ Administration</a>
+        <a href="a-propos.html">ℹ️ À propos</a>
+
+    </div>
+
+</nav>
+
+<br>
+
+<header class="hero">
+
+<div class="titre-site">
+
+<h1>
+<img src="images/pays/belgique.png" width="60">
+Diables Rouges Pronostics
+<img src="images/pays/belgique.png" width="60">
+</h1>
+
+<h2>🇧🇪 Le jeu de pronostics des supporters des Diables Rouges 🇧🇪</h2>
+
+<p>
+Pronostique les matchs, gagne des points et deviens le meilleur supporter !
+</p>
+
+</div>
+
+</header>
+
+<p>Bienvenue sur votre espace de pronostics dédié aux Diables Rouges !</p>
+
+<p>
+Venez tester vos connaissances, pronostiquer les matchs
+et essayer de terminer en tête du classement.
+</p>
+
+<div class="presentation">
+
+<h3>🇧🇪 Bienvenue dans l'aventure !</h3>
+
+<p>
+Participez aux pronostics des matchs des Diables Rouges,
+marquez des points et tentez de devenir le meilleur pronostiqueur.
+</p>
+
+<p>
+Un jeu créé pour les supporters, par les supporters.
+</p>
+
+</div>
+
+<div class="match">
+
+<h3>⚽ Prochain match</h3>
+
+<div class="equipes">
+
+<div class="equipe">
+<img id="accueil-drapeau1" src="images/pays/belgique.png" width="70">
+<h2 id="accueil-equipe1">Belgique</h2>
+</div>
+
+<div class="versus">
+<h1>🆚</h1>
+</div>
+
+<div class="equipe">
+<img id="accueil-drapeau2" src="images/pays/italie.png" width="70">
+<h2 id="accueil-equipe2">Italie 🇮🇹</h2>
+</div>
+
+</div>
+
+<p id="accueil-date">📅 Date : 25 septembre 2026</p>
+
+<p id="accueil-heure">🕘 Heure : 20:45</p>
+
+<div id="badge-competition">
+    🏆🇪🇺 Ligue des Nations 
+</div>
+
+<p id="accueil-statut">🟡 Statut : À venir</p>
+
+<div id="badge-stade">
+    🏟️ Stade : À définir
+</div>
+
+<br>
+
+<a href="pronostic.html">
+<button>⚽ Pronostiquer ce match</button>
+</a>
+
+</div>
+
+<div class="carte">
+
+<h2>⏳ Coup d'envoi dans</h2>
+
+<div id="match-compteur">
+
+    <img id="compteur-drapeau1" src="images/pays/belgique.png">
+
+    <span id="compteur-equipe1">Belgique</span>
+
+    🆚
+
+    <span id="compteur-equipe2">France</span>
+
+    <img id="compteur-drapeau2" src="images/pays/france.png">
+
+</div>
+
+<div id="compte-a-rebours">
+
+<div class="temps">
+<span id="jours">00</span>
+<p>Jours</p>
+</div>
+
+<div class="temps">
+<span id="heures">00</span>
+<p>Heures</p>
+</div>
+
+<div class="temps">
+<span id="minutes">00</span>
+<p>Minutes</p>
+</div>
+
+<div class="temps">
+<span id="secondes">00</span>
+<p>Secondes</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="carte">
+
+<h2>📊 Les statistiques du jeu</h2>
+
+<div class="stats-container">
+
+<div class="stat-box">
+<div class="stat-emoji">👥</div>
+<div id="nb-participants" class="stat-number">0</div>
+<div class="stat-label">Participants</div>
+</div>
+
+<div class="stat-box">
+<div class="stat-emoji">📝</div>
+<div id="nb-pronostics" class="stat-number">0</div>
+<div class="stat-label">Pronostics</div>
+</div>
+
+<div class="stat-box">
+<div class="stat-emoji">🏆</div>
+<div id="leader" class="stat-number">À venir</div>
+<div class="stat-label">Leader</div>
+</div>
+
+</div>
+
+</div>
+
+<div class="carte">
+
+<h2>🏆 Nos compétitions</h2>
+
+<p>Retrouve tous les grands rendez-vous football :</p>
+
+<div class="competition">
+
+<a href="competitions.html">
+🌍 Coupe du Monde 2030
+<br>
+🟡 Calendrier officiel à venir
+</a>
+
+<a href="competitions.html">
+🇪🇺 Euro 2028
+<br>
+🟡 Calendrier officiel à venir
+</a>
+
+<a href="nations-league.html">
+🏆 Ligue des Nations 2026-2027
+<br>
+🟢 Pronostics disponibles
+</a>
+
+<a href="competitions.html">
+⭐ Ligue des Champions
+<br>
+🟡 Bientôt disponible
+</a>
+
+</div>
+
+</div>
+
+<div class="carte">
+
+<h2>📋 Derniers résultats</h2>
+
+<div id="derniers-resultats">
+
+<p>Aucun résultat disponible pour le moment.</p>
+
+</div>
+
+</div>
+
+<div class="carte actualites">
+
+<h2>📰 Actualités Belgique</h2>
+
+<div class="actu">
+
+<h3>🇧🇪 Diables Rouges</h3>
+
+<p>
+Retrouve toutes les informations sur la sélection belge :
+matchs, résultats, convocations et nouvelles de l'équipe.
+</p>
+
+<a href="#">
+Voir les actualités
+</a>
+
+</div>
+
+
+<div class="actu">
+
+<h3>🔥 Red Flames</h3>
+
+<p>
+Suis les performances et les dernières nouvelles de l'équipe nationale féminine belge.
+</p>
+
+<a href="#">
+Voir les actualités
+</a>
+
+</div>
+
+
+<div class="actu">
+
+<h3>⭐ Équipes nationales jeunes</h3>
+
+<p>
+Les talents de demain : U21, U19 et les jeunes espoirs belges.
+</p>
+
+<a href="#">
+Voir les actualités
+</a>
+
+</div>
+
+</div>
+
+
+<br>
+
+<a href="pronostic.html">
+    <button>🔥 Faire mon pronostic</button>
+</a>
+
+<br><br>
+
+<a href="regles.html">
+    📖 Règles du jeu
+</a>
+
+<script src="script.js"></script>
+<script src="js/equipes.js"></script>
+<script src="js/compteur.js"></script>
+<script src="js/resultats-officiels.js"></script>
+<script src="js/pronostics.js"></script>
+<script src="js/classement.js"></script>
+<script src="js/statistiques.js"></script>
+<script src="js/matchs.js"></script>
+<script src="js/affichage-accueil.js"></script>
+<script src="js/changement-match.js"></script>
+<script src="js/affichage-matchs.js"></script>
+<script src="js/affichage-resultats-accueil.js"></script>
+
+</body>
+</html>
