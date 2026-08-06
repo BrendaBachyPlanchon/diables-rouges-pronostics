@@ -163,4 +163,4 @@ function trouverImageEquipe(nomEquipe, imageParDefaut) {
         imageParDefaut
     );
 
-}
+} 
