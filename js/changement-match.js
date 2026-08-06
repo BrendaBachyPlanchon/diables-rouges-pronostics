@@ -277,7 +277,7 @@ if (choixMatch) {
 
                     logosJupilerProLeague[nomEquipe1] ||
                     drapeaux[nomEquipe1] ||
-                    "images/belgique.png";
+                    "images/pays/belgique.png";
 
 
                 // ==========================================
@@ -290,7 +290,7 @@ if (choixMatch) {
 
                     logosJupilerProLeague[nomEquipe2] ||
                     drapeaux[nomEquipe2] ||
-                    "images/france.png";
+                    "images/pays/france.png";
 
 
                 // ==========================================
