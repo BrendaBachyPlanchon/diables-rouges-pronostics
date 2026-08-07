@@ -89,12 +89,12 @@ let zoneMatchs =
 
 if (zoneMatchs) {
 
-    fetch("matchs.php")
+   fetch("matchs.json")
 
         .then(function(reponse) {
 
             if (!reponse.ok) {
-                throw new Error("Erreur matchs.php");
+                throw new Error("Erreur matchs.json");
             }
 
             return reponse.json();
@@ -104,7 +104,7 @@ if (zoneMatchs) {
         .then(function(matchs) {
 
             console.log(
-                "✅ Matchs affichage chargés depuis le serveur :",
+               "✅ Matchs affichage chargés depuis JSON :",
                 matchs.length
             );
 
