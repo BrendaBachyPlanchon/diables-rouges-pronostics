@@ -1,67 +1,171 @@
 function afficherStatistiques() {
- 
-    let pronostics = JSON.parse(localStorage.getItem("pronostics")) || [];
 
-    let joueurs = [];
+    fetch("matchs.json")
 
-    pronostics.forEach(function(p) {
+    .then(function(reponse) {
 
-        if (!joueurs.includes(p.joueur)) {
-            joueurs.push(p.joueur);
-        }
+        return reponse.json();
 
-    });
+    })
 
-    let participants = joueurs.length;
-    let nbPronostics = pronostics.length;
+    .then(function(matchsStatistiques) {
 
-    let meilleur = "À venir";
-    let meilleurScore = -1;
 
-    joueurs.forEach(function(joueur) {
+        let pronostics =
+            JSON.parse(localStorage.getItem("pronostics")) || [];
 
-        let points = 0;
+
+        let joueurs = [];
+
 
         pronostics.forEach(function(p) {
 
-            if (p.joueur == joueur) {
+            if (!joueurs.includes(p.joueur)) {
 
-                let scores = p.score.split(" - ");
-
-                let resultat = trouverResultat(p.match);
-                
-                if (resultat && resultat.equipe1 !== null) {
-
-    points += calculerPoints(
-        Number(scores[0]),
-        Number(scores[1]),
-        resultat.equipe1,
-        resultat.equipe2
-    );
-
-}
+                joueurs.push(p.joueur);
 
             }
 
         });
 
-        if (points > meilleurScore) {
-            meilleurScore = points;
-            meilleur = joueur + " (" + points + " pts)";
-        }
+
+        let participants = joueurs.length;
+
+        let nbPronostics = pronostics.length;
+
+
+        let meilleur = "À venir";
+
+        let meilleurScore = -1;
+
+
+
+        joueurs.forEach(function(joueur) {
+
+
+            let points = 0;
+
+
+
+            pronostics.forEach(function(p) {
+
+
+                if (p.joueur == joueur) {
+
+
+                    let scores =
+                        p.score.split(" - ");
+
+
+
+                    let matchTrouve =
+                        matchsStatistiques.find(function(match) {
+
+
+                            let nomMatch =
+                                match.equipe1.trim() +
+                                " - " +
+                                match.equipe2.trim();
+
+
+
+                            return nomMatch.toLowerCase()
+                                === p.match.toLowerCase();
+
+
+                        });
+
+
+
+                    if (
+                        matchTrouve &&
+                        matchTrouve.statut === "Terminé"
+                    ) {
+
+
+                        points += calculerPoints(
+
+                            Number(scores[0]),
+
+                            Number(scores[1]),
+
+                            Number(matchTrouve.score1),
+
+                            Number(matchTrouve.score2)
+
+                        );
+
+
+                    }
+
+
+                }
+
+
+            });
+
+
+
+            if (points > meilleurScore) {
+
+                meilleurScore = points;
+
+                meilleur =
+                    joueur +
+                    " (" +
+                    points +
+                    " pts)";
+
+            }
+
+
+        });
+
+
+
+        let participantsElt =
+            document.getElementById("nb-participants");
+
+
+        let pronosticsElt =
+            document.getElementById("nb-pronostics");
+
+
+        let leaderElt =
+            document.getElementById("leader");
+
+
+
+        if (participantsElt)
+            participantsElt.innerText = participants;
+
+
+        if (pronosticsElt)
+            pronosticsElt.innerText = nbPronostics;
+
+
+        if (leaderElt)
+            leaderElt.innerText = meilleur;
+
+
+
+    })
+
+    .catch(function(erreur) {
+
+        console.error(
+            "❌ Erreur statistiques :",
+            erreur
+        );
 
     });
 
-    let participantsElt = document.getElementById("nb-participants");
-    let pronosticsElt = document.getElementById("nb-pronostics");
-    let leaderElt = document.getElementById("leader");
-
-    if (participantsElt) participantsElt.innerText = participants;
-    if (pronosticsElt) pronosticsElt.innerText = nbPronostics;
-    if (leaderElt) leaderElt.innerText = meilleur;
-
 }
 
+
+
 window.addEventListener("load", function() {
+
     afficherStatistiques();
+
 });
