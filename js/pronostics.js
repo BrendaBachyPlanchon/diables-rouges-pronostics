@@ -1,37 +1,40 @@
 let boutonPronostic = document.getElementById("envoyer-pronostic");
 
+
 // ==========================================
 // ENREGISTRER UN PRONOSTIC
 // ==========================================
 
 if (boutonPronostic) {
 
-boutonPronostic.addEventListener("click", function() {
-
-    let choixMatch = document.getElementById("choix-match");
-
-    let nomMatchChoisi = choixMatch.value.trim();
-
-    if (!nomMatchChoisi) {
-
-        alert("⚠️ Veuillez sélectionner un match.");
-
-        return;
-
-    }
+    boutonPronostic.addEventListener("click", function() {
 
 
-    // ==========================================
-    // VÉRIFIER LE MATCH SUR LE SERVEUR
-    // ==========================================
+        let choixMatch = document.getElementById("choix-match");
 
-    fetch("matchs.php")
+        let nomMatchChoisi = choixMatch.value.trim();
+
+
+        if (!nomMatchChoisi) {
+
+            alert("⚠️ Veuillez sélectionner un match.");
+            return;
+
+        }
+
+
+
+        // ==========================================
+        // VÉRIFIER LE MATCH AVEC matchs.json
+        // ==========================================
+
+        fetch("matchs.json")
 
         .then(function(reponse) {
 
             if (!reponse.ok) {
 
-                throw new Error("Erreur matchs.php");
+                throw new Error("Erreur matchs.json");
 
             }
 
@@ -39,31 +42,39 @@ boutonPronostic.addEventListener("click", function() {
 
         })
 
+
         .then(function(matchsAdmin) {
+
 
             let matchAdmin = matchsAdmin.find(function(match) {
 
-                return (
+
+                let nomMatch =
+
                     match.equipe1.trim() +
                     " - " +
-                    match.equipe2.trim()
-                ).toLowerCase() ===
-                nomMatchChoisi.toLowerCase();
+                    match.equipe2.trim();
+
+
+                return nomMatch.toLowerCase() ===
+                    nomMatchChoisi.toLowerCase();
+
 
             });
+
 
 
             if (!matchAdmin) {
 
                 alert("❌ Match introuvable.");
-
                 return;
 
             }
 
 
+
             // ==========================================
-            // VÉRIFIER SI LE MATCH EST DÉJÀ COMMENCÉ
+            // VÉRIFIER DATE DU MATCH
             // ==========================================
 
             let dateDebut =
@@ -75,8 +86,10 @@ boutonPronostic.addEventListener("click", function() {
             let maintenant =
                 new Date().getTime();
 
+
             let dateMatch =
                 new Date(dateDebut).getTime();
+
 
 
             if (maintenant >= dateMatch) {
@@ -90,9 +103,11 @@ boutonPronostic.addEventListener("click", function() {
             }
 
 
+
             // ==========================================
             // RÉCUPÉRER LES INFORMATIONS
             // ==========================================
+
 
             let pseudo =
                 document.querySelector(
@@ -100,10 +115,12 @@ boutonPronostic.addEventListener("click", function() {
                 ).value.trim();
 
 
+
             let scores =
                 document.querySelectorAll(
                     'input[type="number"]'
                 );
+
 
 
             if (
@@ -122,9 +139,12 @@ boutonPronostic.addEventListener("click", function() {
             }
 
 
+
+
             // ==========================================
-            // IDENTIFIANT DU SUPPORTER
+            // IDENTIFIANT SUPPORTER
             // ==========================================
+
 
             let supporterId =
                 localStorage.getItem(
@@ -132,15 +152,19 @@ boutonPronostic.addEventListener("click", function() {
                 );
 
 
+
             if (!supporterId) {
 
+
                 supporterId =
+
                     "supporter-" +
                     Date.now() +
                     "-" +
                     Math.random()
-                        .toString(36)
-                        .substring(2, 10);
+                    .toString(36)
+                    .substring(2,10);
+
 
 
                 localStorage.setItem(
@@ -148,7 +172,10 @@ boutonPronostic.addEventListener("click", function() {
                     supporterId
                 );
 
+
             }
+
+
 
 
             localStorage.setItem(
@@ -157,110 +184,83 @@ boutonPronostic.addEventListener("click", function() {
             );
 
 
+
+
             // ==========================================
-            // PRONOSTIC
+            // CRÉATION DU PRONOSTIC
             // ==========================================
 
+
             let pronostic = {
+
 
                 supporterId:
                     supporterId,
 
+
                 joueur:
                     pseudo,
 
+
                 match:
                     nomMatchChoisi,
+
 
                 score:
                     scores[0].value +
                     " - " +
                     scores[1].value
 
+
             };
 
 
+
+
             // ==========================================
-            // ENVOI AU SERVEUR
+            // SAUVEGARDE LOCAL
             // ==========================================
 
-            fetch("pronostics.php", {
 
-                method: "POST",
+            let anciensPronostics =
 
-                headers: {
-
-                    "Content-Type":
-                        "application/json"
-
-                },
-
-                body:
-                    JSON.stringify(
-                        pronostic
-                    )
-
-            })
-
-            .then(function(reponse) {
-
-                if (!reponse.ok) {
-
-                    throw new Error(
-                        "Erreur pronostics.php"
-                    );
-
-                }
-
-                return reponse.json();
-
-            })
-
-            .then(function(resultat) {
-
-                if (resultat.success) {
-
-                    alert(
-                        "✅ Ton pronostic est enregistré !"
-                    );
+                JSON.parse(
+                    localStorage.getItem("pronostics")
+                ) || [];
 
 
-                    afficherPronostics();
 
-                } else {
-
-                    alert(
-                        "🔒 " +
-                        (
-                            resultat.message ||
-                            "Pronostic refusé."
-                        )
-                    );
-
-                }
-
-            })
-
-            .catch(function(erreur) {
-
-                console.error(
-                    "❌ Erreur enregistrement :",
-                    erreur
-                );
+            anciensPronostics.push(
+                pronostic
+            );
 
 
-                alert(
-                    "❌ Impossible d'enregistrer le pronostic."
-                );
 
-            });
+            localStorage.setItem(
+                "pronostics",
+                JSON.stringify(anciensPronostics)
+            );
+
+
+
+            alert(
+                "✅ Ton pronostic est enregistré !"
+            );
+
+
+
+            afficherPronostics();
+
+
 
         })
 
+
         .catch(function(erreur) {
 
+
             console.error(
-                "❌ Impossible de vérifier le match :",
+                "❌ Erreur vérification match :",
                 erreur
             );
 
@@ -269,151 +269,163 @@ boutonPronostic.addEventListener("click", function() {
                 "❌ Impossible de vérifier le match."
             );
 
-        });
-
-});
-
-}
-
-// ==========================================
-// AFFICHER LES PRONOSTICS DEPUIS LE SERVEUR
-// ==========================================
-
-function afficherPronostics() {
-
-
-let table =
-    document.getElementById(
-        "table-pronostics"
-    );
-
-
-if (!table) {
-
-    return;
-
-}
-
-
-table.innerHTML =
-    "<tr>" +
-    "<th>👤 Joueur</th>" +
-    "<th>⚽ Match</th>" +
-    "<th>🎯 Pronostic</th>" +
-    "</tr>";
-
-
-// ==========================================
-// CHARGER DEPUIS LE SERVEUR
-// ==========================================
-
-fetch("pronostics.php")
-
-    .then(function(reponse) {
-
-        if (!reponse.ok) {
-
-            throw new Error(
-                "Erreur pronostics.php"
-            );
-
-        }
-
-        return reponse.json();
-
-    })
-
-    .then(function(pronostics) {
-
-        console.log(
-            "✅ Pronostics chargés depuis le serveur :",
-            pronostics.length
-        );
-
-
-        pronostics.forEach(function(p) {
-
-            table.innerHTML +=
-
-                "<tr>" +
-
-                "<td>" +
-                p.joueur +
-                "</td>" +
-
-                "<td>" +
-                p.match +
-                "</td>" +
-
-                "<td>" +
-                p.score +
-                "</td>" +
-
-                "</tr>";
 
         });
 
-    })
 
-    .catch(function(erreur) {
-
-        console.error(
-            "❌ Impossible de charger les pronostics :",
-            erreur
-        );
 
     });
 
 }
 
+
+
 // ==========================================
-// CHARGER LES MATCHS DEPUIS LE SERVEUR
+// AFFICHER LES PRONOSTICS
 // ==========================================
 
-function chargerMatchsAdmin() {
 
-let selectMatch =
-    document.getElementById(
-        "choix-match"
+function afficherPronostics() {
+
+
+    let table =
+        document.getElementById(
+            "table-pronostics"
+        );
+
+
+
+    if (!table) {
+
+        return;
+
+    }
+
+
+
+    table.innerHTML =
+
+        "<tr>" +
+        "<th>👤 Joueur</th>" +
+        "<th>⚽ Match</th>" +
+        "<th>🎯 Pronostic</th>" +
+        "</tr>";
+
+
+
+
+    let pronostics =
+
+        JSON.parse(
+            localStorage.getItem("pronostics")
+        ) || [];
+
+
+
+
+    console.log(
+        "✅ Pronostics chargés :",
+        pronostics.length
     );
 
 
-if (!selectMatch) {
 
-    return;
+
+    pronostics.forEach(function(p) {
+
+
+        table.innerHTML +=
+
+
+            "<tr>" +
+
+            "<td>" +
+            p.joueur +
+            "</td>" +
+
+
+            "<td>" +
+            p.match +
+            "</td>" +
+
+
+            "<td>" +
+            p.score +
+            "</td>" +
+
+
+            "</tr>";
+
+
+
+    });
+
+
 
 }
 
 
-fetch("matchs.php")
+
+
+// ==========================================
+// CHARGER LES MATCHS
+// ==========================================
+
+
+function chargerMatchsAdmin() {
+
+
+    let selectMatch =
+
+        document.getElementById(
+            "choix-match"
+        );
+
+
+
+    if (!selectMatch) {
+
+        return;
+
+    }
+
+
+
+
+    fetch("matchs.json")
 
     .then(function(reponse) {
+
 
         if (!reponse.ok) {
 
             throw new Error(
-                "Erreur matchs.php"
+                "Erreur matchs.json"
             );
 
         }
 
+
         return reponse.json();
+
 
     })
 
+
+
     .then(function(matchsAdmin) {
 
+
+
         selectMatch.innerHTML =
+
             '<option value="">⚽ Sélectionner un match</option>';
+
+
 
 
         matchsAdmin.forEach(function(match) {
 
-            let equipe1 =
-                match.equipe1.trim();
-
-            let equipe2 =
-                match.equipe2.trim();
 
 
             let option =
@@ -422,46 +434,66 @@ fetch("matchs.php")
                 );
 
 
+
             option.value =
-                equipe1 +
+
+                match.equipe1.trim() +
                 " - " +
-                equipe2;
+                match.equipe2.trim();
+
 
 
             option.textContent =
-                equipe1 +
+
+                match.equipe1 +
                 " 🆚 " +
-                equipe2;
+                match.equipe2;
+
 
 
             selectMatch.appendChild(
                 option
             );
 
+
+
         });
 
 
+
+
         console.log(
-            "✅ Matchs chargés depuis le serveur :",
+            "✅ Matchs chargés :",
             matchsAdmin.length
         );
 
+
+
     })
 
+
+
     .catch(function(erreur) {
+
 
         console.error(
             "❌ Impossible de charger les matchs :",
             erreur
         );
 
+
     });
 
+
+
 }
+
+
 
 // ==========================================
 // DÉMARRAGE
 // ==========================================
+
 
 chargerMatchsAdmin();
 
