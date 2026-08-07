@@ -16,17 +16,17 @@ if (selectMatchAdmin) {
     // CHARGER LES MATCHS DEPUIS LE SERVEUR
     // ==========================================
 
-    fetch("matchs.php")
+    fetch("matchs.json")
 
-        .then(function(reponse) {
+    .then(function(reponse) {
 
-            if (!reponse.ok) {
-                throw new Error("Erreur matchs.php");
-            }
+        if (!reponse.ok) {
+            throw new Error("Erreur matchs.json");
+        }
 
-            return reponse.json();
+        return reponse.json();
 
-        })
+    })
 
         .then(function(matchsAdmin) {
 
