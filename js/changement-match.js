@@ -12,10 +12,10 @@ if (choixMatch) {
 
 
         // ==========================================
-        // RECHERCHE DU MATCH SUR LE SERVEUR
+        // RECHERCHE DU MATCH DANS LE FICHIER JSON
         // ==========================================
 
-        fetch("matchs.php")
+        fetch("matchs.json")
 
             .then(function(reponse) {
 
