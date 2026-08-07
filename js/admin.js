@@ -6,12 +6,12 @@ console.log("✅ admin.js serveur actif");
 
 
 // ==========================================
-// CHARGER LES MATCHS DEPUIS LE SERVEUR
+// CHARGER LES MATCHS DEPUIS LE FICHIER JSON
 // ==========================================
 
 function chargerMatchsAdmin() {
 
-    return fetch("matchs.php")
+    return fetch("matchs.json")
         .then(function(reponse) {
 
             if (!reponse.ok) {
@@ -23,7 +23,7 @@ function chargerMatchsAdmin() {
         })
         .then(function(matchs) {
 
-            console.log("✅ Matchs chargés depuis le serveur :", matchs.length);
+            console.log("✅ Matchs chargés depuis JSON :", matchs.length);
 
             return matchs;
 
