@@ -4,48 +4,46 @@ let choixCompetition = document.getElementById("choix-competition-classement");
 let zoneClassements = document.getElementById("zone-classements");
 
 const equipesJupilerProLeague = [
-
     "Club Brugge",
-    "KV Kortrijk",
-    "Lommel SK",
+    "Courtrai",
+    "Lommel",
     "SK Beveren",
-    "STVV",
+    "Saint-Trond",
     "Union Saint-Gilloise",
-    "KVC Westerlo",
-    "Standard de Liège",
-    "Cercle Brugge",
-    "SV Zulte Waregem",
-    "KRC Genk",
-    "RSC Anderlecht",
-    "RAAL La Louvière",
-    "Sporting Charleroi",
-    "OH Leuven",
-    "KAA Gent",
-    "KV Mechelen",
-    "Royal Antwerp FC"
-
+    "Westerlo",
+    "Standard",
+    "Cercle Bruges",
+    "Zulte Waregem",
+    "Genk",
+    "Anderlecht",
+    "La Louvière",
+    "Charleroi",
+    "OH Louvain",
+    "Gantoise",
+    "Mechelen",
+    "Antwerp"
 ];
 
 const logosClassementJupilerProLeague = {
 
     "Club Brugge": "images/clubs/club-brugge.png",
-    "KV Kortrijk": "images/clubs/kortrijk.png",
-    "Lommel SK": "images/clubs/lommel.png",
+    "Courtrai": "images/clubs/kortrijk.png",
+    "Lommel": "images/clubs/lommel.png",
     "SK Beveren": "images/clubs/beveren.png",
-    "STVV": "images/clubs/stvv.png",
+    "Saint-Trond": "images/clubs/stvv.png",
     "Union Saint-Gilloise": "images/clubs/union.png",
-    "KVC Westerlo": "images/clubs/westerlo.png",
-    "Standard de Liège": "images/clubs/standard.png",
-    "Cercle Brugge": "images/clubs/cercle-brugge.png",
-    "SV Zulte Waregem": "images/clubs/zulte-waregem.png",
-    "KRC Genk": "images/clubs/genk.png",
-    "RSC Anderlecht": "images/clubs/anderlecht.png",
-    "RAAL La Louvière": "images/clubs/raal-la-louviere.png",
-    "Sporting Charleroi": "images/clubs/charleroi.png",
-    "OH Leuven": "images/clubs/oh-leuven.png",
-    "KAA Gent": "images/clubs/gent.png",
-    "KV Mechelen": "images/clubs/mechelen.png",
-    "Royal Antwerp FC": "images/clubs/antwerp.png"
+    "Westerlo": "images/clubs/westerlo.png",
+    "Standard": "images/clubs/standard.png",
+    "Cercle Bruges": "images/clubs/cercle-brugge.png",
+    "Zulte Waregem": "images/clubs/zulte-waregem.png",
+    "Genk": "images/clubs/genk.png",
+    "Anderlecht": "images/clubs/anderlecht.png",
+    "La Louvière": "images/clubs/raal-la-louviere.png",
+    "Charleroi": "images/clubs/charleroi.png",
+    "OH Louvain": "images/clubs/oh-leuven.png",
+    "Gantoise": "images/clubs/gent.png",
+    "Mechelen": "images/clubs/mechelen.png",
+    "Antwerp": "images/clubs/antwerp.png"
 
 };
 
