@@ -49,6 +49,78 @@ const logosClassementJupilerProLeague = {
 
 };
 
+const logosClassementPays = {
+
+    "France": "images/pays/france.png",
+    "Italie": "images/pays/italie.png",
+    "Belgique": "images/pays/belgique.png",
+    "Turquie": "images/pays/turquie.png",
+
+    "Allemagne": "images/pays/allemagne.png",
+    "Pays-Bas": "images/pays/pays-bas.png",
+    "Serbie": "images/pays/serbie.png",
+    "Grèce": "images/pays/grece.png",
+
+    "Espagne": "images/pays/espagne.png",
+    "Croatie": "images/pays/croatie.png",
+    "Angleterre": "images/pays/angleterre.png",
+    "République Tchèque": "images/pays/republique-tcheque.png",
+
+    "Portugal": "images/pays/portugal.png",
+    "Danemark": "images/pays/danemark.png",
+    "Norvège": "images/pays/norvege.png",
+    "Pays de Galles": "images/pays/pays-galles.png",
+
+    "Écosse": "images/pays/ecosse.png",
+    "Suisse": "images/pays/suisse.png",
+    "Slovénie": "images/pays/slovenie.png",
+    "Macédoine du Nord": "images/pays/macedoine-du-nord.png",
+
+    "Hongrie": "images/pays/hongrie.png",
+    "Ukraine": "images/pays/ukraine.png",
+    "Géorgie": "images/pays/georgie.png",
+    "Irlande du Nord": "images/pays/irlande-du-nord.png",
+
+    "Israël": "images/pays/israel.png",
+    "Autriche": "images/pays/autriche.png",
+    "Irlande": "images/pays/irlande.png",
+    "Kosovo": "images/pays/kosovo.png",
+
+    "Pologne": "images/pays/pologne.png",
+    "Bosnie Herzégovine": "images/pays/bosnie-herzegovine.png",
+    "Roumanie": "images/pays/roumanie.png",
+    "Suède": "images/pays/suede.png",
+
+    "Albanie": "images/pays/albanie.png",
+    "Finlande": "images/pays/finlande.png",
+    "Biélorussie": "images/pays/bielorussie.png",
+    "San Marin": "images/pays/saint-marin.png",
+
+    "Chypre": "images/pays/chypre.png",
+    "Monténégro": "images/pays/montenegro.png",
+    "Arménie": "images/pays/armenie.png",
+    "Lettonie": "images/pays/lettonie.png",
+
+    "Féroé": "images/pays/feroe.png",
+    "Kazakhstan": "images/pays/Kazakhstan.png",
+    "Slovaquie": "images/pays/slovaquie.png",
+    "Moldavie": "images/pays/moldavie.png",
+
+    "Islande": "images/pays/islande.png",
+    "Bulgarie": "images/pays/bulgarie.png",
+    "Estonie": "images/pays/estonie.png",
+    "Luxembourg": "images/pays/luxembourg.png",
+
+    "Gibraltar": "images/pays/gibraltar.png",
+    "Malte": "images/pays/malte.png",
+    "Andorre": "images/pays/andorre.png",
+
+    "Azerbaïdjan": "images/pays/azerbaidjan.png",
+    "Lituanie": "images/pays/lituanie.png",
+    "Liechtenstein": "images/pays/liechtenstein.png"
+
+};
+
 const groupesLigueA = {
 
     A1: ["France", "Italie", "Belgique", "Turquie"],
@@ -139,7 +211,7 @@ if (choixCompetition) {
 
                     </select>
 
-                    <div id="classement-groupe"></div>
+                    <div id="classement-groupe" style="width:100%; overflow-x:auto;"></div>
 
                 </div>
 
@@ -221,7 +293,18 @@ if (!groupes[groupe]) {
     });
 
 
-    let matchsAdmin = JSON.parse(localStorage.getItem("matchsAdmin")) || [];
+    fetch("matchs.json")
+    .then(function(reponse) {
+
+        if (!reponse.ok) {
+            throw new Error("Erreur lors du chargement de matchs.json");
+        }
+
+        return reponse.json();
+
+    })
+    .then(function(matchsAdmin) {
+
 
 
     matchsAdmin.forEach(function(match) {
@@ -323,7 +406,7 @@ if (!groupes[groupe]) {
 
         <h2>🇪🇺 Groupe ${groupe}</h2>
 
-        <table border="1" align="center" cellpadding="10">
+       <table border="1" align="center" cellpadding="6" style="width:100%; max-width:100%; box-sizing:border-box;">
 
             <tr>
 
@@ -356,7 +439,7 @@ if (!groupes[groupe]) {
 
                 <td>
     <div style="display:flex; align-items:center; gap:10px;">
-        <img src="${logosClassementJupilerProLeague[equipe]}"
+        <img src="${logosClassementPays[equipe]}"
              alt="${equipe}"
              style="width:35px; height:35px; object-fit:contain;">
         <span>${equipe}</span>
@@ -389,8 +472,9 @@ if (!groupes[groupe]) {
     html += `</table>`;
 
 
-    classementGroupe.innerHTML = html;
+   classementGroupe.innerHTML = html;
 
+});
 }
 
 function afficherClassementJupiler() {
@@ -419,7 +503,17 @@ function afficherClassementJupiler() {
 
     });
 
-    let matchsAdmin = JSON.parse(localStorage.getItem("matchsAdmin")) || [];
+    fetch("matchs.json")
+.then(function(reponse) {
+
+    if (!reponse.ok) {
+        throw new Error("Erreur lors du chargement de matchs.json");
+    }
+
+    return reponse.json();
+
+})
+.then(function(matchsAdmin) {
 
     matchsAdmin.forEach(function(match) {
 
@@ -501,7 +595,13 @@ function afficherClassementJupiler() {
 
     let html = `
 
-        <h2>🇧🇪 Jupiler Pro League 2026-2027</h2>
+      <h2>
+    🇧🇪
+    <img src="images/clubs/jupiler-pro-league.png"
+         alt="Jupiler Pro League"
+         style="height:45px; vertical-align:middle;">
+    2026-2027
+</h2>
 
         <table border="1" align="center" cellpadding="10">
 
@@ -565,6 +665,7 @@ function afficherClassementJupiler() {
 
     html += `</table>`;
 
-    classementGroupe.innerHTML = html;
+   classementGroupe.innerHTML = html;
 
+});
 }
