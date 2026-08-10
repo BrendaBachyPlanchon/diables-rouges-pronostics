@@ -1648,5 +1648,95 @@
         "statut": "À venir",
         "score1": "",
         "score2": ""
+    },
+    {
+        "equipe1": "Cercle Bruges",
+        "equipe2": "Saint-Trond",
+        "date": "2026-08-14",
+        "heure": "20:45",
+        "competition": "Jupiler Pro League",
+        "statut": "À venir",
+        "score1": "",
+        "score2": ""
+    },
+    {
+        "equipe1": "Union Saint-Gilloise",
+        "equipe2": "Zulte Waregem",
+        "date": "2026-08-15",
+        "heure": "16:00",
+        "competition": "Jupiler Pro League",
+        "statut": "À venir",
+        "score1": "",
+        "score2": ""
+    },
+    {
+        "equipe1": "Courtrai",
+        "equipe2": "Antwerp",
+        "date": "2026-08-15",
+        "heure": "18:15",
+        "competition": "Jupiler Pro League",
+        "statut": "À venir",
+        "score1": "",
+        "score2": ""
+    },
+    {
+        "equipe1": "Genk",
+        "equipe2": "Westerlo",
+        "date": "2026-08-15",
+        "heure": "20:45",
+        "competition": "Jupiler Pro League",
+        "statut": "À venir",
+        "score1": "",
+        "score2": ""
+    },
+    {
+        "equipe1": "OH Louvain",
+        "equipe2": "Club Brugge",
+        "date": "2026-08-15",
+        "heure": "20:45",
+        "competition": "Jupiler Pro League",
+        "statut": "À venir",
+        "score1": "",
+        "score2": ""
+    },
+    {
+        "equipe1": "SK Beveren",
+        "equipe2": "Anderlecht",
+        "date": "2026-08-16",
+        "heure": "13:30",
+        "competition": "Jupiler Pro League",
+        "statut": "À venir",
+        "score1": "",
+        "score2": ""
+    },
+    {
+        "equipe1": "La Louvière",
+        "equipe2": "Gantoise",
+        "date": "2026-08-16",
+        "heure": "16:00",
+        "competition": "Jupiler Pro League",
+        "statut": "À venir",
+        "score1": "",
+        "score2": ""
+    },
+    {
+        "equipe1": "Mechelen",
+        "equipe2": "Standard",
+        "date": "2026-08-16",
+        "heure": "18:30",
+        "competition": "Jupiler Pro League",
+        "statut": "À venir",
+        "score1": "",
+        "score2": ""
+    },
+    {
+        "equipe1": "Lommel",
+        "equipe2": "Charleroi",
+        "date": "2026-08-16",
+        "heure": "19:15",
+        "competition": "Jupiler Pro League",
+        "statut": "À venir",
+        "score1": "",
+        "score2": ""
     }
 ]
