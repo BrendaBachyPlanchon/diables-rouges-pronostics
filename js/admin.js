@@ -159,13 +159,25 @@ function afficherMatchsAdmin() {
 
                     "<td>" +
 
-                    "<button onclick='modifierMatch(" +
-                    index +
-                    ")'>✏️ Modifier</button> " +
+                   "<button onclick='modifierMatch(\"" +
+match.date +
+"\", \"" +
+match.heure +
+"\", \"" +
+match.equipe1 +
+"\", \"" +
+match.equipe2 +
+"\")'>✏️ Modifier</button> " +
 
-                    "<button onclick='supprimerMatch(" +
-                    index +
-                    ")'>🗑️ Supprimer</button>" +
+"<button onclick='supprimerMatch(\"" +
+match.date +
+"\", \"" +
+match.heure +
+"\", \"" +
+match.equipe1 +
+"\", \"" +
+match.equipe2 +
+"\")'>🗑️ Supprimer</button>" +
 
                     "</td>" +
 
@@ -266,19 +278,30 @@ if (bouton) {
                 // MODIFICATION
                 // ==========================================
 
-                if (modification !== null) {
+               if (modification !== null) {
 
-                    let index = Number(modification);
+    let ancienMatch = JSON.parse(modification);
 
-                    if (matchsAdmin[index]) {
+    let index = matchsAdmin.findIndex(function(m) {
 
-                        matchsAdmin[index] = nouveauMatch;
+        return (
+            m.date === ancienMatch.date &&
+            m.heure === ancienMatch.heure &&
+            m.equipe1 === ancienMatch.equipe1 &&
+            m.equipe2 === ancienMatch.equipe2
+        );
 
-                    }
+    });
 
-                    localStorage.removeItem("matchModification");
+    if (index !== -1) {
 
-                }
+        matchsAdmin[index] = nouveauMatch;
+
+    }
+
+    localStorage.removeItem("matchModification");
+
+}
 
 
                 // ==========================================
@@ -336,7 +359,7 @@ if (bouton) {
 // SUPPRIMER UN MATCH
 // ==========================================
 
-function supprimerMatch(index) {
+function supprimerMatch(date, heure, equipe1, equipe2) {
 
 
     let confirmation =
@@ -353,7 +376,23 @@ function supprimerMatch(index) {
         .then(function(matchsAdmin) {
 
 
-            matchsAdmin.splice(index, 1);
+           let index = matchsAdmin.findIndex(function(m) {
+
+    return (
+        m.date === date &&
+        m.heure === heure &&
+        m.equipe1 === equipe1 &&
+        m.equipe2 === equipe2
+    );
+
+});
+
+
+if (index !== -1) {
+
+    matchsAdmin.splice(index, 1);
+
+}
 
 
             return sauvegarderMatchsAdmin(matchsAdmin);
@@ -394,7 +433,7 @@ function supprimerMatch(index) {
 // MODIFIER UN MATCH
 // ==========================================
 
-function modifierMatch(index) {
+function modifierMatch(date, heure, equipe1, equipe2) {
 
 
     chargerMatchsAdmin()
@@ -402,7 +441,31 @@ function modifierMatch(index) {
         .then(function(matchsAdmin) {
 
 
-            let match = matchsAdmin[index];
+                   // Refaire exactement le même tri
+        // que celui utilisé dans l'affichage
+        matchsAdmin.sort(function(a, b) {
+
+            let dateA =
+                new Date(a.date + "T" + a.heure);
+
+            let dateB =
+                new Date(b.date + "T" + b.heure);
+
+            return dateA - dateB;
+
+        });
+
+
+        let match = matchsAdmin.find(function(m) {
+
+    return (
+        m.date === date &&
+        m.heure === heure &&
+        m.equipe1 === equipe1 &&
+        m.equipe2 === equipe2
+    );
+
+});
 
 
             if (!match) {
@@ -440,9 +503,14 @@ function modifierMatch(index) {
 
 
             localStorage.setItem(
-                "matchModification",
-                index
-            );
+    "matchModification",
+    JSON.stringify({
+        date: date,
+        heure: heure,
+        equipe1: equipe1,
+        equipe2: equipe2
+    })
+);
 
 
             document.getElementById(

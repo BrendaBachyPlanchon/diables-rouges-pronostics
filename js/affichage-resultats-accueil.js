@@ -13,83 +13,113 @@ function formaterDate(date) {
 
 function afficherDerniersResultatsAccueil() {
 
-
-    let bloc = document.getElementById("derniers-resultats");
-
+    let bloc =
+        document.getElementById("derniers-resultats");
 
     if (!bloc) return;
 
 
-    let matchsAdmin = JSON.parse(localStorage.getItem("matchsAdmin")) || [];
+    fetch("matchs.json")
+
+        .then(function(reponse) {
+
+            if (!reponse.ok) {
+                throw new Error("Impossible de charger matchs.json");
+            }
+
+            return reponse.json();
+
+        })
+
+        .then(function(matchs) {
+
+            // Garder uniquement les matchs terminés
+            let resultats = matchs.filter(function(match) {
+
+                return match.statut === "Terminé";
+
+            });
 
 
-   let resultats = matchsAdmin.filter(function(match) {
+            // Trier du plus récent au plus ancien
+            resultats.sort(function(a, b) {
 
-    return match.statut === "Terminé";
+                let dateA =
+                    new Date(a.date + "T" + a.heure);
 
-});
+                let dateB =
+                    new Date(b.date + "T" + b.heure);
 
+                return dateB - dateA;
 
-resultats = resultats.slice(-3).reverse();
-
-
-    if (resultats.length === 0) {
-
-        bloc.innerHTML = "<p>Aucun résultat disponible pour le moment.</p>";
-        return;
-
-    }
+            });
 
 
-    bloc.innerHTML = "";
+            // Garder les 3 derniers résultats
+            resultats = resultats.slice(0, 3);
 
 
-   resultats.forEach(function(match) {
+            if (resultats.length === 0) {
+
+                bloc.innerHTML =
+                    "<p>Aucun résultat disponible pour le moment.</p>";
+
+                return;
+
+            }
 
 
-    let drapeaux = {
-        "Belgique": "images/pays/belgique.png",
-        "Turquie": "images/pays/turquie.png",
-        "France": "images/pays/france.png",
-        "Italie": "images/pays/italie.png",
-        "Espagne": "images/pays/espagne.png"
-    };
+            bloc.innerHTML = "";
 
 
-    let equipe1 = match.equipe1.trim();
-    let equipe2 = match.equipe2.trim();
+            resultats.forEach(function(match) {
+
+                let equipe1 =
+                    match.equipe1.trim();
+
+                let equipe2 =
+                    match.equipe2.trim();
 
 
-    equipe1 = equipe1.charAt(0).toUpperCase() + equipe1.slice(1).toLowerCase();
-    equipe2 = equipe2.charAt(0).toUpperCase() + equipe2.slice(1).toLowerCase();
+                bloc.innerHTML += `
 
+                    <div class="resultat-accueil">
 
-    bloc.innerHTML +=
+                        <h3>
+                            ${equipe1}
+                            <strong>
+                                ${match.score1} - ${match.score2}
+                            </strong>
+                            ${equipe2}
+                        </h3>
 
-"<div class='resultat-match'>" +
+                        <p>
+                            📅 ${formaterDate(match.date)}
+                        </p>
 
-"<div>" +
+                        <p>
+                            🏆 ${match.competition}
+                        </p>
 
-"<img src='" + (drapeaux[equipe1] || "images/pays/belgique.png") + "' width='40'>" +
+                    </div>
 
-" " + match.equipe1 +
+                `;
 
-" <strong>" + match.score1 + " - " + match.score2 + "</strong> " +
+            });
 
-match.equipe2 +
+        })
 
-" <img src='" + (drapeaux[equipe2] || "images/pays/belgique.png") + "' width='40'>" +
+        .catch(function(erreur) {
 
-"</div>" +
+            console.error(
+                "❌ Erreur derniers résultats :",
+                erreur
+            );
 
-"<p>📅 " + formaterDate(match.date) + "</p>" +
+            bloc.innerHTML =
+                "<p>❌ Impossible de charger les résultats.</p>";
 
-"<p>🏆 " + match.competition + "</p>" +
-
-"</div>";
-
-});
-
+        });
 
 }
 
