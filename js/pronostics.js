@@ -374,117 +374,107 @@ function afficherPronostics() {
 
 function chargerMatchsAdmin() {
 
-
     let selectMatch =
-
-        document.getElementById(
-            "choix-match"
-        );
-
-
+        document.getElementById("choix-match");
 
     if (!selectMatch) {
-
         return;
-
     }
-
-
-
 
     fetch("matchs.json")
 
-    .then(function(reponse) {
+        .then(function(reponse) {
 
+            if (!reponse.ok) {
+                throw new Error("Erreur matchs.json");
+            }
 
-        if (!reponse.ok) {
+            return reponse.json();
 
-            throw new Error(
-                "Erreur matchs.json"
+        })
+
+        .then(function(matchsAdmin) {
+
+            console.log(
+                "✅ Matchs chargés :",
+                matchsAdmin.length
             );
 
-        }
+            // ==========================================
+            // TRIER LES MATCHS PAR DATE
+            // ==========================================
 
+           matchsAdmin.sort(function(a, b) {
 
-        return reponse.json();
+    // À venir en premier
+    let ordreStatut = {
+        "À venir": 1,
+        "En cours": 2,
+        "Terminé": 3
+    };
 
+    let statutA =
+        ordreStatut[a.statut] || 4;
 
-    })
+    let statutB =
+        ordreStatut[b.statut] || 4;
 
+    // Priorité au statut
+    if (statutA !== statutB) {
+        return statutA - statutB;
+    }
 
+    // Puis tri par date
+    let dateA =
+        new Date(a.date + "T" + a.heure);
 
-    .then(function(matchsAdmin) {
+    let dateB =
+        new Date(b.date + "T" + b.heure);
 
+    return dateA - dateB;
 
+});
 
-        selectMatch.innerHTML =
+            // ==========================================
+            // VIDER LE MENU
+            // ==========================================
 
-            '<option value="">⚽ Sélectionner un match</option>';
+            selectMatch.innerHTML =
+                '<option value="">⚽ Sélectionner un match</option>';
 
+            // ==========================================
+            // AFFICHER LES MATCHS
+            // ==========================================
 
+            matchsAdmin.forEach(function(match) {
 
+                let option =
+                    document.createElement("option");
 
-        matchsAdmin.forEach(function(match) {
+                option.value =
+                    match.equipe1.trim() +
+                    " - " +
+                    match.equipe2.trim();
 
+                option.textContent =
+                    match.equipe1 +
+                    " 🆚 " +
+                    match.equipe2;
 
+                selectMatch.appendChild(option);
 
-            let option =
-                document.createElement(
-                    "option"
-                );
+            });
 
+        })
 
+        .catch(function(erreur) {
 
-            option.value =
-
-                match.equipe1.trim() +
-                " - " +
-                match.equipe2.trim();
-
-
-
-            option.textContent =
-
-                match.equipe1 +
-                " 🆚 " +
-                match.equipe2;
-
-
-
-            selectMatch.appendChild(
-                option
+            console.error(
+                "❌ Impossible de charger les matchs :",
+                erreur
             );
-
-
 
         });
-
-
-
-
-        console.log(
-            "✅ Matchs chargés :",
-            matchsAdmin.length
-        );
-
-
-
-    })
-
-
-
-    .catch(function(erreur) {
-
-
-        console.error(
-            "❌ Impossible de charger les matchs :",
-            erreur
-        );
-
-
-    });
-
-
 
 }
 
