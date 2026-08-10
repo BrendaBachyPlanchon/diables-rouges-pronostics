@@ -42,25 +42,51 @@ fetch("matchs.json")
 
         }
 
+    // ==========================================
+    // PRENDRE LE PROCHAIN MATCH À VENIR
+    // ==========================================
 
-        // ==========================================
-        // PRENDRE LE PROCHAIN MATCH
-        // ==========================================
+    let maintenant = new Date().getTime();
 
-        let matchsTries = matchsAdmin.slice().sort(function(a, b) {
+    let matchsAVenir = matchsAdmin.filter(function(match) {
 
-            let dateA =
-                new Date(a.date + "T" + a.heure);
+        let dateMatch = new Date(
+            match.date + "T" + match.heure
+        ).getTime();
 
-            let dateB =
-                new Date(b.date + "T" + b.heure);
+        return match.statut === "À venir" &&
+               dateMatch > maintenant;
 
-            return dateA - dateB;
-
-        });
+    });
 
 
-        let match = matchsTries[0];
+    if (matchsAVenir.length === 0) {
+
+        console.log("⚠️ Aucun match à venir");
+
+        return;
+
+    }
+
+
+    // Trier les matchs à venir par date
+    matchsAVenir.sort(function(a, b) {
+
+        let dateA = new Date(
+            a.date + "T" + a.heure
+        ).getTime();
+
+        let dateB = new Date(
+            b.date + "T" + b.heure
+        ).getTime();
+
+        return dateA - dateB;
+
+    });
+
+
+    // Premier match réellement à venir
+    let match = matchsAVenir[0];
 
 
         // ==========================================
