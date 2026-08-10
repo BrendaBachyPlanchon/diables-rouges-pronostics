@@ -98,56 +98,73 @@ const logosCompteurJupilerProLeague = {
 
 function trouverProchainMatch() {
 
-    let matchsAdmin =
-        JSON.parse(localStorage.getItem("matchsAdmin")) || [];
+    fetch("matchs.json")
 
-    let maintenant = new Date().getTime();
+        .then(function(reponse) {
 
+            if (!reponse.ok) {
+                throw new Error("Impossible de charger matchs.json");
+            }
 
-    let prochains = matchsAdmin.filter(function(match) {
+            return reponse.json();
 
-        let dateMatch = new Date(
-            match.date + "T" + match.heure
-        ).getTime();
+        })
 
-        return dateMatch > maintenant;
+        .then(function(matchs) {
 
-    });
+            let maintenant = new Date().getTime();
 
+            let prochains = matchs.filter(function(match) {
 
-    if (prochains.length === 0) {
+                let dateMatch = new Date(
+                    match.date + "T" + match.heure
+                ).getTime();
 
-        prochainMatch = null;
-        dateProchainMatch = null;
+                return dateMatch > maintenant;
 
-        return;
+            });
 
-    }
+            if (prochains.length === 0) {
 
+                prochainMatch = null;
+                dateProchainMatch = null;
 
-    // Tri chronologique
-    prochains.sort(function(a, b) {
+                return;
 
-        let dateA = new Date(
-            a.date + "T" + a.heure
-        ).getTime();
+            }
 
-        let dateB = new Date(
-            b.date + "T" + b.heure
-        ).getTime();
+            prochains.sort(function(a, b) {
 
-        return dateA - dateB;
+                let dateA = new Date(
+                    a.date + "T" + a.heure
+                ).getTime();
 
-    });
+                let dateB = new Date(
+                    b.date + "T" + b.heure
+                ).getTime();
 
+                return dateA - dateB;
 
-    // Premier match à venir
-    prochainMatch = prochains[0];
+            });
 
+            prochainMatch = prochains[0];
 
-    dateProchainMatch = new Date(
-        prochainMatch.date + "T" + prochainMatch.heure
-    ).getTime();
+            dateProchainMatch = new Date(
+                prochainMatch.date + "T" + prochainMatch.heure
+            ).getTime();
+
+            afficherNomProchainMatch();
+
+        })
+
+        .catch(function(erreur) {
+
+            console.error(
+                "❌ Impossible de charger le prochain match :",
+                erreur
+            );
+
+        });
 
 }
 
@@ -157,10 +174,6 @@ function trouverProchainMatch() {
 // ==========================================
 
 function afficherNomProchainMatch() {
-
-    // On recherche toujours le prochain match
-    trouverProchainMatch();
-
 
     if (!prochainMatch) {
 
@@ -349,10 +362,7 @@ function lancerCompteARebours() {
 // LANCEMENT
 // ==========================================
 
+
 trouverProchainMatch();
-
-afficherNomProchainMatch();
-
-lancerCompteARebours();
 
 setInterval(lancerCompteARebours, 1000);
