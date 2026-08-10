@@ -229,6 +229,9 @@ if (bouton) {
         let competition =
             document.getElementById("competition-admin").value;
 
+        let stade =
+            document.getElementById("stade-admin").value.trim();
+
         let score1 =
             document.getElementById("score1-admin").value;
 
@@ -253,16 +256,17 @@ if (bouton) {
 
         let nouveauMatch = {
 
-            equipe1: equipe1,
-            equipe2: equipe2,
-            date: date,
-            heure: heure,
-            competition: competition,
-            statut: statut,
-            score1: score1,
-            score2: score2
+    equipe1: equipe1,
+    equipe2: equipe2,
+    date: date,
+    heure: heure,
+    competition: competition,
+    stade: stade,
+    statut: statut,
+    score1: score1,
+    score2: score2
 
-        };
+};
 
 
         chargerMatchsAdmin()
@@ -491,6 +495,9 @@ function modifierMatch(date, heure, equipe1, equipe2) {
 
             document.getElementById("competition-admin").value =
                 match.competition;
+
+            document.getElementById("stade-admin").value =
+                match.stade || "";
 
             document.getElementById("statut-admin").value =
                 match.statut;
