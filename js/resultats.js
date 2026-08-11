@@ -140,160 +140,218 @@ const drapeauxPaysResultats = {
     "Angleterre": "images/pays/angleterre.png"
 };
 
-let tableauResultats = document.getElementById("table-resultats");
+let tableauResultats =
+    document.getElementById("table-resultats");
 
 if (tableauResultats) {
 
-    let matchsAdmin = JSON.parse(localStorage.getItem("matchsAdmin")) || [];
+    fetch("matchs.json")
 
-matchsAdmin.forEach(function(match) {
+        .then(function(reponse) {
 
-    console.log("MATCH ADMIN RESULTATS :", match.equipe1, "-", match.equipe2);
+            if (!reponse.ok) {
+                throw new Error("Erreur matchs.json");
+            }
 
-    let equipe1 = match.equipe1.trim();
-let equipe2 = match.equipe2.trim();
+            return reponse.json();
 
-let imageEquipe1 =
-    logosJupilerProLeagueResultats[equipe1] ||
-    drapeauxPaysResultats[equipe1];
+        })
 
-let affichageEquipe1 = imageEquipe1
-    ? `<img src="${imageEquipe1}" 
-             style="width:35px; height:35px; object-fit:contain; vertical-align:middle; margin-right:8px;">
-       ${equipe1}`
-    : equipe1;
+        .then(function(matchsAdmin) {
 
-let imageEquipe2 =
-    logosJupilerProLeagueResultats[equipe2] ||
-    drapeauxPaysResultats[equipe2];
+            // ==========================================
+// TRIER LES MATCHS DU PLUS RÉCENT AU PLUS ANCIEN
+// ==========================================
 
-let affichageEquipe2 = imageEquipe2
-    ? `<img src="${imageEquipe2}" 
-             style="width:35px; height:35px; object-fit:contain; vertical-align:middle; margin-right:8px;">
-       ${equipe2}`
-    : equipe2;
+matchsAdmin.sort(function(a, b) {
 
-    let resultat = "⚽ À venir";
-let vainqueur = "";
+    let dateA =
+        new Date(a.date + "T" + a.heure);
 
+    let dateB =
+        new Date(b.date + "T" + b.heure);
 
-if (match.statut === "Terminé") {
-
-
-    resultat = match.score1 + " - " + match.score2;
-
-
-    if (match.score1 > match.score2) {
-
-        vainqueur = "🏆 Victoire " + match.equipe1;
-
-    } else if (match.score1 < match.score2) {
-
-        vainqueur = "🏆 Victoire " + match.equipe2;
-
-    } else {
-
-        vainqueur = "🤝 Match nul";
-
-    }
-
-
-} else if (match.statut === "En cours") {
-
-
-    resultat = "🔴 Match en cours";
-
-
-}
-
-
-tableauResultats.innerHTML +=
-
-"<tr>" +
-"<td>" + affichageEquipe1 + " 🆚 " + affichageEquipe2 + "</td>" +
-"<td>" + match.date + "</td>" +
-"<td>" + match.heure + "</td>" +
-"<td>" + afficherCompetition(match.competition) + "</td>" +
-"<td>" + match.statut + "</td>" +
-"<td>⚽ " + resultat + "<br>" + vainqueur + "</td>" +
-"</tr>";
+    return dateB - dateA;
 
 });
 
-let matchsAdminNoms = matchsAdmin.map(function(match) {
-    return (
-        match.equipe1.replace(/[^a-zA-ZÀ-ÿ]/g, "").toLowerCase()
-        +
-        "-"
-        +
-        match.equipe2.replace(/[^a-zA-ZÀ-ÿ]/g, "").toLowerCase()
-    );
-});
+            console.log(
+                "✅ Résultats chargés depuis matchs.json :",
+                matchsAdmin.length
+            );
 
-    for (let match in resultatsOfficiels) {
+            // ==========================================
+            // AFFICHER LES MATCHS
+            // ==========================================
 
-console.log("MATCH OFFICIEL RESULTATS :", match);
+            matchsAdmin.forEach(function(match) {
 
-let nomOfficiel = match
-.replace(/[^a-zA-ZÀ-ÿ]/g, "")
-.toLowerCase();
+                console.log(
+                    "MATCH RESULTAT :",
+                    match.equipe1,
+                    "-",
+                    match.equipe2,
+                    match.score1,
+                    "-",
+                    match.score2
+                );
 
-if (matchsAdmin.some(function(m) {
+                let equipe1 =
+                    match.equipe1.trim();
 
-    let admin = (m.equipe1 + " - " + m.equipe2)
-    .replace(/[^a-zA-ZÀ-ÿ]/g, "")
-    .toLowerCase();
-
-    let officiel = match
-    .replace(/[^a-zA-ZÀ-ÿ]/g, "")
-    .toLowerCase();
-
-    return admin === officiel;
-
-})) {
-
-    continue;
-
-}
-
-        let resultat = resultatsOfficiels[match];
-
-        let score = "À venir";
-let statut = "⏳ À venir";
-let vainqueur = "";
-
-if (resultat.equipe1 !== null) {
-
-    score = resultat.equipe1 + " - " + resultat.equipe2;
-    statut = "✅ Terminé";
+                let equipe2 =
+                    match.equipe2.trim();
 
 
-    let equipes = match.split(" - ");
+                // ==========================================
+                // LOGO / DRAPEAU ÉQUIPE 1
+                // ==========================================
 
-if (resultat.equipe1 > resultat.equipe2) {
+                let imageEquipe1 =
+                    logosJupilerProLeagueResultats[equipe1] ||
+                    drapeauxPaysResultats[equipe1];
 
-    vainqueur = "🏆 Victoire " + equipes[0];
 
-} else if (resultat.equipe1 < resultat.equipe2) {
+                let affichageEquipe1 =
+                    imageEquipe1
 
-    vainqueur = "🏆 Victoire " + equipes[1];
+                    ? `<img src="${imageEquipe1}"
+                        style="width:35px;height:35px;object-fit:contain;vertical-align:middle;margin-right:8px;">
+                       ${equipe1}`
 
-} else {
+                    : equipe1;
 
-    vainqueur = "🤝 Match nul";
 
-}
+                // ==========================================
+                // LOGO / DRAPEAU ÉQUIPE 2
+                // ==========================================
 
-}
-        tableauResultats.innerHTML +=
+                let imageEquipe2 =
+                    logosJupilerProLeagueResultats[equipe2] ||
+                    drapeauxPaysResultats[equipe2];
 
-        "<tr>" +
-"<td>" + match + "</td>" +
-"<td>" + statut + "</td>" +
-"<td>⚽ " + score + "<br>" + vainqueur + "</td>" +
-"</tr>";
 
-    }
+                let affichageEquipe2 =
+                    imageEquipe2
+
+                    ? `<img src="${imageEquipe2}"
+                        style="width:35px;height:35px;object-fit:contain;vertical-align:middle;margin-right:8px;">
+                       ${equipe2}`
+
+                    : equipe2;
+
+
+                // ==========================================
+                // RÉSULTAT
+                // ==========================================
+
+                let resultat =
+                    "⚽ À venir";
+
+                let vainqueur = "";
+
+
+                if (match.statut === "Terminé") {
+
+                    resultat =
+                        match.score1 +
+                        " - " +
+                        match.score2;
+
+
+                    if (
+                        Number(match.score1) >
+                        Number(match.score2)
+                    ) {
+
+                        vainqueur =
+                            " 🏆 Victoire " +
+                            equipe1;
+
+                    }
+
+                    else if (
+                        Number(match.score1) <
+                        Number(match.score2)
+                    ) {
+
+                        vainqueur =
+                            " 🏆 Victoire " +
+                            equipe2;
+
+                    }
+
+                    else {
+
+                        vainqueur =
+                            " 🤝 Match nul";
+
+                    }
+
+                }
+
+                else if (
+                    match.statut === "En cours"
+                ) {
+
+                    resultat =
+                        "🔴 Match en cours";
+
+                }
+
+
+                // ==========================================
+                // AJOUTER LA LIGNE AU TABLEAU
+                // ==========================================
+
+                tableauResultats.innerHTML +=
+
+                    "<tr>" +
+
+                    "<td>" +
+                    affichageEquipe1 +
+                    " 🆚 " +
+                    affichageEquipe2 +
+                    "</td>" +
+
+                    "<td>" +
+                    match.date +
+                    "</td>" +
+
+                    "<td>" +
+                    match.heure +
+                    "</td>" +
+
+                    "<td>" +
+                    afficherCompetition(
+                        match.competition
+                    ) +
+                    "</td>" +
+
+                    "<td>" +
+                    match.statut +
+                    "</td>" +
+
+                    "<td>" +
+                    "⚽ " +
+                    resultat +
+                    vainqueur +
+                    "</td>" +
+
+                    "</tr>";
+
+            });
+
+        })
+
+        .catch(function(erreur) {
+
+            console.error(
+                "❌ Impossible de charger les résultats :",
+                erreur
+            );
+
+        });
 
 }
 
