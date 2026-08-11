@@ -730,6 +730,8 @@ nav a:hover {
 
     margin: 0;
 
+    text-align: center;
+
     background:
         linear-gradient(145deg, #242424, #0b0b0b);
 
@@ -753,6 +755,14 @@ nav a:hover {
     transform: translateX(5px);
 
     box-shadow: 0 8px 20px rgba(227, 6, 19, 0.25);
+}
+
+/* ==========================================
+   CARTE NOS COMPÉTITIONS - CENTRAGE
+========================================== */
+
+.competition {
+    text-align: center;
 }
 
 
@@ -1558,4 +1568,18 @@ td button {
         height: 30px !important;
     }
 
+}
+
+/* ==========================================
+   BOUTONS "VOIR LES MATCHS"
+========================================== */
+
+.competition .carte {
+    text-align: center;
+}
+
+.competition .carte a {
+    display: inline-block;
+    text-align: center;
+    margin: 15px auto 0;
 }
