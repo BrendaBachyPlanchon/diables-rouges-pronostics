@@ -125,7 +125,7 @@ const drapeauxPaysResultats = {
     "Slovaquie": "images/pays/slovaquie.png",
     "République Tchèque": "images/pays/republique-tcheque.png",
     "Moldavie": "images/pays/moldavie.png",
-    "Kazakhstan": "images/pays/kazakhstan.png",
+    "Kazakhstan": "images/pays/Kazakhstan.png",
     "Féroé": "images/pays/feroe.png",
     "Liechtenstein": "images/pays/liechtenstein.png",
     "Azerbaïdjan": "images/pays/azerbaidjan.png",
