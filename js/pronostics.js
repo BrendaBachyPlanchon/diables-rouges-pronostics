@@ -465,6 +465,29 @@ function chargerMatchsAdmin() {
 
             });
 
+            // ==========================================
+// SÉLECTIONNER AUTOMATIQUEMENT LE PROCHAIN MATCH
+// ==========================================
+
+let prochainMatch = matchsAdmin.find(function(match) {
+
+    return match.statut === "À venir";
+
+});
+
+if (prochainMatch) {
+
+    selectMatch.value =
+        prochainMatch.equipe1.trim() +
+        " - " +
+        prochainMatch.equipe2.trim();
+
+    selectMatch.dispatchEvent(
+        new Event("change")
+    );
+
+}
+
         })
 
         .catch(function(erreur) {
