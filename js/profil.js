@@ -576,7 +576,7 @@ Promise.all([
     );
 
 });
-```
+
 
 }
 
@@ -585,13 +585,10 @@ Promise.all([
 // ==========================================
 
 window.addEventListener(
-"load",
-function() {
+    "load",
+    function() {
 
+        afficherProfil();
 
-    afficherProfil();
-
-}
-
-
+    }
 );

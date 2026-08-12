@@ -133,6 +133,32 @@ if (zoneMatchs) {
             // AFFICHAGE
             // ==========================================
 
+// ==========================================
+// FILTRER LA COMPÉTITION
+// ==========================================
+
+let pageActuelle = window.location.pathname;
+
+if (pageActuelle.includes("nations-league")) {
+
+    matchs = matchs.filter(function(match) {
+
+        return match.competition === "Ligue des Nations";
+
+    });
+
+}
+
+if (pageActuelle.includes("championnats-europeens")) {
+
+    matchs = matchs.filter(function(match) {
+
+        return match.competition === "Jupiler Pro League";
+
+    });
+
+}
+
             matchs.forEach(function(match) {
 
                 let equipe1 =
