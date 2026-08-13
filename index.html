@@ -9,7 +9,7 @@
 <body>
 
     <button id="bouton-menu" class="menu-mobile">
-☰ Menu
+    ☰ Menu
 </button>
 
 <nav>
@@ -20,7 +20,7 @@
     <a href="resultats.html">📋 Résultats</a>
     <a href="profil.html">👤 Mon profil</a>
 
-    <button class="plus-mobile" onclick="ouvrirPlus()">
+    <button class="plus-mobile">
         ☰ Plus
     </button>
 
@@ -130,15 +130,13 @@ Un jeu créé pour les supporters, par les supporters.
 
 <div id="match-compteur">
 
-    <img id="compteur-drapeau1" src="images/pays/belgique.png">
+    <img id="compteur-drapeau1" src="images/pays/italie.png">
 
-    <span id="compteur-equipe1">Belgique</span>
+    <span id="compteur-equipe1">Italie</span>
+       🆚
+    <span id="compteur-equipe2">Belgique</span>
 
-    🆚
-
-    <span id="compteur-equipe2">France</span>
-
-    <img id="compteur-drapeau2" src="images/pays/france.png">
+    <img id="compteur-drapeau2" src="images/pays/belgique.png">
 
 </div>
 
@@ -317,14 +315,6 @@ Voir les actualités
 </div>
 
 
-<br>
-
-<a href="pronostic.html">
-    <button>🔥 Faire mon pronostic</button>
-</a>
-
-<br><br>
-
 <a href="regles.html">
     📖 Règles du jeu
 </a>
@@ -341,6 +331,9 @@ Voir les actualités
 <script src="js/changement-match.js"></script>
 <script src="js/affichage-matchs.js"></script>
 <script src="js/affichage-resultats-accueil.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
 
 </body>
 </html>

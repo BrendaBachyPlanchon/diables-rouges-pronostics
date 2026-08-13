@@ -28,7 +28,7 @@ if (boutonPronostic) {
         // VÉRIFIER LE MATCH AVEC matchs.json
         // ==========================================
 
-        fetch("matchs.json")
+       fetch("matchs.json")
 
         .then(function(reponse) {
 
@@ -191,86 +191,97 @@ if (boutonPronostic) {
             // ==========================================
 
 
-            let pronostic = {
+           let pronostic = {
 
+    supporter_id: supporterId,
 
-                supporterId:
-                    supporterId,
+    joueur: pseudo,
 
+    match: nomMatchChoisi,
 
-                joueur:
-                    pseudo,
+    partition:
+        scores[0].value +
+        " - " +
+        scores[1].value,
 
+    score: 0
+};
 
-                match:
-                    nomMatchChoisi,
+// ==========================================
+// ENREGISTRER DANS SUPABASE
+// ==========================================
 
+console.log("📤 PRONOSTIC ENVOYÉ À SUPABASE :", pronostic);
 
-                score:
-                    scores[0].value +
-                    " - " +
-                    scores[1].value
+supabaseClient
+    .from("pronostics")
+    .insert([
+        pronostic
+    ])
+    .then(function(resultat) {
 
+        if (resultat.error) {
 
-            };
+            console.log(
+    "CODE SUPABASE =",
+    resultat.error?.code
+);
 
+console.log(
+    "MESSAGE SUPABASE =",
+    resultat.error?.message
+);
 
+console.log(
+    "DETAILS SUPABASE =",
+    resultat.error?.details
+);
 
+console.log(
+    "HINT SUPABASE =",
+    resultat.error?.hint
+);
 
-            // ==========================================
-            // SAUVEGARDE LOCAL
-            // ==========================================
-
-
-            let anciensPronostics =
-
-                JSON.parse(
-                    localStorage.getItem("pronostics")
-                ) || [];
-
-
-
-            anciensPronostics.push(
-                pronostic
+            alert(
+                "❌ Le pronostic n'a pas pu être enregistré dans la base."
             );
 
+            return;
+        }
 
+        console.log(
+            "✅ Pronostic enregistré dans Supabase !",
+            resultat.data
+        );
 
-            localStorage.setItem(
-                "pronostics",
-                JSON.stringify(anciensPronostics)
-            );
+    });
+
 
 
 
             alert(
-                "✅ Ton pronostic est enregistré !"
-            );
+    "✅ Ton pronostic est enregistré !"
+);
 
-
-
-            afficherPronostics();
+afficherPronostics();
 
 
 
         })
 
 
-        .catch(function(erreur) {
+       .catch(function(erreur) {
 
+    console.error("❌ ERREUR COMPLETE :", erreur);
+    console.error("❌ MESSAGE :", erreur.message);
+    console.error("❌ STACK :", erreur.stack);
 
-            console.error(
-                "❌ Erreur vérification match :",
-                erreur
-            );
+    alert(
+        "❌ Impossible de vérifier le match : " +
+        erreur.message
+    );
 
-
-            alert(
-                "❌ Impossible de vérifier le match."
-            );
-
-
-        });
+});
 
 
 
@@ -284,23 +295,16 @@ if (boutonPronostic) {
 // AFFICHER LES PRONOSTICS
 // ==========================================
 
-
 function afficherPronostics() {
-
 
     let table =
         document.getElementById(
             "table-pronostics"
         );
 
-
-
     if (!table) {
-
         return;
-
     }
-
 
 
     table.innerHTML =
@@ -312,55 +316,73 @@ function afficherPronostics() {
         "</tr>";
 
 
+    // ==========================================
+    // CHARGER LES PRONOSTICS DEPUIS SUPABASE
+    // ==========================================
+
+    supabaseClient
+        .from("pronostics")
+        .select("*")
+        .order("created_at", {
+            ascending: false
+        })
+
+        .then(function(resultat) {
+
+            if (resultat.error) {
+
+                console.error(
+                    "❌ Erreur chargement des pronostics :",
+                    resultat.error
+                );
+
+                return;
+            }
 
 
-    let pronostics =
-
-        JSON.parse(
-            localStorage.getItem("pronostics")
-        ) || [];
+            let pronostics =
+                resultat.data || [];
 
 
+            console.log(
+                "✅ Pronostics chargés depuis Supabase :",
+                pronostics.length
+            );
 
 
-    console.log(
-        "✅ Pronostics chargés :",
-        pronostics.length
-    );
+            pronostics.forEach(function(p) {
 
+                table.innerHTML +=
 
+                    "<tr>" +
 
+                    "<td>" +
+                    (p.joueur || "") +
+                    "</td>" +
 
-    pronostics.forEach(function(p) {
+                    "<td>" +
+                    (p.match || "") +
+                    "</td>" +
 
+                    "<td>" +
+                    "🎯 " +
+                    (p.partition || "-") +
+                    "</td>" +
 
-        table.innerHTML +=
+                    "</tr>";
 
+            });
 
-            "<tr>" +
+        })
 
-            "<td>" +
-            p.joueur +
-            "</td>" +
+        .catch(function(erreur) {
 
+            console.error(
+                "❌ Impossible de charger les pronostics :",
+                erreur
+            );
 
-            "<td>" +
-            p.match +
-            "</td>" +
-
-
-            "<td>" +
-            p.score +
-            "</td>" +
-
-
-            "</tr>";
-
-
-
-    });
-
-
+        });
 
 }
 
@@ -381,7 +403,7 @@ function chargerMatchsAdmin() {
         return;
     }
 
-    fetch("matchs.json")
+   fetch("matchs.json")
 
         .then(function(reponse) {
 

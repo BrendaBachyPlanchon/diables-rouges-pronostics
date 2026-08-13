@@ -3,56 +3,82 @@
 // ==========================================
 
 function calculerPoints(
-    pronosticBelgique,
-    pronosticAdversaire,
-    resultatBelgique,
-    resultatAdversaire
+    pronosticEquipe1,
+    pronosticEquipe2,
+    resultatEquipe1,
+    resultatEquipe2
 ) {
 
     // Score exact
     if (
-        pronosticBelgique == resultatBelgique &&
-        pronosticAdversaire == resultatAdversaire
+        pronosticEquipe1 == resultatEquipe1 &&
+        pronosticEquipe2 == resultatEquipe2
     ) {
-
         return 3;
-
     }
-
 
     // Résultat du pronostic
     let pronosticGagnant =
-
-        pronosticBelgique > pronosticAdversaire
-            ? "Belgique"
-            : pronosticBelgique < pronosticAdversaire
-                ? "Adversaire"
+        pronosticEquipe1 > pronosticEquipe2
+            ? "Equipe1"
+            : pronosticEquipe1 < pronosticEquipe2
+                ? "Equipe2"
                 : "Nul";
-
 
     // Résultat réel
     let resultatGagnant =
-
-        resultatBelgique > resultatAdversaire
-            ? "Belgique"
-            : resultatBelgique < resultatAdversaire
-                ? "Adversaire"
+        resultatEquipe1 > resultatEquipe2
+            ? "Equipe1"
+            : resultatEquipe1 < resultatEquipe2
+                ? "Equipe2"
                 : "Nul";
-
 
     // Bon résultat
     if (pronosticGagnant == resultatGagnant) {
-
         return 1;
-
     }
 
-
     return 0;
-
 }
 
+// ==========================================
+// METTRE À JOUR LE SCORE DANS SUPABASE
+// ==========================================
 
+function mettreAJourScoreSupabase(id, points) {
+
+    if (!id) {
+        console.error("❌ ID du pronostic manquant.");
+        return;
+    }
+
+    supabaseClient
+        .from("pronostics")
+        .update({
+            score: points
+        })
+        .eq("id", id)
+
+        .then(function(resultat) {
+
+            if (resultat.error) {
+
+                console.error(
+                    "❌ Erreur mise à jour score Supabase :",
+                    resultat.error
+                );
+
+                return;
+            }
+
+            console.log(
+                "✅ Score mis à jour dans Supabase :",
+                id,
+                points
+            );
+
+        });
+}
 
 // ==========================================
 // AFFICHER LE CLASSEMENT
@@ -157,16 +183,16 @@ function afficherClassement(
             // RÉCUPÉRER LE SCORE DU PRONOSTIC
             // ==========================================
 
-            let scores =
-                p.score.split(" - ");
+           let scores =
+                 p.partition.split("-");
 
 
             let pronostic1 =
-                Number(scores[0]);
+                 Number(scores[0]);
 
 
             let pronostic2 =
-                Number(scores[1]);
+                 Number(scores[1]);
 
 
 
@@ -237,38 +263,49 @@ function afficherClassement(
 
 
 
-                // ==========================================
-                // CALCUL DES POINTS
-                // ==========================================
+               // ==========================================
+// CALCUL DES POINTS
+// ==========================================
 
-                points += calculerPoints(
+let pointsPronostic = calculerPoints(
+    pronostic1,
+    pronostic2,
+    resultat1,
+    resultat2
+);
 
-                    pronostic1,
-                    pronostic2,
-                    resultat1,
-                    resultat2
-
-                );
-
-
-
-                // ==========================================
-                // SCORE EXACT
-                // ==========================================
-
-                if (
-
-                    pronostic1 === resultat1 &&
-
-                    pronostic2 === resultat2
-
-                ) {
+points += pointsPronostic;
 
 
-                    scoresExacts++;
+// ==========================================
+// METTRE À JOUR SUPABASE
+// ==========================================
+
+if (Number(p.score) !== pointsPronostic) {
+
+    mettreAJourScoreSupabase(
+        p.id,
+        pointsPronostic
+    );
+
+}
 
 
-                }
+// ==========================================
+// SCORE EXACT
+// ==========================================
+
+if (
+
+    pronostic1 === resultat1 &&
+
+    pronostic2 === resultat2
+
+) {
+
+    scoresExacts++;
+
+}
 
 
             }
@@ -412,32 +449,34 @@ function afficherClassement(
 
 
 // ==========================================
-// CHARGER LES PRONOSTICS DEPUIS LOCALSTORAGE
+// CHARGER LES PRONOSTICS DEPUIS SUPABASE
 // ==========================================
 
 function chargerPronosticsClassement() {
 
+    return supabaseClient
+        .from("pronostics")
+        .select("*")
 
-    let pronostics =
+        .then(function(resultat) {
 
-        JSON.parse(
-            localStorage.getItem("pronostics")
-        ) || [];
+            if (resultat.error) {
 
+                console.error(
+                    "❌ Erreur chargement pronostics Supabase :",
+                    resultat.error
+                );
 
+                return [];
+            }
 
-    console.log(
+            console.log(
+                "✅ Pronostics chargés depuis Supabase :",
+                resultat.data.length
+            );
 
-        "✅ Pronostics chargés depuis le navigateur :",
-
-        pronostics.length
-
-    );
-
-
-
-    return pronostics;
-
+            return resultat.data;
+        });
 }
 
 
@@ -484,21 +523,18 @@ function chargerMatchsClassement() {
 
 
 
-            let pronostics =
-                chargerPronosticsClassement();
-
-
+           chargerPronosticsClassement()
+             .then(function(pronostics) {
 
             afficherClassement(
-
-                pronostics,
-
-                matchsAdmin
-
+               pronostics,
+               matchsAdmin
             );
 
+        });
 
-        })
+
+    })
 
 
         .catch(function(erreur) {

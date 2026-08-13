@@ -1,5 +1,48 @@
 console.log("✅ Participants chargé");
 
+// ==========================================
+// CALCUL DES POINTS
+// ==========================================
+
+function calculerPoints(
+    pronosticEquipe1,
+    pronosticEquipe2,
+    resultatEquipe1,
+    resultatEquipe2
+) {
+
+    // Score exact
+    if (
+        pronosticEquipe1 == resultatEquipe1 &&
+        pronosticEquipe2 == resultatEquipe2
+    ) {
+        return 3;
+    }
+
+    // Résultat du pronostic
+    let pronosticGagnant =
+        pronosticEquipe1 > pronosticEquipe2
+            ? "Equipe1"
+            : pronosticEquipe1 < pronosticEquipe2
+                ? "Equipe2"
+                : "Nul";
+
+    // Résultat réel
+    let resultatGagnant =
+        resultatEquipe1 > resultatEquipe2
+            ? "Equipe1"
+            : resultatEquipe1 < resultatEquipe2
+                ? "Equipe2"
+                : "Nul";
+
+    // Bon résultat
+    if (pronosticGagnant === resultatGagnant) {
+        return 1;
+    }
+
+    return 0;
+}
+
 
 // ==========================================
 // AFFICHER LES PARTICIPANTS
@@ -10,284 +53,314 @@ function afficherParticipants() {
     let tableau =
         document.getElementById("table-participants");
 
-
     if (!tableau) {
         return;
     }
 
 
     // ==========================================
-    // CHARGER LES PRONOSTICS
+    // CHARGER LES PRONOSTICS DEPUIS SUPABASE
     // ==========================================
 
-    let pronostics =
-        JSON.parse(
-            localStorage.getItem("pronostics")
-        ) || [];
+    supabaseClient
+        .from("pronostics")
+        .select("*")
 
+        .then(function(resultat) {
 
-    // ==========================================
-    // EN-TÊTE DU TABLEAU
-    // ==========================================
+            if (resultat.error) {
 
-    tableau.innerHTML =
-
-        "<tr>" +
-
-        "<th>Pseudo</th>" +
-        "<th>Pronostics</th>" +
-        "<th>Scores exacts</th>" +
-        "<th>Points</th>" +
-        "<th>Action</th>" +
-
-        "</tr>";
-
-
-    // ==========================================
-    // RÉCUPÉRER LES JOUEURS
-    // ==========================================
-
-    let joueurs = [];
-
-
-    pronostics.forEach(function(p) {
-
-        if (!joueurs.includes(p.joueur)) {
-
-            joueurs.push(p.joueur);
-
-        }
-
-    });
-
-
-    // ==========================================
-    // CHARGER LES MATCHS
-    // ==========================================
-
-    fetch("matchs.json")
-
-        .then(function(reponse) {
-
-            if (!reponse.ok) {
-
-                throw new Error(
-                    "Erreur lors du chargement de matchs.json"
+                console.error(
+                    "❌ Erreur chargement participants Supabase :",
+                    resultat.error
                 );
 
+                return;
             }
 
-            return reponse.json();
-
-        })
-
-
-        .then(function(matchsAdmin) {
+            let pronostics =
+                resultat.data || [];
 
 
             console.log(
-                "✅ Matchs chargés pour les participants :",
-                matchsAdmin.length
+                "✅ Pronostics des participants chargés depuis Supabase :",
+                pronostics.length
             );
 
 
             // ==========================================
-            // CALCULER CHAQUE PARTICIPANT
+            // EN-TÊTE DU TABLEAU
             // ==========================================
 
-            joueurs.forEach(function(joueur) {
+            tableau.innerHTML =
 
+                "<tr>" +
 
-                let nombrePronostics = 0;
+                "<th>Pseudo</th>" +
+                "<th>Pronostics</th>" +
+                "<th>Scores exacts</th>" +
+                "<th>Points</th>" +
+                "<th>Action</th>" +
 
-                let points = 0;
+                "</tr>";
 
-                let scoresExacts = 0;
 
+            // ==========================================
+            // RÉCUPÉRER LES JOUEURS
+            // ==========================================
 
-                pronostics.forEach(function(p) {
+            let joueurs = [];
 
 
-                    if (p.joueur !== joueur) {
+            pronostics.forEach(function(p) {
 
-                        return;
+                if (
+                    p.joueur &&
+                    !joueurs.includes(p.joueur)
+                ) {
 
-                    }
+                    joueurs.push(p.joueur);
 
-
-                    nombrePronostics++;
-
-
-                    // ==========================================
-                    // RECHERCHER LE MATCH DANS matchs.json
-                    // ==========================================
-
-                    let matchAdmin =
-                        matchsAdmin.find(function(match) {
-
-
-                            let nomMatch =
-
-                                match.equipe1.trim() +
-                                " - " +
-                                match.equipe2.trim();
-
-
-                            return (
-
-                                nomMatch.toLowerCase() ===
-                                p.match.trim().toLowerCase()
-
-                            );
-
-                        });
-
-
-                    // Match introuvable
-
-                    if (!matchAdmin) {
-
-                        console.log(
-                            "⚠️ Match introuvable :",
-                            p.match
-                        );
-
-                        return;
-
-                    }
-
-
-                    // ==========================================
-                    // VÉRIFIER SI LE MATCH EST TERMINÉ
-                    // ==========================================
-
-                    if (
-
-                        matchAdmin.statut !== "Terminé" ||
-
-                        matchAdmin.score1 === "" ||
-
-                        matchAdmin.score2 === ""
-
-                    ) {
-
-                        return;
-
-                    }
-
-
-                    // ==========================================
-                    // SCORE DU PRONOSTIC
-                    // ==========================================
-
-                    let scores =
-                        p.score.split(" - ");
-
-
-                    let pronostic1 =
-                        Number(scores[0]);
-
-
-                    let pronostic2 =
-                        Number(scores[1]);
-
-
-                    // ==========================================
-                    // SCORE RÉEL
-                    // ==========================================
-
-                    let resultat1 =
-                        Number(matchAdmin.score1);
-
-
-                    let resultat2 =
-                        Number(matchAdmin.score2);
-
-
-                    // ==========================================
-                    // CALCUL DES POINTS
-                    // ==========================================
-
-                    points += calculerPoints(
-
-                        pronostic1,
-                        pronostic2,
-
-                        resultat1,
-                        resultat2
-
-                    );
-
-
-                    // ==========================================
-                    // SCORE EXACT
-                    // ==========================================
-
-                    if (
-
-                        pronostic1 === resultat1 &&
-
-                        pronostic2 === resultat2
-
-                    ) {
-
-                        scoresExacts++;
-
-                    }
-
-
-                });
-
-
-                // ==========================================
-                // AFFICHER LE PARTICIPANT
-                // ==========================================
-
-                tableau.innerHTML +=
-
-                    "<tr>" +
-
-                    "<td>" +
-                    joueur +
-                    "</td>" +
-
-                    "<td>" +
-                    nombrePronostics +
-                    "</td>" +
-
-                    "<td>🎯 " +
-                    scoresExacts +
-                    "</td>" +
-
-                    "<td>⭐ " +
-                    points +
-                    "</td>" +
-
-                    "<td>" +
-
-                    "<button onclick=\"supprimerParticipant('" +
-                    joueur +
-                    "')\">" +
-
-                    "🗑️ Supprimer" +
-
-                    "</button>" +
-
-                    "</td>" +
-
-                    "</tr>";
-
+                }
 
             });
 
 
-        })
+            // ==========================================
+            // CHARGER LES MATCHS
+            // ==========================================
 
+            return fetch("matchs.json")
+
+                .then(function(reponse) {
+
+                    if (!reponse.ok) {
+
+                        throw new Error(
+                            "Erreur lors du chargement de matchs.json"
+                        );
+
+                    }
+
+                    return reponse.json();
+
+                })
+
+                .then(function(matchsAdmin) {
+
+                    console.log(
+                        "✅ Matchs chargés pour les participants :",
+                        matchsAdmin.length
+                    );
+
+
+                    // ==========================================
+                    // CALCULER CHAQUE PARTICIPANT
+                    // ==========================================
+
+                    joueurs.forEach(function(joueur) {
+
+                        let nombrePronostics = 0;
+
+                        let points = 0;
+
+                        let scoresExacts = 0;
+
+
+                        pronostics.forEach(function(p) {
+
+                            if (p.joueur !== joueur) {
+                                return;
+                            }
+
+
+                            nombrePronostics++;
+
+
+                            // ==========================================
+                            // RECHERCHER LE MATCH
+                            // ==========================================
+
+                            let matchAdmin =
+                                matchsAdmin.find(function(match) {
+
+                                    let nomMatch =
+                                        match.equipe1.trim() +
+                                        " - " +
+                                        match.equipe2.trim();
+
+                                    return (
+                                        nomMatch.toLowerCase() ===
+                                        p.match.trim().toLowerCase()
+                                    );
+
+                                });
+
+
+                            if (!matchAdmin) {
+
+                                console.warn(
+                                    "⚠️ Match introuvable :",
+                                    p.match
+                                );
+
+                                return;
+
+                            }
+
+
+                            // ==========================================
+                            // MATCH TERMINÉ
+                            // ==========================================
+
+                            if (
+
+                                matchAdmin.statut !== "Terminé" ||
+
+                                matchAdmin.score1 === "" ||
+
+                                matchAdmin.score2 === ""
+
+                            ) {
+
+                                return;
+
+                            }
+
+
+                            // ==========================================
+                            // PRONOSTIC
+                            // ==========================================
+
+                            if (!p.partition) {
+
+                                console.warn(
+                                    "⚠️ Pronostic sans partition :",
+                                    p
+                                );
+
+                                return;
+
+                            }
+
+
+                            let scores =
+                                p.partition.split("-");
+
+
+                            if (scores.length !== 2) {
+
+                                console.warn(
+                                    "⚠️ Partition incorrecte :",
+                                    p.partition
+                                );
+
+                                return;
+
+                            }
+
+
+                            let pronostic1 =
+                                Number(scores[0]);
+
+                            let pronostic2 =
+                                Number(scores[1]);
+
+
+                            // ==========================================
+                            // SCORE RÉEL
+                            // ==========================================
+
+                            let resultat1 =
+                                Number(matchAdmin.score1);
+
+                            let resultat2 =
+                                Number(matchAdmin.score2);
+
+
+                            // ==========================================
+                            // CALCUL DES POINTS
+                            // ==========================================
+
+                            let pointsPronostic =
+                                calculerPoints(
+                                    pronostic1,
+                                    pronostic2,
+                                    resultat1,
+                                    resultat2
+                                );
+
+
+                            points += pointsPronostic;
+
+
+                            // ==========================================
+                            // SCORE EXACT
+                            // ==========================================
+
+                            if (
+
+                                pronostic1 === resultat1 &&
+
+                                pronostic2 === resultat2
+
+                            ) {
+
+                                scoresExacts++;
+
+                            }
+
+                        });
+
+
+                        // ==========================================
+                        // AFFICHER LE PARTICIPANT
+                        // ==========================================
+
+                        tableau.innerHTML +=
+
+                            "<tr>" +
+
+                            "<td>" +
+                            joueur +
+                            "</td>" +
+
+                            "<td>" +
+                            nombrePronostics +
+                            "</td>" +
+
+                            "<td>🎯 " +
+                            scoresExacts +
+                            "</td>" +
+
+                            "<td>⭐ " +
+                            points +
+                            "</td>" +
+
+                            "<td>" +
+
+                            "<button onclick=\"supprimerParticipant('" +
+                            joueur.replace(/'/g, "\\'") +
+                            "')\">" +
+
+                            "🗑️ Supprimer" +
+
+                            "</button>" +
+
+                            "</td>" +
+
+                            "</tr>";
+
+                    });
+
+                });
+
+        })
 
         .catch(function(erreur) {
 
             console.error(
-                "❌ Impossible de charger matchs.json :",
+                "❌ Impossible de charger les participants :",
                 erreur
             );
 
@@ -296,63 +369,64 @@ function afficherParticipants() {
 }
 
 
-
 // ==========================================
 // SUPPRIMER UN PARTICIPANT
 // ==========================================
 
 function supprimerParticipant(joueur) {
 
-
     let confirmation = confirm(
 
         "⚠️ Voulez-vous vraiment supprimer " +
         joueur +
-        " ?"
+        " et tous ses pronostics ?"
 
     );
 
 
     if (!confirmation) {
-
         return;
-
     }
 
 
-    let pronostics =
-        JSON.parse(
-            localStorage.getItem("pronostics")
-        ) || [];
+    supabaseClient
+        .from("pronostics")
+        .delete()
+        .eq("joueur", joueur)
+
+        .then(function(resultat) {
+
+            if (resultat.error) {
+
+                console.error(
+                    "❌ Erreur suppression participant :",
+                    resultat.error
+                );
+
+                alert(
+                    "❌ Impossible de supprimer le participant."
+                );
+
+                return;
+            }
 
 
-    pronostics =
+            console.log(
+                "✅ Participant supprimé de Supabase :",
+                joueur
+            );
 
-        pronostics.filter(function(p) {
 
-            return p.joueur !== joueur;
+            alert(
+                "✅ Participant supprimé"
+            );
+
+
+            afficherParticipants();
 
         });
 
-
-    localStorage.setItem(
-
-        "pronostics",
-
-        JSON.stringify(pronostics)
-
-    );
-
-
-    alert(
-        "✅ Participant supprimé"
-    );
-
-
-    location.reload();
-
 }
-
 
 
 // ==========================================
@@ -367,4 +441,3 @@ window.addEventListener(
 
     }
 );
-
