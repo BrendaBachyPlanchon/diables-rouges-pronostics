@@ -474,3 +474,132 @@ window.addEventListener(
 
     }
 );
+
+// ==========================================
+// CHOIX DE L'AVATAR DU SUPPORTER
+// ==========================================
+
+function initialiserAvatars() {
+
+    const avatars =
+        document.querySelectorAll(".avatar-choix");
+
+    const avatarProfil =
+        document.getElementById("avatar-profil");
+
+    const avatarSelectionne =
+        document.getElementById("avatar-selectionne");
+
+
+    if (!avatars.length || !avatarProfil) {
+        return;
+    }
+
+
+    // ==========================================
+    // CHARGER L'AVATAR DÉJÀ CHOISI
+    // ==========================================
+
+    const avatarSauvegarde =
+        localStorage.getItem("avatarSupporter");
+
+
+    if (avatarSauvegarde) {
+
+        avatarProfil.src =
+            "images/avatars/" + avatarSauvegarde;
+
+
+        // Afficher la sélection dans la galerie
+        avatars.forEach(function(avatar) {
+
+            if (
+                avatar.dataset.avatar ===
+                avatarSauvegarde
+            ) {
+
+                avatar.classList.add(
+                    "avatar-selectionne"
+                );
+
+            }
+
+        });
+
+    }
+
+
+    // ==========================================
+    // CLIQUER SUR UN AVATAR
+    // ==========================================
+
+    avatars.forEach(function(avatar) {
+
+        avatar.addEventListener(
+            "click",
+            function() {
+
+
+                const choix =
+                    avatar.dataset.avatar;
+
+
+                // Retirer la sélection précédente
+                avatars.forEach(function(a) {
+
+                    a.classList.remove(
+                        "avatar-selectionne"
+                    );
+
+                });
+
+
+                // Ajouter la sélection au nouvel avatar
+                avatar.classList.add(
+                    "avatar-selectionne"
+                );
+
+
+                // Afficher l'avatar choisi
+                avatarProfil.src =
+                    "images/avatars/" + choix;
+
+
+                // Sauvegarder le choix
+                localStorage.setItem(
+                    "avatarSupporter",
+                    choix
+                );
+
+
+                // Afficher le message
+               if (avatarSelectionne) {
+
+    avatarSelectionne.innerText =
+        "🇧🇪 Ton avatar de supporter est sélectionné !";
+
+}
+
+
+                console.log(
+                    "✅ Avatar choisi :",
+                    choix
+                );
+
+            }
+        );
+
+    });
+
+}
+
+
+// Lancer le système d'avatars
+window.addEventListener(
+    "load",
+    function() {
+
+        initialiserAvatars();
+
+    }
+);
