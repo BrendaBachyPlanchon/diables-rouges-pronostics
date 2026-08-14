@@ -109,10 +109,19 @@ if (boutonPronostic) {
             // ==========================================
 
 
-            let pseudo =
-                document.querySelector(
-                    'input[type="text"]'
-                ).value.trim();
+           let pseudo =
+    document.getElementById(
+        "pseudo-supporter"
+    ).value.trim();
+
+                if (pseudo !== "") {
+
+    localStorage.setItem(
+        "pseudoActuel",
+        pseudo
+    );
+
+}
 
 
 
@@ -650,3 +659,35 @@ if (prochainMatch) {
 chargerMatchsAdmin();
 
 afficherPronostics();
+
+// ==========================================
+// MÉMORISER AUTOMATIQUEMENT LE PSEUDO
+// ==========================================
+
+let champPseudo =
+    document.getElementById(
+        "pseudo-supporter"
+    );
+
+if (champPseudo) {
+
+    champPseudo.addEventListener(
+        "input",
+        function() {
+
+            let pseudo =
+                champPseudo.value.trim();
+
+            if (pseudo !== "") {
+
+                localStorage.setItem(
+                    "pseudoActuel",
+                    pseudo
+                );
+
+            }
+
+        }
+    );
+
+}
