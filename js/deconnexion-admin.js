@@ -1,6 +1,6 @@
-function deconnexionAdmin() {
+async function deconnexionAdmin() {
 
-    localStorage.removeItem("adminConnecte");
+    await supabaseClient.auth.signOut();
 
     alert("🚪 Vous êtes déconnecté");
 

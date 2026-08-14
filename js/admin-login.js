@@ -1,21 +1,32 @@
-function connexionAdmin() {
+async function connexionAdmin() {
 
-    let motDePasse = document.getElementById("motdepasse").value;
+    const email = document.getElementById("email").value;
+    const motDePasse = document.getElementById("motdepasse").value;
 
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email: email,
+        password: motDePasse
+    });
 
-    let motDePasseAdmin = "Diables2026";
+    if (error) {
+        alert("❌ Email ou mot de passe incorrect");
+        console.error(error);
+        return;
+    }
 
+    // Connexion réussie
+   
+    window.location.href = "admin.html";
+}
 
-    if (motDePasse === motDePasseAdmin) {
+function voirMotDePasse() {
 
-        localStorage.setItem("adminConnecte", "oui");
+    const champ = document.getElementById("motdepasse");
 
-        window.location.href = "admin.html";
-
+    if (champ.type === "password") {
+        champ.type = "text";
     } else {
-
-        alert("❌ Mot de passe incorrect");
-
+        champ.type = "password";
     }
 
 }

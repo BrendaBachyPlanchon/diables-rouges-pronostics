@@ -20,10 +20,23 @@
 
 <div class="formulaire">
 
+<label>Adresse e-mail :</label>
+<br><br>
+
+<input type="email" id="email" placeholder="Votre adresse e-mail">
+
+<br><br>
+
 <label>Mot de passe :</label>
 <br><br>
 
-<input type="password" id="motdepasse">
+<div style="position: relative; display: inline-block;">
+    <input type="password" id="motdepasse" placeholder="Votre mot de passe">
+    <button type="button" onclick="voirMotDePasse()" 
+            style="position: absolute; right: 5px; top: 50%; transform: translateY(-50%); border: none; background: none; cursor: pointer;">
+        👁️
+    </button>
+</div>
 
 <br><br>
 
@@ -40,6 +53,13 @@
 </div>
 
 
+<!-- Supabase -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<!-- Configuration Supabase -->
+<script src="supabase.js"></script>
+
+<!-- Connexion administrateur -->
 <script src="js/admin-login.js"></script>
 
 </body>

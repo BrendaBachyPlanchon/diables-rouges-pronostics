@@ -1,10 +1,14 @@
-let adminConnecte = localStorage.getItem("adminConnecte");
+async function verifierConnexion() {
 
+    const { data, error } = await supabaseClient.auth.getSession();
 
-if (adminConnecte !== "oui") {
+    if (!data.session) {
 
-    alert("🔒 Accès réservé à l'administrateur");
+        alert("🔒 Accès réservé à l'administrateur");
 
-    window.location.href = "login-admin.html";
+        window.location.href = "login-admin.html";
+    }
 
 }
+
+verifierConnexion();
