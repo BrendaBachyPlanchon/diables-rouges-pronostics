@@ -208,62 +208,179 @@ if (boutonPronostic) {
 };
 
 // ==========================================
-// ENREGISTRER DANS SUPABASE
+// ENREGISTRER OU MODIFIER DANS SUPABASE
 // ==========================================
 
-console.log("📤 PRONOSTIC ENVOYÉ À SUPABASE :", pronostic);
+console.log(
+    "📤 PRONOSTIC À ENREGISTRER :",
+    pronostic
+);
+
+
+// ==========================================
+// CHERCHER SI CE SUPPORTER A DÉJÀ
+// PRONOSTIQUÉ CE MATCH
+// ==========================================
 
 supabaseClient
     .from("pronostics")
-    .insert([
-        pronostic
-    ])
+    .select("*")
+    .eq("supporter_id", supporterId)
+    .eq("match", nomMatchChoisi)
+    .maybeSingle()
+
     .then(function(resultat) {
 
         if (resultat.error) {
 
-            console.log(
-    "CODE SUPABASE =",
-    resultat.error?.code
-);
-
-console.log(
-    "MESSAGE SUPABASE =",
-    resultat.error?.message
-);
-
-console.log(
-    "DETAILS SUPABASE =",
-    resultat.error?.details
-);
-
-console.log(
-    "HINT SUPABASE =",
-    resultat.error?.hint
-);
+            console.error(
+                "❌ Erreur lors de la vérification :",
+                resultat.error
+            );
 
             alert(
-                "❌ Le pronostic n'a pas pu être enregistré dans la base."
+                "❌ Impossible de vérifier ton pronostic."
             );
 
             return;
         }
 
-        console.log(
-            "✅ Pronostic enregistré dans Supabase !",
-            resultat.data
-        );
 
-    });
+        // ==========================================
+        // PRONOSTIC EXISTANT → MODIFICATION
+        // ==========================================
+
+        if (resultat.data) {
+
+            console.log(
+                "✏️ Pronostic déjà existant : modification"
+            );
 
 
+            supabaseClient
+                .from("pronostics")
+                .update({
+
+                    joueur: pseudo,
+
+                    partition:
+                        scores[0].value +
+                        " - " +
+                        scores[1].value
+
+                })
+                .eq(
+                    "id",
+                    resultat.data.id
+                )
+
+                .then(function(modification) {
+
+                    if (modification.error) {
+
+                        console.error(
+                            "❌ Erreur modification :",
+                            modification.error
+                        );
+
+                        alert(
+                            "❌ Impossible de modifier ton pronostic."
+                        );
+
+                        return;
+                    }
 
 
-            alert(
-    "✅ Ton pronostic est enregistré !"
-);
+                    console.log(
+                        "✅ Pronostic modifié dans Supabase !"
+                    );
 
-afficherPronostics();
+
+                    alert(
+                        "✅ Ton pronostic a été modifié !"
+                    );
+
+
+                    afficherPronostics();
+
+                });
+
+        }
+
+
+        // ==========================================
+        // AUCUN PRONOSTIC → NOUVEL ENREGISTREMENT
+        // ==========================================
+
+        else {
+
+            console.log(
+                "🆕 Nouveau pronostic : enregistrement"
+            );
+
+
+            supabaseClient
+                .from("pronostics")
+                .insert([
+                    pronostic
+                ])
+
+                .then(function(insertion) {
+
+                    if (insertion.error) {
+
+                        console.error(
+                            "❌ Erreur insertion :",
+                            insertion.error
+                        );
+
+                        console.log(
+                            "CODE SUPABASE =",
+                            insertion.error?.code
+                        );
+
+                        console.log(
+                            "MESSAGE SUPABASE =",
+                            insertion.error?.message
+                        );
+
+                        console.log(
+                            "DETAILS SUPABASE =",
+                            insertion.error?.details
+                        );
+
+                        console.log(
+                            "HINT SUPABASE =",
+                            insertion.error?.hint
+                        );
+
+
+                        alert(
+                            "❌ Le pronostic n'a pas pu être enregistré."
+                        );
+
+                        return;
+                    }
+
+
+                    console.log(
+                        "✅ Pronostic enregistré dans Supabase !",
+                        insertion.data
+                    );
+
+
+                    alert(
+                        "✅ Ton pronostic est enregistré !"
+                    );
+
+
+                    afficherPronostics();
+
+                });
+
+        }
+
+    })
 
 
 

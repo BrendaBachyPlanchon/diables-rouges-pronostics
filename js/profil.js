@@ -8,8 +8,20 @@ function afficherProfil() {
     let pseudo =
         localStorage.getItem("pseudoActuel");
 
+    // Si aucun pseudo n'est trouvé,
+    // essayer de récupérer le dernier pseudo utilisé
     if (!pseudo) {
+
+        pseudo =
+            localStorage.getItem("pseudo");
+
+    }
+
+    // Dernier recours
+    if (!pseudo) {
+
         pseudo = "Supporter";
+
     }
 
     let supporterId =
