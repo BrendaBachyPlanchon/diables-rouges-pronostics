@@ -583,6 +583,106 @@ function initialiserAvatars() {
                     choix
                 );
 
+                // ==========================================
+// SAUVEGARDER L'AVATAR DANS SUPABASE
+// ==========================================
+
+let supporterId =
+    localStorage.getItem("supporterId");
+
+let pseudo =
+    localStorage.getItem("pseudoActuel") || "Supporter";
+
+if (supporterId) {
+
+    // ==========================================
+    // CHERCHER LE SUPPORTER
+    // ==========================================
+
+    supabaseClient
+        .from("supporters")
+        .select("supporter_id")
+        .eq("supporter_id", supporterId)
+        .maybeSingle()
+
+        .then(function(resultat) {
+
+            if (resultat.error) {
+
+                console.error(
+                    "❌ Erreur recherche supporter :",
+                    resultat.error
+                );
+
+                return;
+            }
+
+            // ==========================================
+            // SUPPORTER EXISTANT → MODIFIER
+            // ==========================================
+
+            if (resultat.data) {
+
+                return supabaseClient
+                    .from("supporters")
+                    .update({
+                        pseudo: pseudo,
+                        avatar: choix
+                    })
+                    .eq(
+                        "supporter_id",
+                        supporterId
+                    );
+
+            }
+
+            // ==========================================
+            // NOUVEAU SUPPORTER → CRÉER
+            // ==========================================
+
+            return supabaseClient
+                .from("supporters")
+                .insert({
+                    supporter_id: supporterId,
+                    pseudo: pseudo,
+                    avatar: choix
+                });
+
+        })
+
+        .then(function(resultat) {
+
+            if (!resultat) {
+                return;
+            }
+
+            if (resultat.error) {
+
+                console.error(
+                    "❌ Erreur sauvegarde avatar Supabase :",
+                    resultat.error
+                );
+
+                return;
+            }
+
+            console.log(
+                "✅ Avatar sauvegardé dans Supabase !"
+            );
+
+        })
+
+        .catch(function(erreur) {
+
+            console.error(
+                "❌ Erreur complète sauvegarde avatar :",
+                erreur
+            );
+
+        });
+
+}
+
 
                 // Afficher le message
                if (avatarSelectionne) {
