@@ -154,6 +154,8 @@ function afficherMatchsAdmin() {
 
             matchsAdmin.forEach(function(match, index) {
 
+                console.log("🔎 MATCH :", match.equipe1, "-", match.equipe2, "score1 =", match.score1, "score2 =", match.score2);
+
                 if (
                     filtre &&
                     filtre.value !== "Toutes" &&
@@ -165,15 +167,19 @@ function afficherMatchsAdmin() {
 
                 let scoreAffiche = "⚽ À venir";
 
-                if (
-                    match.score1 !== "" &&
-                    match.score2 !== ""
-                ) {
+if (
+    match.score1 !== null &&
+    match.score2 !== null &&
+    match.score1 !== undefined &&
+    match.score2 !== undefined &&
+    match.score1 !== "" &&
+    match.score2 !== ""
+) {
 
-                    scoreAffiche =
-                        match.score1 + " - " + match.score2;
+    scoreAffiche =
+        match.score1 + " - " + match.score2;
 
-                }
+}
 
 
                 tableau.innerHTML +=
