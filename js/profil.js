@@ -3,34 +3,73 @@
 // VERSION SUPABASE
 // ==========================================
 
-function afficherProfil() {
-
-    let pseudo =
-        localStorage.getItem("pseudoActuel");
-
-    // Si aucun pseudo n'est trouvé,
-    // essayer de récupérer le dernier pseudo utilisé
-    if (!pseudo) {
-
-        pseudo =
-            localStorage.getItem("pseudo");
-
-    }
-
-    // Dernier recours
-    if (!pseudo) {
-
-        pseudo = "Supporter";
-
-    }
+async function afficherProfil() {
 
     let supporterId =
         localStorage.getItem("supporterId");
+
+    let pseudo = "Supporter";
+
+
+    // ==========================================
+    // RÉCUPÉRER LE SUPPORTER DEPUIS SUPABASE
+    // ==========================================
+
+    if (supporterId) {
+
+        const resultat =
+            await supabaseClient
+                .from("supporters")
+                .select("pseudo, avatar")
+                .eq("supporter_id", supporterId)
+                .maybeSingle();
+
+
+        if (resultat.error) {
+
+            console.error(
+                "❌ Erreur chargement supporter :",
+                resultat.error
+            );
+
+        } else if (resultat.data) {
+
+            pseudo =
+                resultat.data.pseudo || "Supporter";
+
+
+            // Sauvegarder le pseudo localement
+            localStorage.setItem(
+                "pseudoActuel",
+                pseudo
+            );
+
+
+            // Sauvegarder l'avatar localement
+            if (resultat.data.avatar) {
+
+                localStorage.setItem(
+                    "avatarSupporter",
+                    resultat.data.avatar
+                );
+
+            }
+
+
+            console.log(
+                "✅ Supporter chargé depuis Supabase :",
+                pseudo
+            );
+
+        }
+
+    }
 
 
     // ==========================================
     // CHARGER LES PRONOSTICS DEPUIS SUPABASE
     // ==========================================
+
 
     supabaseClient
         .from("pronostics")
@@ -712,6 +751,135 @@ window.addEventListener(
     function() {
 
         initialiserAvatars();
+
+    }
+);
+
+// ==========================================
+// CHARGER LE PROFIL DEPUIS SUPABASE
+// ==========================================
+
+function chargerProfilSupporter() {
+
+    const supporterId =
+        localStorage.getItem("supporterId");
+
+    if (!supporterId) {
+        return;
+    }
+
+    supabaseClient
+        .from("supporters")
+        .select("pseudo, avatar")
+        .eq("supporter_id", supporterId)
+        .maybeSingle()
+
+        .then(function(resultat) {
+
+            if (resultat.error) {
+
+                console.error(
+                    "❌ Impossible de charger le supporter :",
+                    resultat.error
+                );
+
+                return;
+            }
+
+            if (!resultat.data) {
+
+                console.log(
+                    "ℹ️ Aucun profil supporter trouvé."
+                );
+
+                return;
+            }
+
+            const supporter =
+                resultat.data;
+
+
+            // ==========================================
+            // RÉCUPÉRER LE PSEUDO
+            // ==========================================
+
+            if (supporter.pseudo) {
+
+                localStorage.setItem(
+                    "pseudoActuel",
+                    supporter.pseudo
+                );
+
+                const pseudoProfil =
+                    document.getElementById(
+                        "pseudo-profil"
+                    );
+
+                if (pseudoProfil) {
+
+                    pseudoProfil.innerText =
+                        "👤 " + supporter.pseudo;
+
+                }
+
+            }
+
+
+            // ==========================================
+            // RÉCUPÉRER L'AVATAR
+            // ==========================================
+
+            if (supporter.avatar) {
+
+                localStorage.setItem(
+                    "avatarSupporter",
+                    supporter.avatar
+                );
+
+                const avatarProfil =
+                    document.getElementById(
+                        "avatar-profil"
+                    );
+
+                if (avatarProfil) {
+
+                    avatarProfil.src =
+                        "images/avatars/" +
+                        supporter.avatar;
+
+                }
+
+            }
+
+
+            console.log(
+                "✅ Profil supporter chargé depuis Supabase :",
+                supporter
+            );
+
+        })
+
+        .catch(function(erreur) {
+
+            console.error(
+                "❌ Erreur chargement profil supporter :",
+                erreur
+            );
+
+        });
+
+}
+
+
+// ==========================================
+// LANCER LE CHARGEMENT DU PROFIL
+// ==========================================
+
+window.addEventListener(
+    "load",
+    function() {
+
+        chargerProfilSupporter();
 
     }
 );
