@@ -1,367 +1,438 @@
-let boutonPronostic = document.getElementById("envoyer-pronostic");
+let boutonPronostic =
+    document.getElementById("envoyer-pronostic");
 
 
 // ==========================================
 // ENREGISTRER UN PRONOSTIC
+// VERSION SUPABASE
 // ==========================================
 
 if (boutonPronostic) {
 
-    boutonPronostic.addEventListener("click", async function() {
+    boutonPronostic.addEventListener(
+        "click",
+        async function() {
 
-        let choixMatch = document.getElementById("choix-match");
+            try {
 
-        let nomMatchChoisi = choixMatch.value.trim();
+                // ==========================================
+                // RÉCUPÉRER LE MATCH
+                // ==========================================
 
+                let choixMatch =
+                    document.getElementById("choix-match");
 
-        if (!nomMatchChoisi) {
-
-            alert("⚠️ Veuillez sélectionner un match.");
-            return;
-
-        }
-
-
-
-        // ==========================================
-        // VÉRIFIER LE MATCH AVEC matchs.json
-        // ==========================================
-
-       fetch("matchs.json")
-
-        .then(function(reponse) {
-
-            if (!reponse.ok) {
-
-                throw new Error("Erreur matchs.json");
-
-            }
-
-            return reponse.json();
-
-        })
+                let nomMatchChoisi =
+                    choixMatch.value.trim();
 
 
-        .then(function(matchsAdmin) {
+                if (!nomMatchChoisi) {
+
+                    alert(
+                        "⚠️ Veuillez sélectionner un match."
+                    );
+
+                    return;
+
+                }
 
 
-            let matchAdmin = matchsAdmin.find(function(match) {
+                // ==========================================
+                // CHARGER matchs.json
+                // ==========================================
+
+                let reponse =
+                    await fetch("matchs.json");
 
 
-                let nomMatch =
+                if (!reponse.ok) {
 
-                    match.equipe1.trim() +
-                    " - " +
-                    match.equipe2.trim();
+                    throw new Error(
+                        "Erreur matchs.json"
+                    );
 
-
-                return nomMatch.toLowerCase() ===
-                    nomMatchChoisi.toLowerCase();
+                }
 
 
-            });
+                let matchsAdmin =
+                    await reponse.json();
 
 
+                // ==========================================
+                // TROUVER LE MATCH
+                // ==========================================
 
-            if (!matchAdmin) {
+                let matchAdmin =
+                    matchsAdmin.find(function(match) {
 
-                alert("❌ Match introuvable.");
-                return;
+                        let nomMatch =
 
-            }
-
-
-
-            // ==========================================
-            // VÉRIFIER DATE DU MATCH
-            // ==========================================
-
-            let dateDebut =
-                matchAdmin.date +
-                "T" +
-                matchAdmin.heure;
+                            match.equipe1.trim() +
+                            " - " +
+                            match.equipe2.trim();
 
 
-            let maintenant =
-                new Date().getTime();
+                        return (
+                            nomMatch.toLowerCase() ===
+                            nomMatchChoisi.toLowerCase()
+                        );
+
+                    });
 
 
-            let dateMatch =
-                new Date(dateDebut).getTime();
+                if (!matchAdmin) {
+
+                    alert(
+                        "❌ Match introuvable."
+                    );
+
+                    return;
+
+                }
 
 
+                // ==========================================
+                // VÉRIFIER LA DATE DU MATCH
+                // ==========================================
 
-            if (maintenant >= dateMatch) {
+                let dateDebut =
+                    matchAdmin.date +
+                    "T" +
+                    matchAdmin.heure;
 
-                alert(
-                    "🔒 Les pronostics sont fermés pour ce match !"
+
+                let maintenant =
+                    new Date().getTime();
+
+
+                let dateMatch =
+                    new Date(dateDebut).getTime();
+
+
+                if (maintenant >= dateMatch) {
+
+                    alert(
+                        "🔒 Les pronostics sont fermés pour ce match !"
+                    );
+
+                    return;
+
+                }
+
+
+                // ==========================================
+                // RÉCUPÉRER LE PSEUDO
+                // ==========================================
+
+                let champPseudo =
+                    document.getElementById(
+                        "pseudo-supporter"
+                    );
+
+
+                let pseudo =
+                    champPseudo.value.trim();
+
+
+                if (!pseudo) {
+
+                    alert(
+                        "⚠️ Veuillez indiquer ton prénom ou pseudo."
+                    );
+
+                    return;
+
+                }
+
+
+                // ==========================================
+                // RÉCUPÉRER LES SCORES
+                // ==========================================
+
+                let scores =
+                    document.querySelectorAll(
+                        'input[type="number"]'
+                    );
+
+
+                if (
+                    scores.length < 2 ||
+                    scores[0].value === "" ||
+                    scores[1].value === ""
+                ) {
+
+                    alert(
+                        "⚠️ Veuillez remplir tous les champs."
+                    );
+
+                    return;
+
+                }
+
+
+                // ==========================================
+                // MÉMORISER LE PSEUDO
+                // ==========================================
+
+                localStorage.setItem(
+                    "pseudoActuel",
+                    pseudo
                 );
 
-                return;
 
-            }
+                // ==========================================
+                // RÉCUPÉRER L'ID LOCAL
+                // ==========================================
 
-
-
-            // ==========================================
-            // RÉCUPÉRER LES INFORMATIONS
-            // ==========================================
-
-
-           let pseudo =
-    document.getElementById(
-        "pseudo-supporter"
-    ).value.trim();
-
-                if (pseudo !== "") {
-
-    localStorage.setItem(
-        "pseudoActuel",
-        pseudo
-    );
-
-}
+                let supporterId =
+                    localStorage.getItem(
+                        "supporterId"
+                    );
 
 
+                console.log(
+                    "🆔 ID local actuel :",
+                    supporterId
+                );
 
-            let scores =
-                document.querySelectorAll(
-                    'input[type="number"]'
+                console.log(
+                    "👤 Pseudo saisi :",
+                    pseudo
                 );
 
 
+                // ==========================================
+                // RECHERCHER LE SUPPORTER PAR SON PSEUDO
+                // ==========================================
+                //
+                // IMPORTANT :
+                // On recherche toujours le pseudo dans
+                // Supabase afin d'éviter qu'un ancien
+                // supporterId du téléphone soit utilisé.
+                //
+                // ==========================================
 
-            if (
-                pseudo === "" ||
-                scores.length < 2 ||
-                scores[0].value === "" ||
-                scores[1].value === ""
-            ) {
+                let rechercheSupporter =
+                    await supabaseClient
+                        .from("supporters")
+                        .select(
+                            "supporter_id, pseudo, avatar"
+                        )
+                        .eq(
+                            "pseudo",
+                            pseudo
+                        )
+                        .maybeSingle();
 
-                alert(
-                    "⚠️ Veuillez remplir tous les champs."
-                );
 
-                return;
+                if (rechercheSupporter.error) {
 
-            }
+                    console.error(
+                        "❌ Erreur recherche supporter :",
+                        rechercheSupporter.error
+                    );
 
+                    alert(
+                        "❌ Impossible de retrouver ton profil."
+                    );
 
+                    return;
 
+                }
 
-            // ==========================================
-// IDENTIFIANT SUPPORTER
-// ==========================================
 
-let supporterId =
-    localStorage.getItem("supporterId");
+                // ==========================================
+                // SUPPORTER TROUVÉ
+                // ==========================================
 
+                if (rechercheSupporter.data) {
 
-// ==========================================
-// SI AUCUN ID SUR CET APPAREIL
-// RECHERCHER LE SUPPORTER DANS SUPABASE
-// ==========================================
+                    supporterId =
+                        rechercheSupporter
+                            .data
+                            .supporter_id;
 
-if (!supporterId) {
 
-    console.log(
-        "🔎 Recherche du supporter :",
-        pseudo
-    );
+                    localStorage.setItem(
+                        "supporterId",
+                        supporterId
+                    );
 
-    const rechercheSupporter =
-        await supabaseClient
-            .from("supporters")
-            .select(
-                "supporter_id, pseudo, avatar"
-            )
-            .eq("pseudo", pseudo)
-            .maybeSingle();
 
+                    localStorage.setItem(
+                        "pseudoActuel",
+                        rechercheSupporter
+                            .data
+                            .pseudo
+                    );
 
-    if (rechercheSupporter.error) {
 
-        console.error(
-            "❌ Erreur recherche supporter :",
-            rechercheSupporter.error
-        );
+                    if (
+                        rechercheSupporter
+                            .data
+                            .avatar
+                    ) {
 
-        alert(
-            "❌ Impossible de retrouver ton profil."
-        );
+                        localStorage.setItem(
+                            "avatarSupporter",
+                            rechercheSupporter
+                                .data
+                                .avatar
+                        );
 
-        return;
+                    }
 
-    }
 
+                    console.log(
+                        "✅ Supporter retrouvé dans Supabase :",
+                        supporterId
+                    );
 
-    // ==========================================
-    // SUPPORTER EXISTANT
-    // ==========================================
+                }
 
-    if (rechercheSupporter.data) {
 
-        supporterId =
-            rechercheSupporter.data.supporter_id;
+                // ==========================================
+                // SUPPORTER NON TROUVÉ
+                // ==========================================
 
+                else {
 
-        localStorage.setItem(
-            "supporterId",
-            supporterId
-        );
+                    if (!supporterId) {
 
+                        supporterId =
 
-        localStorage.setItem(
-            "pseudoActuel",
-            rechercheSupporter.data.pseudo
-        );
+                            "supporter-" +
+                            Date.now() +
+                            "-" +
+                            Math.random()
+                                .toString(36)
+                                .substring(2, 10);
 
 
-        if (rechercheSupporter.data.avatar) {
+                        localStorage.setItem(
+                            "supporterId",
+                            supporterId
+                        );
 
-            localStorage.setItem(
-                "avatarSupporter",
-                rechercheSupporter.data.avatar
-            );
 
-        }
+                        console.log(
+                            "🆕 Nouveau supporter créé :",
+                            supporterId
+                        );
 
+                    }
 
-        console.log(
-            "✅ Supporter retrouvé :",
-            supporterId
-        );
+                    else {
 
-    }
+                        console.log(
+                            "ℹ️ ID local conservé :",
+                            supporterId
+                        );
 
+                    }
 
-    // ==========================================
-    // NOUVEAU SUPPORTER
-    // ==========================================
+                }
 
-    else {
 
-        supporterId =
+                // ==========================================
+                // CRÉER LE PRONOSTIC
+                // ==========================================
 
-            "supporter-" +
-            Date.now() +
-            "-" +
-            Math.random()
-                .toString(36)
-                .substring(2, 10);
+                let pronostic = {
 
+                    supporter_id:
+                        supporterId,
 
-        localStorage.setItem(
-            "supporterId",
-            supporterId
-        );
+                    joueur:
+                        pseudo,
 
-
-        localStorage.setItem(
-            "pseudoActuel",
-            pseudo
-        );
-
-
-        console.log(
-            "🆕 Nouveau supporter créé :",
-            supporterId
-        );
-
-    }
-
-}
-
-
-            // ==========================================
-            // CRÉATION DU PRONOSTIC
-            // ==========================================
-
-
-           let pronostic = {
-
-    supporter_id: supporterId,
-
-    joueur: pseudo,
-
-    match: nomMatchChoisi,
-
-    partition:
-        scores[0].value +
-        " - " +
-        scores[1].value,
-
-    score: 0
-};
-
-// ==========================================
-// ENREGISTRER OU MODIFIER DANS SUPABASE
-// ==========================================
-
-console.log(
-    "📤 PRONOSTIC À ENREGISTRER :",
-    pronostic
-);
-
-
-// ==========================================
-// CHERCHER SI CE SUPPORTER A DÉJÀ
-// PRONOSTIQUÉ CE MATCH
-// ==========================================
-
-supabaseClient
-    .from("pronostics")
-    .select("*")
-    .eq("supporter_id", supporterId)
-    .eq("match", nomMatchChoisi)
-    .maybeSingle()
-
-    .then(function(resultat) {
-
-        if (resultat.error) {
-
-            console.error(
-                "❌ Erreur lors de la vérification :",
-                resultat.error
-            );
-
-            alert(
-                "❌ Impossible de vérifier ton pronostic."
-            );
-
-            return;
-        }
-
-
-        // ==========================================
-        // PRONOSTIC EXISTANT → MODIFICATION
-        // ==========================================
-
-        if (resultat.data) {
-
-            console.log(
-                "✏️ Pronostic déjà existant : modification"
-            );
-
-
-            supabaseClient
-                .from("pronostics")
-                .update({
-
-                    joueur: pseudo,
+                    match:
+                        nomMatchChoisi,
 
                     partition:
                         scores[0].value +
                         " - " +
-                        scores[1].value
+                        scores[1].value,
 
-                })
-                .eq(
-                    "id",
-                    resultat.data.id
-                )
+                    score:
+                        0
 
-                .then(function(modification) {
+                };
+
+
+                console.log(
+                    "📤 PRONOSTIC À ENREGISTRER :",
+                    pronostic
+                );
+
+
+                // ==========================================
+                // CHERCHER UN PRONOSTIC EXISTANT
+                // ==========================================
+
+                let recherchePronostic =
+                    await supabaseClient
+                        .from("pronostics")
+                        .select("*")
+                        .eq(
+                            "supporter_id",
+                            supporterId
+                        )
+                        .eq(
+                            "match",
+                            nomMatchChoisi
+                        )
+                        .maybeSingle();
+
+
+                if (recherchePronostic.error) {
+
+                    console.error(
+                        "❌ Erreur vérification pronostic :",
+                        recherchePronostic.error
+                    );
+
+                    alert(
+                        "❌ Impossible de vérifier ton pronostic."
+                    );
+
+                    return;
+
+                }
+
+
+                // ==========================================
+                // PRONOSTIC EXISTANT
+                // ==========================================
+
+                if (recherchePronostic.data) {
+
+                    console.log(
+                        "✏️ Pronostic existant : modification"
+                    );
+
+
+                    let modification =
+                        await supabaseClient
+                            .from("pronostics")
+                            .update({
+
+                                joueur:
+                                    pseudo,
+
+                                partition:
+                                    scores[0].value +
+                                    " - " +
+                                    scores[1].value
+
+                            })
+                            .eq(
+                                "id",
+                                recherchePronostic
+                                    .data
+                                    .id
+                            );
+
 
                     if (modification.error) {
 
@@ -375,6 +446,7 @@ supabaseClient
                         );
 
                         return;
+
                     }
 
 
@@ -390,109 +462,102 @@ supabaseClient
 
                     afficherPronostics();
 
-                });
+                    return;
 
-        }
-
-
-        // ==========================================
-        // AUCUN PRONOSTIC → NOUVEL ENREGISTREMENT
-        // ==========================================
-
-        else {
-
-            console.log(
-                "🆕 Nouveau pronostic : enregistrement"
-            );
+                }
 
 
-            supabaseClient
-                .from("pronostics")
-                .insert([
-                    pronostic
-                ])
+                // ==========================================
+                // NOUVEAU PRONOSTIC
+                // ==========================================
 
-                .then(function(insertion) {
-
-                    if (insertion.error) {
-
-                        console.error(
-                            "❌ Erreur insertion :",
-                            insertion.error
-                        );
-
-                        console.log(
-                            "CODE SUPABASE =",
-                            insertion.error?.code
-                        );
-
-                        console.log(
-                            "MESSAGE SUPABASE =",
-                            insertion.error?.message
-                        );
-
-                        console.log(
-                            "DETAILS SUPABASE =",
-                            insertion.error?.details
-                        );
-
-                        console.log(
-                            "HINT SUPABASE =",
-                            insertion.error?.hint
-                        );
+                console.log(
+                    "🆕 Nouveau pronostic : enregistrement"
+                );
 
 
-                        alert(
-                            "❌ Le pronostic n'a pas pu être enregistré."
-                        );
+                let insertion =
+                    await supabaseClient
+                        .from("pronostics")
+                        .insert([
+                            pronostic
+                        ]);
 
-                        return;
-                    }
 
+                if (insertion.error) {
 
-                    console.log(
-                        "✅ Pronostic enregistré dans Supabase !",
-                        insertion.data
+                    console.error(
+                        "❌ Erreur insertion :",
+                        insertion.error
+                    );
+
+                    console.error(
+                        "CODE SUPABASE =",
+                        insertion.error.code
+                    );
+
+                    console.error(
+                        "MESSAGE SUPABASE =",
+                        insertion.error.message
+                    );
+
+                    console.error(
+                        "DETAILS SUPABASE =",
+                        insertion.error.details
+                    );
+
+                    console.error(
+                        "HINT SUPABASE =",
+                        insertion.error.hint
                     );
 
 
                     alert(
-                        "✅ Ton pronostic est enregistré !"
+                        "❌ Le pronostic n'a pas pu être enregistré."
                     );
 
+                    return;
 
-                    afficherPronostics();
+                }
 
-                });
+
+                console.log(
+                    "✅ Pronostic enregistré dans Supabase !"
+                );
+
+
+                alert(
+                    "✅ Ton pronostic est enregistré !"
+                );
+
+
+                afficherPronostics();
+
+            }
+
+            catch (erreur) {
+
+                console.error(
+                    "❌ ERREUR COMPLETE :",
+                    erreur
+                );
+
+                console.error(
+                    "❌ MESSAGE :",
+                    erreur.message
+                );
+
+                alert(
+                    "❌ Une erreur est survenue : " +
+                    erreur.message
+                );
+
+            }
 
         }
-
-    })
-
-
-
-        })
-
-
-       .catch(function(erreur) {
-
-    console.error("❌ ERREUR COMPLETE :", erreur);
-    console.error("❌ MESSAGE :", erreur.message);
-    console.error("❌ STACK :", erreur.stack);
-
-    alert(
-        "❌ Impossible de vérifier le match : " +
-        erreur.message
     );
 
-});
-
-
-
-    });
-
 }
-
 
 
 // ==========================================
@@ -505,6 +570,7 @@ function afficherPronostics() {
         document.getElementById(
             "table-pronostics"
         );
+
 
     if (!table) {
         return;
@@ -527,9 +593,12 @@ function afficherPronostics() {
     supabaseClient
         .from("pronostics")
         .select("*")
-        .order("created_at", {
-            ascending: false
-        })
+        .order(
+            "created_at",
+            {
+                ascending: false
+            }
+        )
 
         .then(function(resultat) {
 
@@ -541,6 +610,7 @@ function afficherPronostics() {
                 );
 
                 return;
+
             }
 
 
@@ -554,28 +624,30 @@ function afficherPronostics() {
             );
 
 
-            pronostics.forEach(function(p) {
+            pronostics.forEach(
+                function(p) {
 
-                table.innerHTML +=
+                    table.innerHTML +=
 
-                    "<tr>" +
+                        "<tr>" +
 
-                    "<td>" +
-                    (p.joueur || "") +
-                    "</td>" +
+                        "<td>" +
+                        (p.joueur || "") +
+                        "</td>" +
 
-                    "<td>" +
-                    (p.match || "") +
-                    "</td>" +
+                        "<td>" +
+                        (p.match || "") +
+                        "</td>" +
 
-                    "<td>" +
-                    "🎯 " +
-                    (p.partition || "-") +
-                    "</td>" +
+                        "<td>" +
+                        "🎯 " +
+                        (p.partition || "-") +
+                        "</td>" +
 
-                    "</tr>";
+                        "</tr>";
 
-            });
+                }
+            );
 
         })
 
@@ -591,28 +663,33 @@ function afficherPronostics() {
 }
 
 
-
-
 // ==========================================
 // CHARGER LES MATCHS
 // ==========================================
 
-
 function chargerMatchsAdmin() {
 
     let selectMatch =
-        document.getElementById("choix-match");
+        document.getElementById(
+            "choix-match"
+        );
+
 
     if (!selectMatch) {
         return;
     }
 
-   fetch("matchs.json")
+
+    fetch("matchs.json")
 
         .then(function(reponse) {
 
             if (!reponse.ok) {
-                throw new Error("Erreur matchs.json");
+
+                throw new Error(
+                    "Erreur matchs.json"
+                );
+
             }
 
             return reponse.json();
@@ -626,40 +703,69 @@ function chargerMatchsAdmin() {
                 matchsAdmin.length
             );
 
+
             // ==========================================
-            // TRIER LES MATCHS PAR DATE
+            // TRIER LES MATCHS
             // ==========================================
 
-           matchsAdmin.sort(function(a, b) {
+            matchsAdmin.sort(
+                function(a, b) {
 
-    // À venir en premier
-    let ordreStatut = {
-        "À venir": 1,
-        "En cours": 2,
-        "Terminé": 3
-    };
+                    let ordreStatut = {
 
-    let statutA =
-        ordreStatut[a.statut] || 4;
+                        "À venir": 1,
 
-    let statutB =
-        ordreStatut[b.statut] || 4;
+                        "En cours": 2,
 
-    // Priorité au statut
-    if (statutA !== statutB) {
-        return statutA - statutB;
-    }
+                        "Terminé": 3
 
-    // Puis tri par date
-    let dateA =
-        new Date(a.date + "T" + a.heure);
+                    };
 
-    let dateB =
-        new Date(b.date + "T" + b.heure);
 
-    return dateA - dateB;
+                    let statutA =
+                        ordreStatut[a.statut] || 4;
 
-});
+
+                    let statutB =
+                        ordreStatut[b.statut] || 4;
+
+
+                    if (
+                        statutA !== statutB
+                    ) {
+
+                        return (
+                            statutA -
+                            statutB
+                        );
+
+                    }
+
+
+                    let dateA =
+                        new Date(
+                            a.date +
+                            "T" +
+                            a.heure
+                        );
+
+
+                    let dateB =
+                        new Date(
+                            b.date +
+                            "T" +
+                            b.heure
+                        );
+
+
+                    return (
+                        dateA -
+                        dateB
+                    );
+
+                }
+            );
+
 
             // ==========================================
             // VIDER LE MENU
@@ -668,51 +774,73 @@ function chargerMatchsAdmin() {
             selectMatch.innerHTML =
                 '<option value="">⚽ Sélectionner un match</option>';
 
+
             // ==========================================
             // AFFICHER LES MATCHS
             // ==========================================
 
-            matchsAdmin.forEach(function(match) {
+            matchsAdmin.forEach(
+                function(match) {
 
-                let option =
-                    document.createElement("option");
+                    let option =
+                        document.createElement(
+                            "option"
+                        );
 
-                option.value =
-                    match.equipe1.trim() +
-                    " - " +
-                    match.equipe2.trim();
 
-                option.textContent =
-                    match.equipe1 +
-                    " 🆚 " +
-                    match.equipe2;
+                    option.value =
 
-                selectMatch.appendChild(option);
+                        match.equipe1.trim() +
+                        " - " +
+                        match.equipe2.trim();
 
-            });
+
+                    option.textContent =
+
+                        match.equipe1 +
+                        " 🆚 " +
+                        match.equipe2;
+
+
+                    selectMatch.appendChild(
+                        option
+                    );
+
+                }
+            );
+
 
             // ==========================================
-// SÉLECTIONNER AUTOMATIQUEMENT LE PROCHAIN MATCH
-// ==========================================
+            // SÉLECTIONNER LE PROCHAIN MATCH
+            // ==========================================
 
-let prochainMatch = matchsAdmin.find(function(match) {
+            let prochainMatch =
+                matchsAdmin.find(
+                    function(match) {
 
-    return match.statut === "À venir";
+                        return (
+                            match.statut ===
+                            "À venir"
+                        );
 
-});
+                    }
+                );
 
-if (prochainMatch) {
 
-    selectMatch.value =
-        prochainMatch.equipe1.trim() +
-        " - " +
-        prochainMatch.equipe2.trim();
+            if (prochainMatch) {
 
-    selectMatch.dispatchEvent(
-        new Event("change")
-    );
+                selectMatch.value =
 
-}
+                    prochainMatch.equipe1.trim() +
+                    " - " +
+                    prochainMatch.equipe2.trim();
+
+
+                selectMatch.dispatchEvent(
+                    new Event("change")
+                );
+
+            }
 
         })
 
@@ -728,15 +856,14 @@ if (prochainMatch) {
 }
 
 
-
 // ==========================================
 // DÉMARRAGE
 // ==========================================
 
-
 chargerMatchsAdmin();
 
 afficherPronostics();
+
 
 // ==========================================
 // MÉMORISER AUTOMATIQUEMENT LE PSEUDO
@@ -747,6 +874,7 @@ let champPseudo =
         "pseudo-supporter"
     );
 
+
 if (champPseudo) {
 
     champPseudo.addEventListener(
@@ -755,6 +883,7 @@ if (champPseudo) {
 
             let pseudo =
                 champPseudo.value.trim();
+
 
             if (pseudo !== "") {
 
