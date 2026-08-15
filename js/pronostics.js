@@ -144,7 +144,6 @@ if (boutonPronostic) {
 
                 }
 
-
                 // ==========================================
                 // RÉCUPÉRER LES SCORES
                 // ==========================================
@@ -179,8 +178,6 @@ if (boutonPronostic) {
                     pseudo
                 );
 
-
-               ```js
 // ==========================================
 // RÉCUPÉRER L'UTILISATEUR AUTH SUPABASE
 // ==========================================
@@ -314,9 +311,6 @@ console.log(
     "🆔 UUID Auth :",
     supporterId
 );
-```
-
-
 
                 // ==========================================
                 // CRÉER LE PRONOSTIC
@@ -794,38 +788,88 @@ function chargerMatchsAdmin() {
             );
 
 
-            // ==========================================
-            // SÉLECTIONNER LE PROCHAIN MATCH
-            // ==========================================
+           // ==========================================
+          // SÉLECTIONNER LE PROCHAIN MATCH
+         // ==========================================
 
-            let prochainMatch =
-                matchsAdmin.find(
-                    function(match) {
+let maintenant =
+    new Date();
 
-                        return (
-                            match.statut ===
-                            "À venir"
-                        );
 
-                    }
+// Garder uniquement les matchs qui ne sont pas encore commencés
+let matchsFuturs =
+    matchsAdmin.filter(
+        function(match) {
+
+            let dateMatch =
+                new Date(
+                    match.date +
+                    "T" +
+                    match.heure
                 );
 
+            return (
+                dateMatch >
+                maintenant
+            );
 
-            if (prochainMatch) {
-
-                selectMatch.value =
-
-                    prochainMatch.equipe1.trim() +
-                    " - " +
-                    prochainMatch.equipe2.trim();
+        }
+    );
 
 
-                selectMatch.dispatchEvent(
-                    new Event("change")
-                );
+// Trier les matchs futurs du plus proche au plus lointain
+matchsFuturs.sort(
+    function(a, b) {
 
-            }
+        let dateA =
+            new Date(
+                a.date +
+                "T" +
+                a.heure
+            );
 
+        let dateB =
+            new Date(
+                b.date +
+                "T" +
+                b.heure
+            );
+
+        return dateA - dateB;
+
+    }
+);
+
+
+// Prendre le prochain match
+let prochainMatch =
+    matchsFuturs[0];
+
+
+if (prochainMatch) {
+
+    selectMatch.value =
+
+        prochainMatch.equipe1.trim() +
+        " - " +
+        prochainMatch.equipe2.trim();
+
+
+    selectMatch.dispatchEvent(
+        new Event("change")
+    );
+
+
+    console.log(
+        "🎯 Prochain match sélectionné :",
+        prochainMatch.equipe1,
+        "-",
+        prochainMatch.equipe2,
+        prochainMatch.date,
+        prochainMatch.heure
+    );
+
+}
         })
 
         .catch(function(erreur) {
