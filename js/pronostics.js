@@ -180,158 +180,142 @@ if (boutonPronostic) {
                 );
 
 
-                // ==========================================
-                // RÉCUPÉRER L'ID LOCAL
-                // ==========================================
+               ```js
+// ==========================================
+// RÉCUPÉRER L'UTILISATEUR AUTH SUPABASE
+// ==========================================
 
-                let supporterId =
-                    localStorage.getItem(
-                        "supporterId"
-                    );
-
-
-                console.log(
-                    "🆔 ID local actuel :",
-                    supporterId
-                );
-
-                console.log(
-                    "👤 Pseudo saisi :",
-                    pseudo
-                );
+let sessionResult =
+    await supabaseClient.auth.getUser();
 
 
-                // ==========================================
-                // RECHERCHER LE SUPPORTER PAR SON PSEUDO
-                // ==========================================
-                //
-                // IMPORTANT :
-                // On recherche toujours le pseudo dans
-                // Supabase afin d'éviter qu'un ancien
-                // supporterId du téléphone soit utilisé.
-                //
-                // ==========================================
+if (
+    sessionResult.error ||
+    !sessionResult.data ||
+    !sessionResult.data.user
+) {
 
-                let rechercheSupporter =
-                    await supabaseClient
-                        .from("supporters")
-                        .select(
-                            "supporter_id, pseudo, avatar"
-                        )
-                        .eq(
-                            "pseudo",
-                            pseudo
-                        )
-                        .maybeSingle();
+    console.error(
+        "❌ Aucun utilisateur Auth connecté :",
+        sessionResult.error
+    );
+
+    alert(
+        "❌ Tu dois être connecté pour enregistrer un pronostic."
+    );
+
+    return;
+
+}
 
 
-                if (rechercheSupporter.error) {
-
-                    console.error(
-                        "❌ Erreur recherche supporter :",
-                        rechercheSupporter.error
-                    );
-
-                    alert(
-                        "❌ Impossible de retrouver ton profil."
-                    );
-
-                    return;
-
-                }
+let user =
+    sessionResult.data.user;
 
 
-                // ==========================================
-                // SUPPORTER TROUVÉ
-                // ==========================================
-
-                if (rechercheSupporter.data) {
-
-                    supporterId =
-                        rechercheSupporter
-                            .data
-                            .supporter_id;
+let supporterId =
+    user.id;
 
 
-                    localStorage.setItem(
-                        "supporterId",
-                        supporterId
-                    );
+console.log(
+    "🆔 UUID Auth utilisé :",
+    supporterId
+);
 
 
-                    localStorage.setItem(
-                        "pseudoActuel",
-                        rechercheSupporter
-                            .data
-                            .pseudo
-                    );
+// ==========================================
+// RECHERCHER LE PROFIL SUPPORTER
+// ==========================================
+
+let rechercheSupporter =
+    await supabaseClient
+        .from("supporters")
+        .select(
+            "supporter_id, pseudo, avatar"
+        )
+        .eq(
+            "supporter_id",
+            supporterId
+        )
+        .maybeSingle();
 
 
-                    if (
-                        rechercheSupporter
-                            .data
-                            .avatar
-                    ) {
+if (rechercheSupporter.error) {
 
-                        localStorage.setItem(
-                            "avatarSupporter",
-                            rechercheSupporter
-                                .data
-                                .avatar
-                        );
+    console.error(
+        "❌ Erreur recherche supporter :",
+        rechercheSupporter.error
+    );
 
-                    }
+    alert(
+        "❌ Impossible de retrouver ton profil."
+    );
 
+    return;
 
-                    console.log(
-                        "✅ Supporter retrouvé dans Supabase :",
-                        supporterId
-                    );
-
-                }
+}
 
 
-                // ==========================================
-                // SUPPORTER NON TROUVÉ
-                // ==========================================
+if (!rechercheSupporter.data) {
 
-                else {
+    console.error(
+        "❌ Aucun profil supporter associé au compte Auth."
+    );
 
-                    if (!supporterId) {
+    alert(
+        "❌ Ton profil supporter est introuvable."
+    );
 
-                        supporterId =
+    return;
 
-                            "supporter-" +
-                            Date.now() +
-                            "-" +
-                            Math.random()
-                                .toString(36)
-                                .substring(2, 10);
+}
 
 
-                        localStorage.setItem(
-                            "supporterId",
-                            supporterId
-                        );
+pseudo =
+    rechercheSupporter
+        .data
+        .pseudo;
 
 
-                        console.log(
-                            "🆕 Nouveau supporter créé :",
-                            supporterId
-                        );
+localStorage.setItem(
+    "supporterId",
+    supporterId
+);
 
-                    }
 
-                    else {
+localStorage.setItem(
+    "pseudoActuel",
+    pseudo
+);
 
-                        console.log(
-                            "ℹ️ ID local conservé :",
-                            supporterId
-                        );
 
-                    }
+if (
+    rechercheSupporter
+        .data
+        .avatar
+) {
 
-                }
+    localStorage.setItem(
+        "avatarSupporter",
+        rechercheSupporter
+            .data
+            .avatar
+    );
+
+}
+
+
+console.log(
+    "✅ Profil supporter retrouvé :",
+    pseudo
+);
+
+console.log(
+    "🆔 UUID Auth :",
+    supporterId
+);
+```
+
 
 
                 // ==========================================
