@@ -145,23 +145,34 @@ let tableauResultats =
 
 if (tableauResultats) {
 
-    fetch("matchs.json")
+    supabaseClient
+        .from("matchs")
+        .select("*")
 
-        .then(function(reponse) {
+        .then(function(resultatSupabase) {
 
-            if (!reponse.ok) {
-                throw new Error("Erreur matchs.json");
+            if (resultatSupabase.error) {
+
+                console.error(
+                    "❌ Erreur chargement des matchs depuis Supabase :",
+                    resultatSupabase.error
+                );
+
+                throw resultatSupabase.error;
+
             }
 
-            return reponse.json();
+            let matchsAdmin =
+                resultatSupabase.data || [];
 
-        })
-
-        .then(function(matchsAdmin) {
+            console.log(
+                "✅ Résultats chargés depuis Supabase :",
+                matchsAdmin.length
+            );
 
             // ==========================================
-// TRIER LES MATCHS DU PLUS RÉCENT AU PLUS ANCIEN
-// ==========================================
+           // TRIER LES MATCHS DU PLUS RÉCENT AU PLUS ANCIEN
+          // ==========================================
 
 matchsAdmin.sort(function(a, b) {
 
@@ -175,10 +186,10 @@ matchsAdmin.sort(function(a, b) {
 
 });
 
-            console.log(
-                "✅ Résultats chargés depuis matchs.json :",
-                matchsAdmin.length
-            );
+           console.log(
+    "✅ Résultats chargés depuis Supabase :",
+    matchsAdmin.length
+);
 
             // ==========================================
             // AFFICHER LES MATCHS
