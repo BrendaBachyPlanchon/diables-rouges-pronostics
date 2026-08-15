@@ -45,10 +45,34 @@ function sauvegarderMatchsAdmin(matchs) {
 
     return supabaseClient
         .from("matchs")
-        .upsert(matchs, {
-            onConflict: "id"
-        })
-        .select();
+        .upsert(matchs)
+        .select()
+        .then(function(resultat) {
+
+            if (resultat.error) {
+
+                console.error(
+                    "❌ Erreur Supabase :",
+                    resultat.error
+                );
+
+                return {
+                    success: false,
+                    message: resultat.error.message
+                };
+
+            }
+
+            console.log(
+                "✅ Matchs enregistrés dans Supabase"
+            );
+
+            return {
+                success: true,
+                message: "Matchs enregistrés avec succès"
+            };
+
+        });
 
 }
 
