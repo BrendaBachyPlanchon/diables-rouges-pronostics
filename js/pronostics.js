@@ -7,8 +7,7 @@ let boutonPronostic = document.getElementById("envoyer-pronostic");
 
 if (boutonPronostic) {
 
-    boutonPronostic.addEventListener("click", function() {
-
+    boutonPronostic.addEventListener("click", async function() {
 
         let choixMatch = document.getElementById("choix-match");
 
@@ -151,48 +150,127 @@ if (boutonPronostic) {
 
 
             // ==========================================
-            // IDENTIFIANT SUPPORTER
-            // ==========================================
+// IDENTIFIANT SUPPORTER
+// ==========================================
+
+let supporterId =
+    localStorage.getItem("supporterId");
 
 
-            let supporterId =
-                localStorage.getItem(
-                    "supporterId"
-                );
+// ==========================================
+// SI AUCUN ID SUR CET APPAREIL
+// RECHERCHER LE SUPPORTER DANS SUPABASE
+// ==========================================
+
+if (!supporterId) {
+
+    console.log(
+        "🔎 Recherche du supporter :",
+        pseudo
+    );
+
+    const rechercheSupporter =
+        await supabaseClient
+            .from("supporters")
+            .select(
+                "supporter_id, pseudo, avatar"
+            )
+            .eq("pseudo", pseudo)
+            .maybeSingle();
 
 
+    if (rechercheSupporter.error) {
 
-            if (!supporterId) {
+        console.error(
+            "❌ Erreur recherche supporter :",
+            rechercheSupporter.error
+        );
 
+        alert(
+            "❌ Impossible de retrouver ton profil."
+        );
 
-                supporterId =
+        return;
 
-                    "supporter-" +
-                    Date.now() +
-                    "-" +
-                    Math.random()
-                    .toString(36)
-                    .substring(2,10);
-
-
-
-                localStorage.setItem(
-                    "supporterId",
-                    supporterId
-                );
+    }
 
 
-            }
+    // ==========================================
+    // SUPPORTER EXISTANT
+    // ==========================================
+
+    if (rechercheSupporter.data) {
+
+        supporterId =
+            rechercheSupporter.data.supporter_id;
 
 
+        localStorage.setItem(
+            "supporterId",
+            supporterId
+        );
 
+
+        localStorage.setItem(
+            "pseudoActuel",
+            rechercheSupporter.data.pseudo
+        );
+
+
+        if (rechercheSupporter.data.avatar) {
 
             localStorage.setItem(
-                "pseudoActuel",
-                pseudo
+                "avatarSupporter",
+                rechercheSupporter.data.avatar
             );
 
+        }
 
+
+        console.log(
+            "✅ Supporter retrouvé :",
+            supporterId
+        );
+
+    }
+
+
+    // ==========================================
+    // NOUVEAU SUPPORTER
+    // ==========================================
+
+    else {
+
+        supporterId =
+
+            "supporter-" +
+            Date.now() +
+            "-" +
+            Math.random()
+                .toString(36)
+                .substring(2, 10);
+
+
+        localStorage.setItem(
+            "supporterId",
+            supporterId
+        );
+
+
+        localStorage.setItem(
+            "pseudoActuel",
+            pseudo
+        );
+
+
+        console.log(
+            "🆕 Nouveau supporter créé :",
+            supporterId
+        );
+
+    }
+
+}
 
 
             // ==========================================
