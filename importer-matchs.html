@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Import des matchs</title>
+</head>
+
+<body>
+
+<h1>⚽ Import des matchs vers Supabase</h1>
+
+<p>
+    Cette page va importer les matchs présents dans
+    <strong>matchs.json</strong> vers la table
+    <strong>matchs</strong> de Supabase.
+</p>
+
+<button id="importer">
+    🚀 Importer les matchs
+</button>
+
+<p id="message"></p>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+
+<script>
+
+const message = document.getElementById("message");
+
+document.getElementById("importer").addEventListener("click", async function () {
+
+    message.textContent = "⏳ Lecture de matchs.json...";
+
+    try {
+
+        const reponse = await fetch("matchs.json");
+
+        if (!reponse.ok) {
+            throw new Error("Impossible de charger matchs.json");
+        }
+
+        const matchs = await reponse.json();
+
+        console.log("📋 Matchs trouvés :", matchs.length);
+
+        message.textContent =
+            "📋 " + matchs.length + " matchs trouvés. Import en cours...";
+
+
+        const matchsSupabase = matchs.map(function(match) {
+
+            return {
+
+                equipe1: match.equipe1,
+                equipe2: match.equipe2,
+                date: match.date,
+                heure: match.heure,
+                competition: match.competition || "",
+                stade: match.stade || "",
+                statut: match.statut || "À venir",
+
+                score1:
+                    match.score1 === "" ||
+                    match.score1 === null ||
+                    match.score1 === undefined
+                        ? null
+                        : Number(match.score1),
+
+                score2:
+                    match.score2 === "" ||
+                    match.score2 === null ||
+                    match.score2 === undefined
+                        ? null
+                        : Number(match.score2)
+
+            };
+
+        });
+
+
+        const resultat =
+            await supabaseClient
+                .from("matchs")
+                .insert(matchsSupabase);
+
+
+        if (resultat.error) {
+
+            console.error(
+                "❌ Erreur Supabase :",
+                resultat.error
+            );
+
+            throw new Error(
+                resultat.error.message
+            );
+
+        }
+
+
+        console.log(
+            "✅ Import terminé :",
+            matchsSupabase.length
+        );
+
+
+        message.textContent =
+            "✅ Import terminé : " +
+            matchsSupabase.length +
+            " matchs ajoutés dans Supabase !";
+
+
+    } catch (erreur) {
+
+        console.error(
+            "❌ Erreur complète :",
+            erreur
+        );
+
+        message.textContent =
+            "❌ Erreur : " +
+            erreur.message;
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

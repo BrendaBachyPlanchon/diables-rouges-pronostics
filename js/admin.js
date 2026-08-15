@@ -38,26 +38,17 @@ function chargerMatchsAdmin() {
 
 function sauvegarderMatchsAdmin(matchs) {
 
-    return fetch("matchs.php", {
+    console.log(
+        "📤 Enregistrement des matchs dans Supabase :",
+        matchs.length
+    );
 
-        method: "POST",
-
-        headers: {
-            "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify(matchs)
-
-    })
-    .then(function(reponse) {
-
-        if (!reponse.ok) {
-            throw new Error("Erreur lors de l'enregistrement");
-        }
-
-        return reponse.json();
-
-    });
+    return supabaseClient
+        .from("matchs")
+        .upsert(matchs, {
+            onConflict: "id"
+        })
+        .select();
 
 }
 
