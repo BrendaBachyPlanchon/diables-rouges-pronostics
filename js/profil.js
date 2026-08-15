@@ -759,114 +759,161 @@ window.addEventListener(
 // CHARGER LE PROFIL DEPUIS SUPABASE
 // ==========================================
 
-function chargerProfilSupporter() {
+async function chargerProfilSupporter() {
 
-    const supporterId =
-        localStorage.getItem("supporterId");
+    // ==========================================
+    // RÉCUPÉRER L'UTILISATEUR AUTH SUPABASE
+    // ==========================================
 
-    if (!supporterId) {
+    const {
+        data: { user },
+        error: authError
+    } = await supabaseClient.auth.getUser();
+
+
+    if (authError) {
+
+        console.error(
+            "❌ Erreur récupération utilisateur Auth :",
+            authError
+        );
+
         return;
     }
 
-    supabaseClient
-        .from("supporters")
-        .select("pseudo, avatar")
-        .eq("supporter_id", supporterId)
-        .maybeSingle()
 
-        .then(function(resultat) {
+    if (!user) {
 
-            if (resultat.error) {
+        console.log(
+            "ℹ️ Aucun utilisateur Auth connecté."
+        );
 
-                console.error(
-                    "❌ Impossible de charger le supporter :",
-                    resultat.error
-                );
-
-                return;
-            }
-
-            if (!resultat.data) {
-
-                console.log(
-                    "ℹ️ Aucun profil supporter trouvé."
-                );
-
-                return;
-            }
-
-            const supporter =
-                resultat.data;
+        return;
+    }
 
 
-            // ==========================================
-            // RÉCUPÉRER LE PSEUDO
-            // ==========================================
+    // ==========================================
+    // UUID AUTH DU SUPPORTER
+    // ==========================================
 
-            if (supporter.pseudo) {
-
-                localStorage.setItem(
-                    "pseudoActuel",
-                    supporter.pseudo
-                );
-
-                const pseudoProfil =
-                    document.getElementById(
-                        "pseudo-profil"
-                    );
-
-                if (pseudoProfil) {
-
-                    pseudoProfil.innerText =
-                        "👤 " + supporter.pseudo;
-
-                }
-
-            }
+    const supporterId =
+        user.id;
 
 
-            // ==========================================
-            // RÉCUPÉRER L'AVATAR
-            // ==========================================
-
-            if (supporter.avatar) {
-
-                localStorage.setItem(
-                    "avatarSupporter",
-                    supporter.avatar
-                );
-
-                const avatarProfil =
-                    document.getElementById(
-                        "avatar-profil"
-                    );
-
-                if (avatarProfil) {
-
-                    avatarProfil.src =
-                        "images/avatars/" +
-                        supporter.avatar;
-
-                }
-
-            }
+    console.log(
+        "🆔 UUID Auth du profil :",
+        supporterId
+    );
 
 
-            console.log(
-                "✅ Profil supporter chargé depuis Supabase :",
-                supporter
+    // ==========================================
+    // RECHERCHER LE PROFIL SUPPORTER
+    // ==========================================
+
+    const resultat =
+        await supabaseClient
+            .from("supporters")
+            .select("pseudo, avatar")
+            .eq("supporter_id", supporterId)
+            .maybeSingle();
+
+
+    if (resultat.error) {
+
+        console.error(
+            "❌ Impossible de charger le supporter :",
+            resultat.error
+        );
+
+        return;
+    }
+
+
+    if (!resultat.data) {
+
+        console.log(
+            "ℹ️ Aucun profil supporter trouvé."
+        );
+
+        return;
+    }
+
+
+    const supporter =
+        resultat.data;
+
+
+    // ==========================================
+    // RÉCUPÉRER LE PSEUDO
+    // ==========================================
+
+    if (supporter.pseudo) {
+
+        localStorage.setItem(
+            "pseudoActuel",
+            supporter.pseudo
+        );
+
+
+        const pseudoProfil =
+            document.getElementById(
+                "pseudo-profil"
             );
 
-        })
 
-        .catch(function(erreur) {
+        if (pseudoProfil) {
 
-            console.error(
-                "❌ Erreur chargement profil supporter :",
-                erreur
+            pseudoProfil.innerText =
+                "👤 " + supporter.pseudo;
+
+        }
+
+    }
+
+
+    // ==========================================
+    // RÉCUPÉRER L'AVATAR
+    // ==========================================
+
+    if (supporter.avatar) {
+
+        localStorage.setItem(
+            "avatarSupporter",
+            supporter.avatar
+        );
+
+
+        const avatarProfil =
+            document.getElementById(
+                "avatar-profil"
             );
 
-        });
+
+        if (avatarProfil) {
+
+            avatarProfil.src =
+                "images/avatars/" +
+                supporter.avatar;
+
+        }
+
+    }
+
+
+    // ==========================================
+    // MÉMORISER L'UUID AUTH
+    // ==========================================
+
+    localStorage.setItem(
+        "supporterId",
+        supporterId
+    );
+
+
+    console.log(
+        "✅ Profil supporter chargé depuis Supabase :",
+        supporter
+    );
 
 }
 
