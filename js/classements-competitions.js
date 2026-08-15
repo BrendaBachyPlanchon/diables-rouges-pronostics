@@ -501,17 +501,27 @@ function afficherClassementJupiler() {
 
     });
 
-    fetch("matchs.json")
-.then(function(reponse) {
+   supabaseClient
+    .from("matchs")
+    .select("*")
+    .then(function(resultat) {
 
-    if (!reponse.ok) {
-        throw new Error("Erreur lors du chargement de matchs.json");
-    }
+        if (resultat.error) {
 
-    return reponse.json();
+            console.error(
+                "❌ Erreur chargement matchs Supabase :",
+                resultat.error
+            );
 
-})
-.then(function(matchsAdmin) {
+            return;
+        }
+
+        let matchsAdmin = resultat.data;
+
+        console.log(
+            "✅ Matchs Jupiler chargés depuis Supabase :",
+            matchsAdmin.length
+        );
 
     matchsAdmin.forEach(function(match) {
 
