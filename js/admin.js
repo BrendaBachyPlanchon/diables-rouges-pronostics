@@ -6,26 +6,33 @@ console.log("✅ admin.js serveur actif");
 
 
 // ==========================================
-// CHARGER LES MATCHS DEPUIS LE FICHIER JSON
+// CHARGER LES MATCHS DEPUIS SUPABASE
 // ==========================================
 
 function chargerMatchsAdmin() {
 
-    return fetch("matchs.json")
-        .then(function(reponse) {
+    return supabaseClient
+        .from("matchs")
+        .select("*")
+        .then(function(resultat) {
 
-            if (!reponse.ok) {
-                throw new Error("Erreur lors du chargement des matchs");
+            if (resultat.error) {
+
+                console.error(
+                    "❌ Erreur chargement Supabase :",
+                    resultat.error
+                );
+
+                throw resultat.error;
+
             }
 
-            return reponse.json();
+            console.log(
+                "✅ Matchs chargés depuis Supabase :",
+                resultat.data.length
+            );
 
-        })
-        .then(function(matchs) {
-
-            console.log("✅ Matchs chargés depuis JSON :", matchs.length);
-
-            return matchs;
+            return resultat.data;
 
         });
 
