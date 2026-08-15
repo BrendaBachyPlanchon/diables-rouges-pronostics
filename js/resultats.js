@@ -143,6 +143,19 @@ const drapeauxPaysResultats = {
 let tableauResultats =
     document.getElementById("table-resultats");
 
+    if (tableauResultats) {
+    tableauResultats.innerHTML = `
+        <tr>
+            <th>Match</th>
+            <th>Date</th>
+            <th>Heure</th>
+            <th>Compétition</th>
+            <th>Statut</th>
+            <th>Résultat</th>
+        </tr>
+    `;
+}
+
 if (tableauResultats) {
 
     supabaseClient
