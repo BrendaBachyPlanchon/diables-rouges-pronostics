@@ -43,9 +43,37 @@ function sauvegarderMatchsAdmin(matchs) {
         matchs.length
     );
 
+    // Nettoyage des scores avant l'envoi
+    const matchsNettoyes = matchs.map(function(match) {
+
+        return {
+            ...match,
+
+            score1:
+                match.score1 === "" ||
+                match.score1 === undefined ||
+                match.score1 === null
+                    ? null
+                    : Number(match.score1),
+
+            score2:
+                match.score2 === "" ||
+                match.score2 === undefined ||
+                match.score2 === null
+                    ? null
+                    : Number(match.score2)
+        };
+
+    });
+
+    console.log(
+        "📦 Matchs préparés pour Supabase :",
+        matchsNettoyes
+    );
+
     return supabaseClient
         .from("matchs")
-        .upsert(matchs)
+        .upsert(matchsNettoyes)
         .select()
         .then(function(resultat) {
 
@@ -75,7 +103,6 @@ function sauvegarderMatchsAdmin(matchs) {
         });
 
 }
-
 
 // ==========================================
 // AFFICHER LES MATCHS
@@ -292,33 +319,77 @@ if (bouton) {
                 let modification =
                     localStorage.getItem("matchModification");
 
+                    console.log("🔎 Modification trouvée :", modification);
+
 
                 // ==========================================
                 // MODIFICATION
                 // ==========================================
 
-               if (modification !== null) {
+              if (modification !== null) {
 
     let ancienMatch = JSON.parse(modification);
 
-    let index = matchsAdmin.findIndex(function(m) {
+    console.log("✏️ Modification du match :", ancienMatch);
+    console.log("📋 Nouveau match :", nouveauMatch);
 
-        return (
-            m.date === ancienMatch.date &&
-            m.heure === ancienMatch.heure &&
-            m.equipe1 === ancienMatch.equipe1 &&
-            m.equipe2 === ancienMatch.equipe2
-        );
+    // Conversion correcte des scores
+    nouveauMatch.score1 =
+        nouveauMatch.score1 === ""
+            ? null
+            : Number(nouveauMatch.score1);
 
-    });
+    nouveauMatch.score2 =
+        nouveauMatch.score2 === ""
+            ? null
+            : Number(nouveauMatch.score2);
 
-    if (index !== -1) {
+    // Mise à jour DIRECTE du match dans Supabase
+    return supabaseClient
+        .from("matchs")
+        .update({
+            equipe1: nouveauMatch.equipe1,
+            equipe2: nouveauMatch.equipe2,
+            date: nouveauMatch.date,
+            heure: nouveauMatch.heure,
+            competition: nouveauMatch.competition,
+            stade: nouveauMatch.stade,
+            statut: nouveauMatch.statut,
+            score1: nouveauMatch.score1,
+            score2: nouveauMatch.score2
+        })
+        .eq("date", ancienMatch.date)
+        .eq("heure", ancienMatch.heure)
+        .eq("equipe1", ancienMatch.equipe1)
+        .eq("equipe2", ancienMatch.equipe2)
+        .then(function(resultat) {
 
-        matchsAdmin[index] = nouveauMatch;
+            if (resultat.error) {
 
-    }
+                console.error(
+                    "❌ Erreur modification Supabase :",
+                    resultat.error
+                );
 
-    localStorage.removeItem("matchModification");
+                return {
+                    success: false,
+                    message: resultat.error.message
+                };
+
+            }
+
+            console.log(
+                "✅ Match modifié directement dans Supabase"
+            );
+
+            localStorage.removeItem("matchModification");
+
+            return {
+                success: true,
+                message: "Match modifié avec succès"
+            };
+
+        });
 
 }
 
@@ -327,14 +398,13 @@ if (bouton) {
                 // NOUVEAU MATCH
                 // ==========================================
 
-                else {
+               else {
 
-                    matchsAdmin.push(nouveauMatch);
+    matchsAdmin.push(nouveauMatch);
 
-                }
+    return sauvegarderMatchsAdmin(matchsAdmin);
 
-
-                return sauvegarderMatchsAdmin(matchsAdmin);
+}
 
             })
 
