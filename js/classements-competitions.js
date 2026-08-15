@@ -291,17 +291,27 @@ if (!groupes[groupe]) {
     });
 
 
-    fetch("matchs.json")
-    .then(function(reponse) {
+   supabaseClient
+    .from("matchs")
+    .select("*")
+    .then(function(resultat) {
 
-        if (!reponse.ok) {
-            throw new Error("Erreur lors du chargement de matchs.json");
+        if (resultat.error) {
+
+            console.error(
+                "❌ Erreur chargement matchs Ligue des Nations Supabase :",
+                resultat.error
+            );
+
+            return;
         }
 
-        return reponse.json();
+        let matchsAdmin = resultat.data;
 
-    })
-    .then(function(matchsAdmin) {
+        console.log(
+            "✅ Matchs Ligue des Nations chargés depuis Supabase :",
+            matchsAdmin.length
+        );
 
 
 
