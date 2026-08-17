@@ -642,42 +642,37 @@ function afficherPronostics() {
 
 
 // ==========================================
-// CHARGER LES MATCHS
+// CHARGER LES MATCHS DEPUIS SUPABASE
 // ==========================================
 
 function chargerMatchsAdmin() {
 
     let selectMatch =
-        document.getElementById(
-            "choix-match"
-        );
-
+        document.getElementById("choix-match");
 
     if (!selectMatch) {
         return;
     }
 
+    supabaseClient
+        .from("matchs")
+        .select("*")
+        .then(function(resultat) {
 
-    fetch("matchs.json")
+            if (resultat.error) {
 
-        .then(function(reponse) {
-
-            if (!reponse.ok) {
-
-                throw new Error(
-                    "Erreur matchs.json"
+                console.error(
+                    "❌ Erreur chargement matchs Supabase :",
+                    resultat.error
                 );
 
+                return;
             }
 
-            return reponse.json();
-
-        })
-
-        .then(function(matchsAdmin) {
+            let matchsAdmin = resultat.data || [];
 
             console.log(
-                "✅ Matchs chargés :",
+                "✅ Matchs chargés depuis Supabase :",
                 matchsAdmin.length
             );
 
@@ -686,63 +681,21 @@ function chargerMatchsAdmin() {
             // TRIER LES MATCHS
             // ==========================================
 
-            matchsAdmin.sort(
-                function(a, b) {
+            matchsAdmin.sort(function(a, b) {
 
-                    let ordreStatut = {
-
-                        "À venir": 1,
-
-                        "En cours": 2,
-
-                        "Terminé": 3
-
-                    };
-
-
-                    let statutA =
-                        ordreStatut[a.statut] || 4;
-
-
-                    let statutB =
-                        ordreStatut[b.statut] || 4;
-
-
-                    if (
-                        statutA !== statutB
-                    ) {
-
-                        return (
-                            statutA -
-                            statutB
-                        );
-
-                    }
-
-
-                    let dateA =
-                        new Date(
-                            a.date +
-                            "T" +
-                            a.heure
-                        );
-
-
-                    let dateB =
-                        new Date(
-                            b.date +
-                            "T" +
-                            b.heure
-                        );
-
-
-                    return (
-                        dateA -
-                        dateB
+                let dateA =
+                    new Date(
+                        a.date + "T" + a.heure
                     );
 
-                }
-            );
+                let dateB =
+                    new Date(
+                        b.date + "T" + b.heure
+                    );
+
+                return dateA - dateB;
+
+            });
 
 
             // ==========================================
@@ -757,132 +710,122 @@ function chargerMatchsAdmin() {
             // AFFICHER LES MATCHS
             // ==========================================
 
-            matchsAdmin.forEach(
-                function(match) {
+            matchsAdmin.forEach(function(match) {
 
-                    let option =
-                        document.createElement(
-                            "option"
+                let option =
+                    document.createElement("option");
+
+                option.value =
+                    match.equipe1.trim() +
+                    " - " +
+                    match.equipe2.trim();
+
+                option.textContent =
+                    match.equipe1 +
+                    " 🆚 " +
+                    match.equipe2;
+
+                selectMatch.appendChild(option);
+
+            });
+
+
+            // ==========================================
+            // CHERCHER LE PROCHAIN MATCH
+            // ==========================================
+
+            let maintenant = new Date();
+
+            let matchsFuturs =
+                matchsAdmin.filter(function(match) {
+
+                    let dateMatch =
+                        new Date(
+                            match.date +
+                            "T" +
+                            match.heure
                         );
 
+                    return dateMatch > maintenant;
 
-                    option.value =
-
-                        match.equipe1.trim() +
-                        " - " +
-                        match.equipe2.trim();
+                });
 
 
-                    option.textContent =
+            // ==========================================
+            // TRIER LES MATCHS FUTURS
+            // ==========================================
 
-                        match.equipe1 +
-                        " 🆚 " +
-                        match.equipe2;
+            matchsFuturs.sort(function(a, b) {
 
-
-                    selectMatch.appendChild(
-                        option
+                let dateA =
+                    new Date(
+                        a.date +
+                        "T" +
+                        a.heure
                     );
 
-                }
-            );
+                let dateB =
+                    new Date(
+                        b.date +
+                        "T" +
+                        b.heure
+                    );
+
+                return dateA - dateB;
+
+            });
 
 
-           // ==========================================
-          // SÉLECTIONNER LE PROCHAIN MATCH
-         // ==========================================
+            // ==========================================
+            // PRENDRE LE PROCHAIN MATCH
+            // ==========================================
 
-let maintenant =
-    new Date();
+            let prochainMatch =
+                matchsFuturs[0];
 
 
-// Garder uniquement les matchs qui ne sont pas encore commencés
-let matchsFuturs =
-    matchsAdmin.filter(
-        function(match) {
+            if (prochainMatch) {
 
-            let dateMatch =
-                new Date(
-                    match.date +
-                    "T" +
-                    match.heure
+                selectMatch.value =
+                    prochainMatch.equipe1.trim() +
+                    " - " +
+                    prochainMatch.equipe2.trim();
+
+
+                selectMatch.dispatchEvent(
+                    new Event("change")
                 );
 
-            return (
-                dateMatch >
-                maintenant
-            );
 
-        }
-    );
+                console.log(
+                    "🎯 Prochain match sélectionné depuis Supabase :",
+                    prochainMatch.equipe1,
+                    "-",
+                    prochainMatch.equipe2,
+                    prochainMatch.date,
+                    prochainMatch.heure
+                );
 
+            } else {
 
-// Trier les matchs futurs du plus proche au plus lointain
-matchsFuturs.sort(
-    function(a, b) {
+                console.log(
+                    "ℹ️ Aucun match futur disponible."
+                );
 
-        let dateA =
-            new Date(
-                a.date +
-                "T" +
-                a.heure
-            );
+            }
 
-        let dateB =
-            new Date(
-                b.date +
-                "T" +
-                b.heure
-            );
-
-        return dateA - dateB;
-
-    }
-);
-
-
-// Prendre le prochain match
-let prochainMatch =
-    matchsFuturs[0];
-
-
-if (prochainMatch) {
-
-    selectMatch.value =
-
-        prochainMatch.equipe1.trim() +
-        " - " +
-        prochainMatch.equipe2.trim();
-
-
-    selectMatch.dispatchEvent(
-        new Event("change")
-    );
-
-
-    console.log(
-        "🎯 Prochain match sélectionné :",
-        prochainMatch.equipe1,
-        "-",
-        prochainMatch.equipe2,
-        prochainMatch.date,
-        prochainMatch.heure
-    );
-
-}
         })
 
         .catch(function(erreur) {
 
             console.error(
-                "❌ Impossible de charger les matchs :",
+                "❌ Impossible de charger les matchs Supabase :",
                 erreur
             );
 
         });
 
 }
-
 
 // ==========================================
 // DÉMARRAGE
