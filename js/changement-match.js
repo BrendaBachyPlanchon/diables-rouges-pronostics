@@ -382,6 +382,19 @@ if (choixMatch) {
                 // VÉRIFIER OUVERTURE / FERMETURE
                 // ==========================================
 
+                console.log(
+    "🔎 Vérification fermeture :",
+    matchAdmin.equipe1,
+    "-",
+    matchAdmin.equipe2,
+    "| statut =",
+    matchAdmin.statut,
+    "| date =",
+    matchAdmin.date,
+    "| heure =",
+    matchAdmin.heure
+);
+
                 verifierOuverturePronostic(
                     matchAdmin
                 );
