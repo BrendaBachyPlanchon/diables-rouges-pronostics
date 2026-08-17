@@ -1,5 +1,6 @@
 // ==========================================
 // COMPTE À REBOURS DU PROCHAIN MATCH
+// VERSION SUPABASE
 // ==========================================
 
 let dateProchainMatch = null;
@@ -12,11 +13,11 @@ let prochainMatch = null;
 
 const drapeaux = {
 
-   "Belgique": "images/pays/belgique.png",
-   "France": "images/pays/france.png",
-   "Italie": "images/pays/italie.png",
-   "Espagne": "images/pays/espagne.png",
-   "Turquie": "images/pays/turquie.png"
+    "Belgique": "images/pays/belgique.png",
+    "France": "images/pays/france.png",
+    "Italie": "images/pays/italie.png",
+    "Espagne": "images/pays/espagne.png",
+    "Turquie": "images/pays/turquie.png"
 
 };
 
@@ -93,65 +94,125 @@ const logosCompteurJupilerProLeague = {
 
 
 // ==========================================
-// TROUVER LE PROCHAIN MATCH
+// TROUVER LE PROCHAIN MATCH DEPUIS SUPABASE
 // ==========================================
 
 function trouverProchainMatch() {
 
-    fetch("matchs.json")
+    supabaseClient
+        .from("matchs")
+        .select("*")
 
-        .then(function(reponse) {
+        .then(function(resultat) {
 
-            if (!reponse.ok) {
-                throw new Error("Impossible de charger matchs.json");
+            if (resultat.error) {
+
+                console.error(
+                    "❌ Erreur chargement prochain match depuis Supabase :",
+                    resultat.error
+                );
+
+                return;
+
             }
 
-            return reponse.json();
 
-        })
+            let matchs =
+                resultat.data || [];
 
-        .then(function(matchs) {
 
-            let maintenant = new Date().getTime();
+            console.log(
+                "✅ Matchs compteur chargés depuis Supabase :",
+                matchs.length
+            );
 
-            let prochains = matchs.filter(function(match) {
 
-                let dateMatch = new Date(
-                    match.date + "T" + match.heure
-                ).getTime();
+            let maintenant =
+                new Date().getTime();
 
-                return dateMatch > maintenant;
 
-            });
+            let prochains =
+                matchs.filter(function(match) {
+
+                    let dateMatch =
+                        new Date(
+                            match.date +
+                            "T" +
+                            match.heure
+                        ).getTime();
+
+                    return (
+                        match.statut === "À venir" &&
+                        dateMatch > maintenant
+                    );
+
+                });
+
 
             if (prochains.length === 0) {
 
                 prochainMatch = null;
                 dateProchainMatch = null;
 
+                console.log(
+                    "⚠️ Aucun match à venir pour le compteur"
+                );
+
                 return;
 
             }
 
+
+            // ==========================================
+            // TRIER PAR DATE
+            // ==========================================
+
             prochains.sort(function(a, b) {
 
-                let dateA = new Date(
-                    a.date + "T" + a.heure
-                ).getTime();
+                let dateA =
+                    new Date(
+                        a.date +
+                        "T" +
+                        a.heure
+                    ).getTime();
 
-                let dateB = new Date(
-                    b.date + "T" + b.heure
-                ).getTime();
+                let dateB =
+                    new Date(
+                        b.date +
+                        "T" +
+                        b.heure
+                    ).getTime();
 
                 return dateA - dateB;
 
             });
 
-            prochainMatch = prochains[0];
 
-            dateProchainMatch = new Date(
-                prochainMatch.date + "T" + prochainMatch.heure
-            ).getTime();
+            // ==========================================
+            // PRENDRE LE PROCHAIN MATCH
+            // ==========================================
+
+            prochainMatch =
+                prochains[0];
+
+
+            dateProchainMatch =
+                new Date(
+                    prochainMatch.date +
+                    "T" +
+                    prochainMatch.heure
+                ).getTime();
+
+
+            console.log(
+                "🎯 Prochain match du compteur depuis Supabase :",
+                prochainMatch.equipe1,
+                "-",
+                prochainMatch.equipe2,
+                prochainMatch.date,
+                prochainMatch.heure
+            );
+
 
             afficherNomProchainMatch();
 
@@ -160,7 +221,7 @@ function trouverProchainMatch() {
         .catch(function(erreur) {
 
             console.error(
-                "❌ Impossible de charger le prochain match :",
+                "❌ Impossible de charger le prochain match du compteur :",
                 erreur
             );
 
@@ -176,14 +237,20 @@ function trouverProchainMatch() {
 function afficherNomProchainMatch() {
 
     if (!prochainMatch) {
-
         return;
-
     }
 
 
-    let equipe1 = document.getElementById("compteur-equipe1");
-    let equipe2 = document.getElementById("compteur-equipe2");
+    let equipe1 =
+        document.getElementById(
+            "compteur-equipe1"
+        );
+
+
+    let equipe2 =
+        document.getElementById(
+            "compteur-equipe2"
+        );
 
 
     if (equipe1) {
@@ -202,16 +269,25 @@ function afficherNomProchainMatch() {
     }
 
 
-    // Logos
+    // ==========================================
+    // LOGOS
+    // ==========================================
+
     let drapeau1 =
-        document.getElementById("compteur-drapeau1");
+        document.getElementById(
+            "compteur-drapeau1"
+        );
+
 
     let drapeau2 =
-        document.getElementById("compteur-drapeau2");
+        document.getElementById(
+            "compteur-drapeau2"
+        );
 
 
     let equipe1Nom =
         prochainMatch.equipe1.trim();
+
 
     let equipe2Nom =
         prochainMatch.equipe2.trim();
@@ -223,6 +299,7 @@ function afficherNomProchainMatch() {
             logosCompteurJupilerProLeague[equipe1Nom] ||
             drapeaux[equipe1Nom] ||
             "images/pays/belgique.png";
+
     }
 
 
@@ -231,7 +308,7 @@ function afficherNomProchainMatch() {
         drapeau2.src =
             logosCompteurJupilerProLeague[equipe2Nom] ||
             drapeaux[equipe2Nom] ||
-            "images/pays/france.png";
+            "images/pays/belgique.png";
 
     }
 
@@ -244,8 +321,6 @@ function afficherNomProchainMatch() {
 
 function lancerCompteARebours() {
 
-    // Si aucun match n'est sélectionné,
-    // on cherche le prochain
     if (prochainMatch === null) {
 
         trouverProchainMatch();
@@ -254,16 +329,6 @@ function lancerCompteARebours() {
 
 
     if (dateProchainMatch === null) {
-
-        let compteur =
-            document.getElementById("compte-a-rebours");
-
-        if (compteur) {
-
-            compteur.innerHTML =
-                "⚽ Aucun match à venir";
-
-        }
 
         return;
 
@@ -275,14 +340,20 @@ function lancerCompteARebours() {
 
 
     let distance =
-        dateProchainMatch - maintenant;
+        dateProchainMatch -
+        maintenant;
 
 
     let compteur =
-        document.getElementById("compte-a-rebours");
+        document.getElementById(
+            "compte-a-rebours"
+        );
 
 
-    // Match arrivé à son heure
+    // ==========================================
+    // MATCH COMMENCÉ
+    // ==========================================
+
     if (distance <= 0) {
 
         if (compteur) {
@@ -293,7 +364,6 @@ function lancerCompteARebours() {
         }
 
 
-        // On cherche immédiatement le prochain
         prochainMatch = null;
         dateProchainMatch = null;
 
@@ -301,7 +371,6 @@ function lancerCompteARebours() {
         setTimeout(function() {
 
             trouverProchainMatch();
-            afficherNomProchainMatch();
 
         }, 1000);
 
@@ -310,6 +379,10 @@ function lancerCompteARebours() {
 
     }
 
+
+    // ==========================================
+    // CALCUL DU TEMPS
+    // ==========================================
 
     let jours =
         Math.floor(
@@ -320,27 +393,30 @@ function lancerCompteARebours() {
 
     let heures =
         Math.floor(
-            (distance %
-            (1000 * 60 * 60 * 24))
-            /
+            (
+                distance %
+                (1000 * 60 * 60 * 24)
+            ) /
             (1000 * 60 * 60)
         );
 
 
     let minutes =
         Math.floor(
-            (distance %
-            (1000 * 60 * 60))
-            /
+            (
+                distance %
+                (1000 * 60 * 60)
+            ) /
             (1000 * 60)
         );
 
 
     let secondes =
         Math.floor(
-            (distance %
-            (1000 * 60))
-            /
+            (
+                distance %
+                (1000 * 60)
+            ) /
             1000
         );
 
@@ -362,7 +438,9 @@ function lancerCompteARebours() {
 // LANCEMENT
 // ==========================================
 
-
 trouverProchainMatch();
 
-setInterval(lancerCompteARebours, 1000);
+setInterval(
+    lancerCompteARebours,
+    1000
+);
