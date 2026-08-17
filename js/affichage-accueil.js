@@ -1,32 +1,47 @@
 // ==========================================
 // AFFICHAGE DU PROCHAIN MATCH SUR L'ACCUEIL
+// VERSION SUPABASE
 // ==========================================
 
 console.log("✅ affichage-accueil.js serveur actif");
 
 
-fetch("matchs.json")
+// ==========================================
+// CHARGER LES MATCHS DEPUIS SUPABASE
+// ==========================================
 
-    .then(function(reponse) {
+supabaseClient
+    .from("matchs")
+    .select("*")
 
-        if (!reponse.ok) {
-            throw new Error("Erreur lors du chargement des matchs");
+    .then(function(resultat) {
+
+        if (resultat.error) {
+
+            console.error(
+                "❌ Erreur chargement matchs accueil depuis Supabase :",
+                resultat.error
+            );
+
+            return;
+
         }
 
-        return reponse.json();
 
-    })
+        let matchsAdmin =
+            resultat.data || [];
 
-    .then(function(matchsAdmin) {
 
         console.log(
-            "✅ Matchs accueil chargés depuis le serveur :",
+            "✅ Matchs accueil chargés depuis Supabase :",
             matchsAdmin.length
         );
 
 
         let equipe1Accueil =
-            document.getElementById("accueil-equipe1");
+            document.getElementById(
+                "accueil-equipe1"
+            );
 
 
         if (!equipe1Accueil) {
@@ -36,57 +51,93 @@ fetch("matchs.json")
 
         if (matchsAdmin.length === 0) {
 
-            console.log("⚠️ Aucun match disponible");
+            console.log(
+                "⚠️ Aucun match disponible dans Supabase"
+            );
 
             return;
 
         }
 
-    // ==========================================
-    // PRENDRE LE PROCHAIN MATCH À VENIR
-    // ==========================================
 
-    let maintenant = new Date().getTime();
+        // ==========================================
+        // PRENDRE LE PROCHAIN MATCH À VENIR
+        // ==========================================
 
-    let matchsAVenir = matchsAdmin.filter(function(match) {
-
-        let dateMatch = new Date(
-            match.date + "T" + match.heure
-        ).getTime();
-
-        return match.statut === "À venir" &&
-               dateMatch > maintenant;
-
-    });
+        let maintenant =
+            new Date().getTime();
 
 
-    if (matchsAVenir.length === 0) {
+        let matchsAVenir =
+            matchsAdmin.filter(function(match) {
 
-        console.log("⚠️ Aucun match à venir");
+                let dateMatch =
+                    new Date(
+                        match.date +
+                        "T" +
+                        match.heure
+                    ).getTime();
 
-        return;
+                return (
+                    match.statut === "À venir" &&
+                    dateMatch > maintenant
+                );
 
-    }
-
-
-    // Trier les matchs à venir par date
-    matchsAVenir.sort(function(a, b) {
-
-        let dateA = new Date(
-            a.date + "T" + a.heure
-        ).getTime();
-
-        let dateB = new Date(
-            b.date + "T" + b.heure
-        ).getTime();
-
-        return dateA - dateB;
-
-    });
+            });
 
 
-    // Premier match réellement à venir
-    let match = matchsAVenir[0];
+        if (matchsAVenir.length === 0) {
+
+            console.log(
+                "⚠️ Aucun match à venir"
+            );
+
+            return;
+
+        }
+
+
+        // ==========================================
+        // TRIER PAR DATE
+        // ==========================================
+
+        matchsAVenir.sort(function(a, b) {
+
+            let dateA =
+                new Date(
+                    a.date +
+                    "T" +
+                    a.heure
+                ).getTime();
+
+            let dateB =
+                new Date(
+                    b.date +
+                    "T" +
+                    b.heure
+                ).getTime();
+
+            return dateA - dateB;
+
+        });
+
+
+        // ==========================================
+        // PRENDRE LE PREMIER MATCH
+        // ==========================================
+
+        let match =
+            matchsAVenir[0];
+
+
+        console.log(
+            "🎯 Prochain match accueil depuis Supabase :",
+            match.equipe1,
+            "-",
+            match.equipe2,
+            match.date,
+            match.heure
+        );
 
 
         // ==========================================
@@ -95,12 +146,14 @@ fetch("matchs.json")
 
         document.getElementById(
             "accueil-equipe1"
-        ).innerText = match.equipe1;
+        ).innerText =
+            match.equipe1;
 
 
         document.getElementById(
             "accueil-equipe2"
-        ).innerText = match.equipe2;
+        ).innerText =
+            match.equipe2;
 
 
         // ==========================================
@@ -113,26 +166,37 @@ fetch("matchs.json")
         let equipe2 =
             match.equipe2.trim();
 
-            console.log("Fonction image :", typeof trouverImageEquipe);
 
-        if (typeof trouverImageEquipe === "function") {
+        if (
+            typeof logosJupilerProLeague !==
+            "undefined"
+        ) {
 
-            document.getElementById(
-                "accueil-drapeau1"
-            ).src =
-                trouverImageEquipe(
-                    equipe1,
-                    "images/pays/belgique.png"
-                );
+            let logo1 =
+                logosJupilerProLeague[equipe1];
+
+            let logo2 =
+                logosJupilerProLeague[equipe2];
 
 
-            document.getElementById(
-                "accueil-drapeau2"
-            ).src =
-                trouverImageEquipe(
-                    equipe2,
-                    "images/pays/belgique.png"
-                );
+            if (logo1) {
+
+                document.getElementById(
+                    "accueil-drapeau1"
+                ).src =
+                    logo1;
+
+            }
+
+
+            if (logo2) {
+
+                document.getElementById(
+                    "accueil-drapeau2"
+                ).src =
+                    logo2;
+
+            }
 
         }
 
@@ -144,7 +208,8 @@ fetch("matchs.json")
         document.getElementById(
             "accueil-date"
         ).innerText =
-            "📅 Date : " + match.date;
+            "📅 Date : " +
+            match.date;
 
 
         // ==========================================
@@ -154,7 +219,8 @@ fetch("matchs.json")
         document.getElementById(
             "accueil-heure"
         ).innerText =
-            "🕘 Heure : " + match.heure;
+            "🕘 Heure : " +
+            match.heure;
 
 
         // ==========================================
@@ -191,7 +257,10 @@ fetch("matchs.json")
 
             badgeStade.innerText =
                 "🏟️ Stade : " +
-                (match.stade || "À définir");
+                (
+                    match.stade ||
+                    "À définir"
+                );
 
         }
 
@@ -240,7 +309,7 @@ fetch("matchs.json")
     .catch(function(erreur) {
 
         console.error(
-            "❌ Impossible de charger le match d'accueil :",
+            "❌ Impossible de charger le match d'accueil depuis Supabase :",
             erreur
         );
 
@@ -253,29 +322,45 @@ fetch("matchs.json")
 
 function afficherCompetition(competition) {
 
-    if (competition === "Ligue des Nations") {
+    if (
+        competition ===
+        "Ligue des Nations"
+    ) {
 
         return "🏆🇪🇺 Ligue des Nations";
 
     }
 
-    if (competition === "Coupe du Monde") {
+
+    if (
+        competition ===
+        "Coupe du Monde"
+    ) {
 
         return "🌍 Coupe du Monde";
 
     }
 
-    if (competition === "Euro") {
+
+    if (
+        competition ===
+        "Euro"
+    ) {
 
         return "🏆 Euro";
 
     }
 
-    if (competition === "Ligue des Champions") {
+
+    if (
+        competition ===
+        "Ligue des Champions"
+    ) {
 
         return "⭐ Ligue des Champions";
 
     }
+
 
     return competition;
 
