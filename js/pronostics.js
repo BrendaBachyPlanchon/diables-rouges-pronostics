@@ -784,27 +784,176 @@ function chargerMatchsAdmin() {
                 matchsFuturs[0];
 
 
-            if (prochainMatch) {
+          if (prochainMatch) {
 
-                selectMatch.value =
-                    prochainMatch.equipe1.trim() +
-                    " - " +
-                    prochainMatch.equipe2.trim();
+    // ==========================================
+    // SÉLECTIONNER LE PROCHAIN MATCH DANS LE MENU
+    // ==========================================
+
+    selectMatch.value =
+        prochainMatch.equipe1.trim() +
+        " - " +
+        prochainMatch.equipe2.trim();
 
 
-                selectMatch.dispatchEvent(
-                    new Event("change")
-                );
+    selectMatch.dispatchEvent(
+        new Event("change")
+    );
 
 
-                console.log(
-                    "🎯 Prochain match sélectionné depuis Supabase :",
-                    prochainMatch.equipe1,
-                    "-",
-                    prochainMatch.equipe2,
-                    prochainMatch.date,
-                    prochainMatch.heure
-                );
+    // ==========================================
+    // METTRE À JOUR LE BLOC "PROCHAIN MATCH"
+    // ==========================================
+
+    let equipeDomicile =
+        document.getElementById("equipe-domicile");
+
+    let equipeExterieur =
+        document.getElementById("equipe-exterieur");
+
+    let drapeauDomicile =
+        document.getElementById("drapeau-domicile");
+
+    let drapeauExterieur =
+        document.getElementById("drapeau-exterieur");
+
+    let dateMatch =
+        document.getElementById("date-match");
+
+    let heureMatch =
+        document.getElementById("heure-match");
+
+    let competitionMatch =
+        document.getElementById("competition-match");
+
+    let scoreDomicile =
+        document.getElementById("score-domicile");
+
+    let scoreExterieur =
+        document.getElementById("score-exterieur");
+
+
+    // ==========================================
+    // ÉQUIPES
+    // ==========================================
+
+    if (equipeDomicile) {
+
+        equipeDomicile.textContent =
+            prochainMatch.equipe1;
+
+    }
+
+
+    if (equipeExterieur) {
+
+        equipeExterieur.textContent =
+            prochainMatch.equipe2;
+
+    }
+
+
+    // ==========================================
+    // SCORES
+    // ==========================================
+
+    if (scoreDomicile) {
+
+        scoreDomicile.textContent =
+            prochainMatch.equipe1;
+
+    }
+
+
+    if (scoreExterieur) {
+
+        scoreExterieur.textContent =
+            prochainMatch.equipe2;
+
+    }
+
+
+    // ==========================================
+    // DATE
+    // ==========================================
+
+    if (dateMatch) {
+
+        dateMatch.textContent =
+            "📅 Date : " +
+            prochainMatch.date;
+
+    }
+
+
+    // ==========================================
+    // HEURE
+    // ==========================================
+
+    if (heureMatch) {
+
+        heureMatch.textContent =
+            "🕘 Heure : " +
+            prochainMatch.heure;
+
+    }
+
+
+    // ==========================================
+    // COMPÉTITION
+    // ==========================================
+
+    if (competitionMatch) {
+
+        competitionMatch.textContent =
+            "🏆 Compétition : " +
+            (
+                prochainMatch.competition ||
+                ""
+            );
+
+    }
+
+
+    // ==========================================
+    // DRAPEAUX
+    // ==========================================
+
+    // Les drapeaux seront mis à jour
+    // uniquement si les informations existent
+    // dans Supabase.
+
+    if (
+        drapeauDomicile &&
+        prochainMatch.drapeau1
+    ) {
+
+        drapeauDomicile.src =
+            prochainMatch.drapeau1;
+
+    }
+
+
+    if (
+        drapeauExterieur &&
+        prochainMatch.drapeau2
+    ) {
+
+        drapeauExterieur.src =
+            prochainMatch.drapeau2;
+
+    }
+
+
+    console.log(
+        "🎯 Prochain match sélectionné depuis Supabase :",
+        prochainMatch.equipe1,
+        "-",
+        prochainMatch.equipe2,
+        prochainMatch.date,
+        prochainMatch.heure
+    );
+
 
             } else {
 
