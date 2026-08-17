@@ -15,25 +15,23 @@ if (choixMatch) {
         // RECHERCHE DU MATCH DANS LE FICHIER JSON
         // ==========================================
 
-        fetch("matchs.json")
+       supabaseClient
+    .from("matchs")
+    .select("*")
+    .then(function(resultat) {
 
-            .then(function(reponse) {
+        if (resultat.error) {
 
-                if (!reponse.ok) {
-                    throw new Error("Erreur matchs.json");
-                }
+            throw resultat.error;
 
-                return reponse.json();
+        }
 
-            })
+        let matchsAdmin = resultat.data;
 
-            .then(function(matchsAdmin) {
-
-                console.log(
-                    "✅ Matchs changement-match chargés depuis le serveur :",
-                    matchsAdmin.length
-                );
-
+        console.log(
+            "✅ Matchs changement-match chargés depuis Supabase :",
+            matchsAdmin.length
+        );
 
                 // ==========================================
                 // TROUVER LE MATCH
