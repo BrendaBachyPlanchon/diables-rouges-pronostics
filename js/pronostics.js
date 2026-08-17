@@ -916,33 +916,40 @@ function chargerMatchsAdmin() {
 
 
     // ==========================================
-    // DRAPEAUX
-    // ==========================================
+// LOGOS DES CLUBS
+// ==========================================
 
-    // Les drapeaux seront mis à jour
-    // uniquement si les informations existent
-    // dans Supabase.
+let logoDomicile =
+    logosJupilerProLeague[
+        prochainMatch.equipe1.trim()
+    ];
 
-    if (
-        drapeauDomicile &&
-        prochainMatch.drapeau1
-    ) {
-
-        drapeauDomicile.src =
-            prochainMatch.drapeau1;
-
-    }
+let logoExterieur =
+    logosJupilerProLeague[
+        prochainMatch.equipe2.trim()
+    ];
 
 
-    if (
-        drapeauExterieur &&
-        prochainMatch.drapeau2
-    ) {
+if (
+    drapeauDomicile &&
+    logoDomicile
+) {
 
-        drapeauExterieur.src =
-            prochainMatch.drapeau2;
+    drapeauDomicile.src =
+        logoDomicile;
 
-    }
+}
+
+
+if (
+    drapeauExterieur &&
+    logoExterieur
+) {
+
+    drapeauExterieur.src =
+        logoExterieur;
+
+}
 
 
     console.log(
