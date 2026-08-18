@@ -1,8 +1,8 @@
 // ==========================================
-// CHARGEMENT DES MATCHS ADMIN DEPUIS LE SERVEUR
+// CHARGEMENT DES MATCHS ADMIN DEPUIS SUPABASE
 // ==========================================
 
-console.log("✅ chargement-matchs-admin.js serveur actif");
+console.log("✅ chargement-matchs-admin.js Supabase actif");
 
 
 let selectMatchAdmin =
@@ -13,29 +13,41 @@ if (selectMatchAdmin) {
 
 
     // ==========================================
-    // CHARGER LES MATCHS DEPUIS LE SERVEUR
+    // CHARGER LES MATCHS DEPUIS SUPABASE
     // ==========================================
 
-    fetch("matchs.json")
+    supabaseClient
+        .from("matchs")
+        .select("*")
 
-    .then(function(reponse) {
+        .then(function(resultat) {
 
-        if (!reponse.ok) {
-            throw new Error("Erreur matchs.json");
-        }
 
-        return reponse.json();
+            if (resultat.error) {
 
-    })
+                console.error(
+                    "❌ Erreur chargement matchs Supabase :",
+                    resultat.error
+                );
 
-        .then(function(matchsAdmin) {
+                return;
+
+            }
+
+
+            let matchsAdmin =
+                resultat.data || [];
 
 
             console.log(
-                "✅ Matchs admin chargés depuis le serveur :",
+                "✅ Matchs admin chargés depuis Supabase :",
                 matchsAdmin.length
             );
 
+
+            // ==========================================
+            // AFFICHER LES MATCHS
+            // ==========================================
 
             matchsAdmin.forEach(function(match) {
 
@@ -75,7 +87,8 @@ if (selectMatchAdmin) {
                         document.createElement("option");
 
 
-                    option.value = valeur;
+                    option.value =
+                        valeur;
 
 
                     let competition =
@@ -114,10 +127,11 @@ if (selectMatchAdmin) {
         .catch(function(erreur) {
 
             console.error(
-                "❌ Impossible de charger les matchs admin :",
+                "❌ Impossible de charger les matchs Supabase :",
                 erreur
             );
 
         });
 
 }
+
