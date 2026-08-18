@@ -5,26 +5,28 @@
 function afficherStatistiques() {
 
     // ==========================================
-    // CHARGER LES MATCHS
+    // CHARGER LES MATCHS DEPUIS SUPABASE
     // ==========================================
 
-    fetch("matchs.json")
+    supabaseClient
+        .from("matchs")
+        .select("*")
 
-        .then(function(reponse) {
+        .then(function(resultatMatchs) {
 
-            if (!reponse.ok) {
+            if (resultatMatchs.error) {
 
-                throw new Error(
-                    "Impossible de charger matchs.json"
-                );
+                throw resultatMatchs.error;
 
             }
 
-            return reponse.json();
+            let matchsStatistiques =
+                resultatMatchs.data || [];
 
-        })
-
-        .then(function(matchsStatistiques) {
+            console.log(
+                "✅ Matchs statistiques chargés depuis Supabase :",
+                matchsStatistiques.length
+            );
 
             // ==========================================
             // CHARGER LES PRONOSTICS DEPUIS SUPABASE
