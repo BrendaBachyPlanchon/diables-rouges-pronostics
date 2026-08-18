@@ -1,8 +1,8 @@
 // ==========================================
-// AFFICHAGE DES MATCHS DEPUIS LE SERVEUR
+// AFFICHAGE DES MATCHS DEPUIS SUPABASE
 // ==========================================
 
-console.log("✅ affichage-matchs.js serveur actif");
+console.log("✅ affichage-matchs.js Supabase actif");
 
 
 // ==========================================
@@ -41,6 +41,7 @@ var logosJupilerProLeague = {
 
     "Cercle Brugge": "images/clubs/cercle-brugge.png",
     "Cercle Bruges": "images/clubs/cercle-brugge.png",
+    "Cercle de Bruges": "images/clubs/cercle-brugge.png",
     "Cercle": "images/clubs/cercle-brugge.png",
 
     "SV Zulte Waregem": "images/clubs/zulte-waregem.png",
@@ -89,169 +90,315 @@ let zoneMatchs =
 
 if (zoneMatchs) {
 
-   fetch("matchs.json")
+    // ==========================================
+    // VÉRIFIER SUPABASE
+    // ==========================================
 
-        .then(function(reponse) {
+    if (
+        typeof supabaseClient === "undefined" ||
+        !supabaseClient
+    ) {
 
-            if (!reponse.ok) {
-                throw new Error("Erreur matchs.json");
-            }
+        console.error(
+            "❌ Supabase Client indisponible pour affichage-matchs.js"
+        );
 
-            return reponse.json();
+        zoneMatchs.innerHTML =
+            "<p>❌ Impossible de charger les matchs.</p>";
 
-        })
-
-        .then(function(matchs) {
-
-            console.log(
-               "✅ Matchs affichage chargés depuis JSON :",
-                matchs.length
-            );
-
-
-            zoneMatchs.innerHTML = "";
+    } else {
 
 
-            // ==========================================
-            // TRI PAR DATE
-            // ==========================================
+        // ==========================================
+        // CHARGER LES MATCHS DEPUIS SUPABASE
+        // ==========================================
 
-            matchs.sort(function(a, b) {
+        supabaseClient
+            .from("matchs")
+            .select("*")
 
-                let dateA =
-                    new Date(a.date + "T" + a.heure);
+            .then(function(resultat) {
 
-                let dateB =
-                    new Date(b.date + "T" + b.heure);
+                let matchs = resultat.data;
+                let erreur = resultat.error;
 
-                return dateA - dateB;
+
+                if (erreur) {
+
+                    console.error(
+                        "❌ Erreur chargement matchs Supabase :",
+                        erreur
+                    );
+
+                    zoneMatchs.innerHTML =
+                        "<p>❌ Impossible de charger les matchs.</p>";
+
+                    return;
+
+                }
+
+
+                if (!matchs) {
+
+                    matchs = [];
+
+                }
+
+
+                console.log(
+                    "✅ Matchs affichage chargés depuis Supabase :",
+                    matchs.length
+                );
+
+
+                zoneMatchs.innerHTML = "";
+
+
+                // ==========================================
+                // TRI PAR DATE
+                // ==========================================
+
+                matchs.sort(function(a, b) {
+
+                    let dateA =
+                        new Date(
+                            a.date +
+                            "T" +
+                            a.heure
+                        );
+
+                    let dateB =
+                        new Date(
+                            b.date +
+                            "T" +
+                            b.heure
+                        );
+
+                    return dateA - dateB;
+
+                });
+
+
+                // ==========================================
+                // FILTRER LA COMPÉTITION
+                // ==========================================
+
+                let pageActuelle =
+                    window.location.pathname;
+
+
+                if (
+                    pageActuelle.includes(
+                        "nations-league"
+                    )
+                ) {
+
+                    matchs =
+                        matchs.filter(function(match) {
+
+                            return (
+                                match.competition ===
+                                "Ligue des Nations"
+                            );
+
+                        });
+
+                }
+
+
+                if (
+                    pageActuelle.includes(
+                        "championnats-europeens"
+                    )
+                ) {
+
+                    matchs =
+                        matchs.filter(function(match) {
+
+                            return (
+                                match.competition ===
+                                "Jupiler Pro League"
+                            );
+
+                        });
+
+                }
+
+
+                console.log(
+                    "📋 Matchs affichés après filtrage :",
+                    matchs.length
+                );
+
+
+                // ==========================================
+                // AFFICHER LES MATCHS
+                // ==========================================
+
+                matchs.forEach(function(match) {
+
+                    let equipe1 =
+                        (match.equipe1 || "").trim();
+
+                    let equipe2 =
+                        (match.equipe2 || "").trim();
+
+
+                    let logo1 =
+                        logosJupilerProLeague[
+                            equipe1
+                        ];
+
+
+                    let logo2 =
+                        logosJupilerProLeague[
+                            equipe2
+                        ];
+
+
+                    let urlMatch =
+                        equipe1 +
+                        " - " +
+                        equipe2;
+
+
+                    // ==========================================
+                    // STATUT
+                    // ==========================================
+
+                    let statut =
+                        match.statut ||
+                        "À venir";
+
+
+                    let boutonTexte =
+                        "⚽ Pronostiquer";
+
+
+                    let boutonDisabled = "";
+
+
+                    if (
+                        statut === "Terminé" ||
+                        statut === "En cours"
+                    ) {
+
+                        boutonTexte =
+                            "🔒 Pronostics clôturés";
+
+                        boutonDisabled =
+                            "disabled";
+
+                    }
+
+
+                    // ==========================================
+                    // CARTE DU MATCH
+                    // ==========================================
+
+                    zoneMatchs.innerHTML += `
+
+                    <div class="carte">
+
+                        <h3>
+                            🏆 ${match.competition || ""}
+                        </h3>
+
+                        <h2>
+
+                            ${
+                                logo1
+                                ?
+                                `<img
+                                    src="${logo1}"
+                                    width="50"
+                                    style="vertical-align:middle;"
+                                >`
+                                :
+                                ""
+                            }
+
+                            ${equipe1}
+
+                            🆚
+
+                            ${equipe2}
+
+                            ${
+                                logo2
+                                ?
+                                `<img
+                                    src="${logo2}"
+                                    width="50"
+                                    style="vertical-align:middle;"
+                                >`
+                                :
+                                ""
+                            }
+
+                        </h2>
+
+                        <p>
+                            📅 ${match.date || ""}
+                        </p>
+
+                        <p>
+                            🕘 ${match.heure || ""}
+                        </p>
+
+                        <p>
+                            📌 ${statut}
+                        </p>
+
+                        ${
+                            boutonDisabled
+                            ?
+                            `
+                            <button
+                                disabled
+                                style="
+                                    opacity:0.6;
+                                    cursor:not-allowed;
+                                "
+                            >
+                                ${boutonTexte}
+                            </button>
+                            `
+                            :
+                            `
+                            <a
+                                href="pronostic.html?match=${encodeURIComponent(urlMatch)}"
+                            >
+
+                                <button>
+                                    ${boutonTexte}
+                                </button>
+
+                            </a>
+                            `
+                        }
+
+                    </div>
+
+                    `;
+
+                });
+
+            })
+
+            .catch(function(erreur) {
+
+                console.error(
+                    "❌ Impossible de charger les matchs depuis Supabase :",
+                    erreur
+                );
+
+
+                zoneMatchs.innerHTML =
+                    "<p>❌ Impossible de charger les matchs.</p>";
 
             });
 
-
-            // ==========================================
-            // AFFICHAGE
-            // ==========================================
-
-// ==========================================
-// FILTRER LA COMPÉTITION
-// ==========================================
-
-let pageActuelle = window.location.pathname;
-
-if (pageActuelle.includes("nations-league")) {
-
-    matchs = matchs.filter(function(match) {
-
-        return match.competition === "Ligue des Nations";
-
-    });
-
-}
-
-if (pageActuelle.includes("championnats-europeens")) {
-
-    matchs = matchs.filter(function(match) {
-
-        return match.competition === "Jupiler Pro League";
-
-    });
-
-}
-
-            matchs.forEach(function(match) {
-
-                let equipe1 =
-                    match.equipe1.trim();
-
-                let equipe2 =
-                    match.equipe2.trim();
-
-
-                let logo1 =
-                    logosJupilerProLeague[equipe1];
-
-                let logo2 =
-                    logosJupilerProLeague[equipe2];
-
-
-                let urlMatch =
-                    equipe1 +
-                    " - " +
-                    equipe2;
-
-
-                zoneMatchs.innerHTML += `
-
-                <div class="carte">
-
-                    <h3>🏆 ${match.competition}</h3>
-
-                    <h2>
-
-                        ${
-                            logo1
-                            ?
-                            `<img
-                                src="${logo1}"
-                                width="50"
-                                style="vertical-align:middle;"
-                            >`
-                            :
-                            ""
-                        }
-
-                        ${equipe1}
-
-                        🆚
-
-                        ${equipe2}
-
-                        ${
-                            logo2
-                            ?
-                            `<img
-                                src="${logo2}"
-                                width="50"
-                                style="vertical-align:middle;"
-                            >`
-                            :
-                            ""
-                        }
-
-                    </h2>
-
-                    <p>📅 ${match.date}</p>
-
-                    <p>🕘 ${match.heure}</p>
-
-                    <a href="pronostic.html?match=${encodeURIComponent(urlMatch)}">
-
-                        <button>
-                            ⚽ Pronostiquer
-                        </button>
-
-                    </a>
-
-                </div>
-
-                `;
-
-            });
-
-        })
-
-        .catch(function(erreur) {
-
-            console.error(
-                "❌ Impossible de charger les matchs :",
-                erreur
-            );
-
-
-            zoneMatchs.innerHTML =
-                "<p>❌ Impossible de charger les matchs.</p>";
-
-        });
+    }
 
 }
