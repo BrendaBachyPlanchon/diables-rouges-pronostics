@@ -1,5 +1,6 @@
 // ==========================================
 // FERMETURE AUTOMATIQUE DES PRONOSTICS
+// VERSION SUPABASE
 // ==========================================
 
 function verifierOuverturePronostic() {
@@ -21,32 +22,59 @@ function verifierOuverturePronostic() {
 
 
     if (!matchChoisi) {
+
         bouton.disabled = true;
-        bouton.innerText = "⚽ Sélectionner un match";
+
+        bouton.innerText =
+            "⚽ Sélectionner un match";
+
         return;
     }
 
 
     // ==========================================
-    // CHARGER LES MATCHS DU SERVEUR
+    // VÉRIFIER QUE SUPABASE EST DISPONIBLE
     // ==========================================
 
-    fetch("matchs.json")
+    if (
+        typeof supabaseClient === "undefined"
+    ) {
 
-        .then(function(reponse) {
+        console.error(
+            "❌ Supabase n'est pas disponible"
+        );
 
-            if (!reponse.ok) {
-                throw new Error("Impossible de charger matchs.json");
+        return;
+    }
+
+
+    // ==========================================
+    // CHARGER LES MATCHS DEPUIS SUPABASE
+    // ==========================================
+
+    supabaseClient
+        .from("matchs")
+        .select("*")
+
+        .then(function(resultat) {
+
+            if (resultat.error) {
+
+                console.error(
+                    "❌ Erreur chargement matchs Supabase :",
+                    resultat.error
+                );
+
+                return;
             }
 
-            return reponse.json();
 
-        })
+            let matchs =
+                resultat.data || [];
 
-        .then(function(matchs) {
 
             console.log(
-                "✅ Vérification fermeture chargée :",
+                "✅ Vérification fermeture chargée depuis Supabase :",
                 matchs.length
             );
 
@@ -55,17 +83,21 @@ function verifierOuverturePronostic() {
             // TROUVER LE MATCH SÉLECTIONNÉ
             // ==========================================
 
-            let match = matchs.find(function(match) {
+            let match =
+                matchs.find(function(match) {
 
-                let nomMatch =
-                    match.equipe1.trim() +
-                    " - " +
-                    match.equipe2.trim();
+                    let nomMatch =
+                        String(match.equipe1).trim() +
+                        " - " +
+                        String(match.equipe2).trim();
 
-                return nomMatch.toLowerCase() ===
-                       matchChoisi.toLowerCase();
 
-            });
+                    return (
+                        nomMatch.toLowerCase() ===
+                        matchChoisi.toLowerCase()
+                    );
+
+                });
 
 
             if (!match) {
@@ -76,9 +108,12 @@ function verifierOuverturePronostic() {
                 );
 
                 return;
-
             }
 
+
+            // ==========================================
+            // INFORMATIONS DU MATCH
+            // ==========================================
 
             console.log(
                 "🔎 Vérification fermeture :",
@@ -95,7 +130,7 @@ function verifierOuverturePronostic() {
 
 
             // ==========================================
-            // VÉRIFIER LE STATUT
+            // MATCH TERMINÉ OU EN COURS
             // ==========================================
 
             if (
@@ -108,7 +143,8 @@ function verifierOuverturePronostic() {
                 bouton.innerText =
                     "🔒 Pronostics clôturés";
 
-                bouton.style.opacity = "0.6";
+                bouton.style.opacity =
+                    "0.6";
 
                 bouton.style.cursor =
                     "not-allowed";
@@ -123,12 +159,11 @@ function verifierOuverturePronostic() {
 
 
                 return;
-
             }
 
 
             // ==========================================
-            // VÉRIFIER LA DATE ET L'HEURE
+            // VÉRIFIER DATE ET HEURE
             // ==========================================
 
             let dateMatch =
@@ -143,14 +178,21 @@ function verifierOuverturePronostic() {
                 new Date().getTime();
 
 
-            if (dateMatch <= maintenant) {
+            // ==========================================
+            // DATE DÉPASSÉE
+            // ==========================================
+
+            if (
+                dateMatch <= maintenant
+            ) {
 
                 bouton.disabled = true;
 
                 bouton.innerText =
                     "🔒 Pronostics clôturés";
 
-                bouton.style.opacity = "0.6";
+                bouton.style.opacity =
+                    "0.6";
 
                 bouton.style.cursor =
                     "not-allowed";
@@ -165,7 +207,6 @@ function verifierOuverturePronostic() {
 
 
                 return;
-
             }
 
 
@@ -178,7 +219,8 @@ function verifierOuverturePronostic() {
             bouton.innerText =
                 "⚽ Envoyer mon pronostic";
 
-            bouton.style.opacity = "1";
+            bouton.style.opacity =
+                "1";
 
             bouton.style.cursor =
                 "pointer";
@@ -189,15 +231,6 @@ function verifierOuverturePronostic() {
                 match.equipe1,
                 "-",
                 match.equipe2
-            );
-
-        })
-
-        .catch(function(erreur) {
-
-            console.error(
-                "❌ Erreur vérification fermeture :",
-                erreur
             );
 
         });
@@ -224,7 +257,9 @@ window.addEventListener(
 // ==========================================
 
 let selectMatchFermeture =
-    document.getElementById("choix-match");
+    document.getElementById(
+        "choix-match"
+    );
 
 
 if (selectMatchFermeture) {
