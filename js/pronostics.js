@@ -37,25 +37,36 @@ if (boutonPronostic) {
                 }
 
 
-                // ==========================================
-                // CHARGER matchs.json
-                // ==========================================
+               // ==========================================
+// CHARGER LE MATCH DEPUIS SUPABASE
+// ==========================================
 
-                let reponse =
-                    await fetch("matchs.json");
+let resultatMatch =
+    await supabaseClient
+        .from("matchs")
+        .select("*");
 
+if (resultatMatch.error) {
 
-                if (!reponse.ok) {
+    console.error(
+        "❌ Erreur chargement du match depuis Supabase :",
+        resultatMatch.error
+    );
 
-                    throw new Error(
-                        "Erreur matchs.json"
-                    );
+    alert(
+        "❌ Impossible de vérifier le match."
+    );
 
-                }
+    return;
+}
 
+let matchsAdmin =
+    resultatMatch.data || [];
 
-                let matchsAdmin =
-                    await reponse.json();
+console.log(
+    "✅ Matchs pour vérification du pronostic depuis Supabase :",
+    matchsAdmin.length
+);
 
 
                 // ==========================================
