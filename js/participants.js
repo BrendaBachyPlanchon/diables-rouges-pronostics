@@ -127,29 +127,28 @@ function afficherParticipants() {
 
 
             // ==========================================
-            // CHARGER LES MATCHS
+            // CHARGER LES MATCHS DEPUIS SUPABASE
             // ==========================================
 
-            return fetch("matchs.json")
+            return supabaseClient
+                .from("matchs")
+                .select("*")
 
-                .then(function(reponse) {
+                .then(function(resultatMatchs) {
 
-                    if (!reponse.ok) {
+                    if (resultatMatchs.error) {
 
-                        throw new Error(
-                            "Erreur lors du chargement de matchs.json"
-                        );
+                        throw resultatMatchs.error;
 
                     }
 
-                    return reponse.json();
 
-                })
+                    let matchsAdmin =
+                        resultatMatchs.data || [];
 
-                .then(function(matchsAdmin) {
 
                     console.log(
-                        "✅ Matchs chargés pour les participants :",
+                        "✅ Matchs chargés pour les participants depuis Supabase :",
                         matchsAdmin.length
                     );
 
