@@ -480,80 +480,66 @@ function chargerPronosticsClassement() {
 }
 
 
-
 // ==========================================
-// CHARGER LES MATCHS DEPUIS matchs.json
+// CHARGER LES MATCHS DEPUIS SUPABASE
 // ==========================================
 
 function chargerMatchsClassement() {
 
+    supabaseClient
+        .from("matchs")
+        .select("*")
 
-    fetch("matchs.json")
+        .then(function(resultat) {
 
-        .then(function(reponse) {
+            if (resultat.error) {
 
-
-            if (!reponse.ok) {
-
-
-                throw new Error(
-                    "Erreur matchs.json"
+                console.error(
+                    "❌ Erreur chargement matchs Supabase :",
+                    resultat.error
                 );
 
+                return;
 
             }
 
-
-            return reponse.json();
-
-
-        })
-
-
-        .then(function(matchsAdmin) {
+            let matchsAdmin =
+                resultat.data || [];
 
 
             console.log(
-
-                "✅ Matchs chargés pour le classement :",
-
+                "✅ Matchs chargés pour le classement depuis Supabase :",
                 matchsAdmin.length
-
             );
 
 
+            // ==========================================
+            // CHARGER LES PRONOSTICS
+            // ==========================================
 
-           chargerPronosticsClassement()
-             .then(function(pronostics) {
+            chargerPronosticsClassement()
 
-            afficherClassement(
-               pronostics,
-               matchsAdmin
-            );
+                .then(function(pronostics) {
 
-        });
+                    afficherClassement(
+                        pronostics,
+                        matchsAdmin
+                    );
 
+                });
 
-    })
-
+        })
 
         .catch(function(erreur) {
 
-
             console.error(
-
                 "❌ Impossible de charger les données du classement :",
-
                 erreur
-
             );
-
 
         });
 
-
 }
-
 
 
 // ==========================================
