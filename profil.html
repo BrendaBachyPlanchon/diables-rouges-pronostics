@@ -39,6 +39,51 @@
 
 <h1>👤 Mon profil supporter 🇧🇪</h1>
 
+<!-- ==========================================
+     CONNEXION / INSCRIPTION SUPPORTER
+     ========================================== -->
+
+<div class="carte" id="zone-auth">
+
+    <h2>🔐 Connexion supporter</h2>
+
+    <p id="message-auth">
+        Connecte-toi ou crée ton compte pour participer aux pronostics.
+    </p>
+
+    <input
+        type="email"
+        id="email-supporter"
+        placeholder="📧 Ton adresse e-mail"
+        autocomplete="email"
+    >
+
+    <input
+        type="password"
+        id="motdepasse-supporter"
+        placeholder="🔑 Ton mot de passe"
+        autocomplete="current-password"
+    >
+
+    <br><br>
+
+    <button id="connexion-supporter">
+        🔐 Se connecter
+    </button>
+
+    <button id="inscription-supporter">
+        🆕 Créer mon compte
+    </button>
+
+    <button
+        id="deconnexion-supporter"
+        style="display:none;"
+    >
+        🚪 Se déconnecter
+    </button>
+
+</div>
+
 
 <div class="carte">
 
@@ -100,6 +145,7 @@
 <script src="supabase.js"></script>
 
 <script src="js/profil.js"></script>
+<script src="js/auth-supporter.js"></script>
 
 </body>
 
