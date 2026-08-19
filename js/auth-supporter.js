@@ -11,6 +11,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const motDePasseInput =
         document.getElementById("motdepasse-supporter");
 
+    const boutonVoirMotDePasse =
+        document.getElementById("voir-mot-de-passe");
+
     const boutonConnexion =
         document.getElementById("connexion-supporter");
 
@@ -40,6 +43,41 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
+     // ==========================================
+    // AFFICHER / MASQUER LE MOT DE PASSE
+    // ==========================================
+
+if (boutonVoirMotDePasse) {
+
+    boutonVoirMotDePasse.addEventListener(
+        "click",
+        function() {
+
+            if (
+                motDePasseInput.type ===
+                "password"
+            ) {
+
+                motDePasseInput.type =
+                    "text";
+
+                boutonVoirMotDePasse.innerText =
+                    "🙈";
+
+            } else {
+
+                motDePasseInput.type =
+                    "password";
+
+                boutonVoirMotDePasse.innerText =
+                    "👁️";
+
+            }
+
+        }
+    );
+
+}
 
     // ==========================================
     // AFFICHER L'ÉTAT DE CONNEXION
