@@ -84,23 +84,18 @@ function mettreAJourScoreSupabase(id, points) {
 // AFFICHER LE CLASSEMENT
 // ==========================================
 
-function afficherClassement(
-    pronostics,
-    matchsAdmin
-) {
+// ==========================================
+// AFFICHER LE CLASSEMENT PUBLIC
+// ==========================================
 
+function afficherClassement(classement) {
 
     let tableau =
         document.getElementById("classement");
 
-
     if (!tableau) {
-
         return;
-
     }
-
-
 
     // ==========================================
     // EN-TÊTE DU TABLEAU
@@ -111,338 +106,69 @@ function afficherClassement(
         "<tr>" +
 
         "<th>Position</th>" +
-
         "<th>Pseudo</th>" +
-
         "<th>Pronostics</th>" +
-
         "<th>Scores exacts</th>" +
-
         "<th>Points</th>" +
 
         "</tr>";
 
 
-
     // ==========================================
-    // RÉCUPÉRER LES JOUEURS
+    // AFFICHER LES SUPPORTERS
     // ==========================================
 
-    let joueurs = [];
+    classement.forEach(function(joueur, index) {
+
+        let classe =
+            index === 0
+                ? "premier"
+                : index === 1
+                    ? "deuxieme"
+                    : index === 2
+                        ? "troisieme"
+                        : "";
 
 
-    pronostics.forEach(function(p) {
+        let position =
+            index === 0
+                ? "🥇"
+                : index === 1
+                    ? "🥈"
+                    : index === 2
+                        ? "🥉"
+                        : index + 1;
 
 
-        if (!joueurs.includes(p.joueur)) {
+        tableau.innerHTML +=
 
-            joueurs.push(p.joueur);
+            "<tr class='" +
+            classe +
+            "'>" +
 
-        }
+            "<td>" +
+            position +
+            "</td>" +
 
+            "<td>" +
+            (joueur.pseudo || "Supporter") +
+            "</td>" +
+
+            "<td>" +
+            (joueur.pronostics || 0) +
+            "</td>" +
+
+            "<td>🎯 " +
+            (joueur.exacts || 0) +
+            "</td>" +
+
+            "<td>⭐ " +
+            (joueur.points || 0) +
+            " pts</td>" +
+
+            "</tr>";
 
     });
-
-
-
-    let classementJoueurs = [];
-
-
-
-    // ==========================================
-    // CALCUL POUR CHAQUE JOUEUR
-    // ==========================================
-
-    joueurs.forEach(function(joueur) {
-
-
-        let points = 0;
-
-        let nombrePronostics = 0;
-
-        let scoresExacts = 0;
-
-
-
-        pronostics.forEach(function(p) {
-
-
-            if (p.joueur !== joueur) {
-
-                return;
-
-            }
-
-
-
-            nombrePronostics++;
-
-
-
-            // ==========================================
-            // RÉCUPÉRER LE SCORE DU PRONOSTIC
-            // ==========================================
-
-           let scores =
-                 p.partition.split("-");
-
-
-            let pronostic1 =
-                 Number(scores[0]);
-
-
-            let pronostic2 =
-                 Number(scores[1]);
-
-
-
-            // ==========================================
-            // RECHERCHER LE MATCH
-            // ==========================================
-
-            let matchAdmin =
-                matchsAdmin.find(function(match) {
-
-
-                    let nomMatch =
-
-                        match.equipe1.trim() +
-                        " - " +
-                        match.equipe2.trim();
-
-
-                    return (
-
-                        nomMatch.toLowerCase() ===
-                        p.match.trim().toLowerCase()
-
-                    );
-
-
-                });
-
-
-
-            // Match introuvable
-            if (!matchAdmin) {
-
-
-                console.log(
-                    "⚠️ Match introuvable :",
-                    p.match
-                );
-
-
-                return;
-
-            }
-
-
-
-            // ==========================================
-            // MATCH TERMINÉ
-            // ==========================================
-
-            if (
-
-                matchAdmin.statut === "Terminé" &&
-
-                matchAdmin.score1 !== "" &&
-
-                matchAdmin.score2 !== ""
-
-            ) {
-
-
-                let resultat1 =
-                    Number(matchAdmin.score1);
-
-
-                let resultat2 =
-                    Number(matchAdmin.score2);
-
-
-
-               // ==========================================
-// CALCUL DES POINTS
-// ==========================================
-
-let pointsPronostic = calculerPoints(
-    pronostic1,
-    pronostic2,
-    resultat1,
-    resultat2
-);
-
-points += pointsPronostic;
-
-
-// ==========================================
-// METTRE À JOUR SUPABASE
-// ==========================================
-
-if (Number(p.score) !== pointsPronostic) {
-
-    mettreAJourScoreSupabase(
-        p.id,
-        pointsPronostic
-    );
-
-}
-
-
-// ==========================================
-// SCORE EXACT
-// ==========================================
-
-if (
-
-    pronostic1 === resultat1 &&
-
-    pronostic2 === resultat2
-
-) {
-
-    scoresExacts++;
-
-}
-
-
-            }
-
-
-        });
-
-
-
-        // ==========================================
-        // AJOUTER LE JOUEUR
-        // ==========================================
-
-        classementJoueurs.push({
-
-            nom:
-                joueur,
-
-            points:
-                points,
-
-            pronostics:
-                nombrePronostics,
-
-            exacts:
-                scoresExacts
-
-        });
-
-
-    });
-
-
-
-    // ==========================================
-    // TRI DU CLASSEMENT
-    // ==========================================
-
-    classementJoueurs.sort(function(a, b) {
-
-
-        // Plus de points
-        if (b.points !== a.points) {
-
-            return b.points - a.points;
-
-        }
-
-
-        // Plus de scores exacts
-        if (b.exacts !== a.exacts) {
-
-            return b.exacts - a.exacts;
-
-        }
-
-
-        // Plus de pronostics
-        return b.pronostics - a.pronostics;
-
-
-    });
-
-
-
-    // ==========================================
-    // AFFICHAGE
-    // ==========================================
-
-    classementJoueurs.forEach(
-        function(joueur, index) {
-
-
-            let classe =
-
-                index === 0
-                    ? "premier"
-                    : index === 1
-                        ? "deuxieme"
-                        : index === 2
-                            ? "troisieme"
-                            : "";
-
-
-
-            let position =
-
-                index === 0
-                    ? "🥇"
-                    : index === 1
-                        ? "🥈"
-                        : index === 2
-                            ? "🥉"
-                            : index + 1;
-
-
-
-            tableau.innerHTML +=
-
-
-                "<tr class='" +
-                classe +
-                "'>" +
-
-
-                "<td>" +
-                position +
-                "</td>" +
-
-
-                "<td>" +
-                joueur.nom +
-                "</td>" +
-
-
-                "<td>" +
-                joueur.pronostics +
-                "</td>" +
-
-
-                "<td>🎯 " +
-                joueur.exacts +
-                "</td>" +
-
-
-                "<td>⭐ " +
-                joueur.points +
-                " pts</td>" +
-
-
-                "</tr>";
-
-
-        }
-
-    );
-
 
 }
 
@@ -452,18 +178,17 @@ if (
 // CHARGER LES PRONOSTICS DEPUIS SUPABASE
 // ==========================================
 
-function chargerPronosticsClassement() {
+function chargerClassementSupabase() {
 
     return supabaseClient
-        .from("pronostics")
-        .select("*")
+        .rpc("classement_public")
 
         .then(function(resultat) {
 
             if (resultat.error) {
 
                 console.error(
-                    "❌ Erreur chargement pronostics Supabase :",
+                    "❌ Erreur chargement classement Supabase :",
                     resultat.error
                 );
 
@@ -471,69 +196,56 @@ function chargerPronosticsClassement() {
             }
 
             console.log(
-                "✅ Pronostics chargés depuis Supabase :",
+                "✅ Classement public chargé depuis Supabase :",
                 resultat.data.length
             );
 
-            return resultat.data;
+            return resultat.data || [];
+
         });
 }
 
-
 // ==========================================
-// CHARGER LES MATCHS DEPUIS SUPABASE
+// CHARGER LE CLASSEMENT DEPUIS SUPABASE
 // ==========================================
 
-function chargerMatchsClassement() {
+function chargerClassement() {
 
     supabaseClient
-        .from("matchs")
-        .select("*")
+        .rpc("classement_public")
 
         .then(function(resultat) {
 
             if (resultat.error) {
 
                 console.error(
-                    "❌ Erreur chargement matchs Supabase :",
+                    "❌ Erreur chargement classement Supabase :",
                     resultat.error
                 );
 
                 return;
-
             }
 
-            let matchsAdmin =
+            let classement =
                 resultat.data || [];
 
 
             console.log(
-                "✅ Matchs chargés pour le classement depuis Supabase :",
-                matchsAdmin.length
+                "✅ Classement public chargé depuis Supabase :",
+                classement.length
             );
 
 
-            // ==========================================
-            // CHARGER LES PRONOSTICS
-            // ==========================================
-
-            chargerPronosticsClassement()
-
-                .then(function(pronostics) {
-
-                    afficherClassement(
-                        pronostics,
-                        matchsAdmin
-                    );
-
-                });
+            afficherClassement(
+                classement
+            );
 
         })
 
         .catch(function(erreur) {
 
             console.error(
-                "❌ Impossible de charger les données du classement :",
+                "❌ Impossible de charger le classement :",
                 erreur
             );
 
@@ -546,4 +258,4 @@ function chargerMatchsClassement() {
 // DÉMARRAGE
 // ==========================================
 
-chargerMatchsClassement();
+chargerClassement();
