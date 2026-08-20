@@ -81,11 +81,7 @@ function mettreAJourScoreSupabase(id, points) {
 }
 
 // ==========================================
-// AFFICHER LE CLASSEMENT
-// ==========================================
-
-// ==========================================
-// AFFICHER LE CLASSEMENT PUBLIC
+// AFFICHER LE CLASSEMENT PUBLIC + PODIUM
 // ==========================================
 
 function afficherClassement(classement) {
@@ -93,12 +89,71 @@ function afficherClassement(classement) {
     let tableau =
         document.getElementById("classement");
 
+    let podium =
+        document.getElementById("podium-classement");
+
+
     if (!tableau) {
         return;
     }
 
+
     // ==========================================
-    // EN-TÊTE DU TABLEAU
+    // PODIUM DES 3 PREMIERS
+    // ==========================================
+
+    if (podium) {
+
+        podium.innerHTML = "";
+
+
+        classement.slice(0, 3).forEach(
+            function(joueur, index) {
+
+                let position =
+                    index === 0
+                        ? "🥇"
+                        : index === 1
+                            ? "🥈"
+                            : "🥉";
+
+
+                podium.innerHTML +=
+
+                    "<div class='bloc-podium'>" +
+
+                    "<div class='podium-position'>" +
+                    position +
+                    "</div>" +
+
+                    "<img src='images/avatars/" +
+                    (joueur.avatar || "avatar1.png") +
+                    "' " +
+                    "width='90' height='90' " +
+                    "style='border-radius:50%;'>" +
+
+                    "<h3>" +
+                    (joueur.pseudo || "Supporter") +
+                    "</h3>" +
+
+                    "<p>🎯 " +
+                    (joueur.exacts || 0) +
+                    " score(s) exact(s)</p>" +
+
+                    "<p>⭐ <strong>" +
+                    (joueur.points || 0) +
+                    " pts</strong></p>" +
+
+                    "</div>";
+
+            }
+        );
+
+    }
+
+
+    // ==========================================
+    // TABLEAU
     // ==========================================
 
     tableau.innerHTML =
@@ -150,9 +205,9 @@ function afficherClassement(classement) {
             position +
             "</td>" +
 
-           "<td>" +
+            "<td>" +
 
-           "<img src='images/avatars/" +
+            "<img src='images/avatars/" +
             (joueur.avatar || "avatar1.png") +
             "' " +
             "width='45' height='45' " +
