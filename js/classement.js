@@ -150,8 +150,16 @@ function afficherClassement(classement) {
             position +
             "</td>" +
 
-            "<td>" +
+           "<td>" +
+
+           "<img src='images/avatars/" +
+            (joueur.avatar || "avatar1.png") +
+            "' " +
+            "width='45' height='45' " +
+            "style='border-radius:50%; vertical-align:middle; margin-right:8px;'>" +
+
             (joueur.pseudo || "Supporter") +
+
             "</td>" +
 
             "<td>" +
