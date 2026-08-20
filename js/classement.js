@@ -169,69 +169,110 @@ function afficherClassement(classement) {
         "</tr>";
 
 
+   // ==========================================
+// AFFICHER LES SUPPORTERS
+// AVEC GESTION DES ÉGALITÉS
+// ==========================================
+
+let positionActuelle = 1;
+
+classement.forEach(function(joueur, index) {
+
+    // Vérifier si le joueur est égal au précédent
+    let memeClassement = false;
+
+    if (index > 0) {
+
+        let precedent = classement[index - 1];
+
+        memeClassement =
+            Number(joueur.points || 0) === Number(precedent.points || 0) &&
+            Number(joueur.exacts || 0) === Number(precedent.exacts || 0) &&
+            Number(joueur.pronostics || 0) === Number(precedent.pronostics || 0);
+
+    }
+
+
+    // Si ce n'est pas une égalité,
+    // la position correspond au rang réel
+    if (!memeClassement) {
+
+        positionActuelle = index + 1;
+
+    }
+
+
     // ==========================================
-    // AFFICHER LES SUPPORTERS
+    // CLASSE CSS
     // ==========================================
 
-    classement.forEach(function(joueur, index) {
+    let classe =
 
-        let classe =
-            index === 0
-                ? "premier"
-                : index === 1
-                    ? "deuxieme"
-                    : index === 2
-                        ? "troisieme"
-                        : "";
-
-
-        let position =
-            index === 0
-                ? "🥇"
-                : index === 1
-                    ? "🥈"
-                    : index === 2
-                        ? "🥉"
-                        : index + 1;
+        positionActuelle === 1
+            ? "premier"
+            : positionActuelle === 2
+                ? "deuxieme"
+                : positionActuelle === 3
+                    ? "troisieme"
+                    : "";
 
 
-        tableau.innerHTML +=
+    // ==========================================
+    // POSITION AFFICHÉE
+    // ==========================================
 
-            "<tr class='" +
-            classe +
-            "'>" +
+    let position =
 
-            "<td>" +
-            position +
-            "</td>" +
+        positionActuelle === 1
+            ? "🥇"
+            : positionActuelle === 2
+                ? "🥈"
+                : positionActuelle === 3
+                    ? "🥉"
+                    : positionActuelle;
 
-            "<td>" +
 
-            "<img src='images/avatars/" +
-            (joueur.avatar || "avatar1.png") +
-            "' " +
-            "width='45' height='45' " +
-            "style='border-radius:50%; vertical-align:middle; margin-right:8px;'>" +
+    // ==========================================
+    // AFFICHAGE
+    // ==========================================
 
-            (joueur.pseudo || "Supporter") +
+    tableau.innerHTML +=
 
-            "</td>" +
+        "<tr class='" +
+        classe +
+        "'>" +
 
-            "<td>" +
-            (joueur.pronostics || 0) +
-            "</td>" +
+        "<td>" +
+        position +
+        "</td>" +
 
-            "<td>🎯 " +
-            (joueur.exacts || 0) +
-            "</td>" +
+        "<td>" +
 
-            "<td>⭐ " +
-            (joueur.points || 0) +
-            " pts</td>" +
+        "<img src='images/avatars/" +
+        (joueur.avatar || "avatar1.png") +
+        "' " +
+        "width='45' height='45' " +
+        "style='border-radius:50%; vertical-align:middle; margin-right:8px;'>" +
 
-            "</tr>";
+        (joueur.pseudo || "Supporter") +
 
-    });
+        "</td>" +
+
+        "<td>" +
+        (joueur.pronostics || 0) +
+        "</td>" +
+
+        "<td>🎯 " +
+        (joueur.exacts || 0) +
+        "</td>" +
+
+        "<td>⭐ " +
+        (joueur.points || 0) +
+        " pts</td>" +
+
+        "</tr>";
+
+});
 
 }
 
