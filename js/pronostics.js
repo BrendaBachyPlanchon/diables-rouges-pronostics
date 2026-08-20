@@ -629,19 +629,6 @@ else if (
 }
 
 // ==========================================
-// EURO
-// ==========================================
-
-else if (
-    pageActuelle.includes("euro")
-) {
-
-    competitionPage =
-        "Euro";
-
-}
-
-// ==========================================
 // LIGUE DES CHAMPIONS
 // ==========================================
 
@@ -664,6 +651,19 @@ else if (
 
     competitionPage =
         "Europa League";
+
+}
+
+// ==========================================
+// EURO
+// ==========================================
+
+else if (
+    pageActuelle.includes("euro")
+) {
+
+    competitionPage =
+        "Euro";
 
 }
 
