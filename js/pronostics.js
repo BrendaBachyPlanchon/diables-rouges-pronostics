@@ -655,6 +655,19 @@ else if (
 }
 
 // ==========================================
+// CONFERENCE LEAGUE
+// ==========================================
+
+else if (
+    pageActuelle.includes("conference-league")
+) {
+
+    competitionPage =
+        "Conference League";
+
+}
+
+// ==========================================
 // EURO
 // ==========================================
 
