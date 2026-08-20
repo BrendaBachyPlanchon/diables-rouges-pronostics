@@ -641,6 +641,19 @@ else if (
 
 }
 
+// ==========================================
+// LIGUE DES CHAMPIONS
+// ==========================================
+
+else if (
+    pageActuelle.includes("ligue-des-champions")
+) {
+
+    competitionPage =
+        "Ligue des Champions";
+
+}
+
 
 console.log(
     "🏆 Compétition de la page :",
