@@ -551,6 +551,7 @@ console.log(
 
 // ==========================================
 // AFFICHER LES PRONOSTICS
+// FILTRÉS PAR COMPÉTITION
 // ==========================================
 
 function afficherPronostics() {
@@ -560,14 +561,11 @@ function afficherPronostics() {
             "table-pronostics"
         );
 
-
     if (!table) {
         return;
     }
 
-
     table.innerHTML =
-
         "<tr>" +
         "<th>👤 Joueur</th>" +
         "<th>⚽ Match</th>" +
@@ -576,7 +574,44 @@ function afficherPronostics() {
 
 
     // ==========================================
-    // CHARGER LES PRONOSTICS DEPUIS SUPABASE
+    // DÉTECTER LA COMPÉTITION DE LA PAGE
+    // ==========================================
+
+    let pageActuelle =
+        window.location.pathname.toLowerCase();
+
+    let competitionPage = null;
+
+
+    if (
+        pageActuelle.includes("nations-league")
+    ) {
+
+        competitionPage =
+            "Ligue des Nations";
+
+    }
+
+    else if (
+        pageActuelle.includes(
+            "championnats-europeens"
+        )
+    ) {
+
+        competitionPage =
+            "Jupiler Pro League";
+
+    }
+
+
+    console.log(
+        "🏆 Compétition de la page :",
+        competitionPage || "Toutes"
+    );
+
+
+    // ==========================================
+    // CHARGER LES PRONOSTICS
     // ==========================================
 
     supabaseClient
@@ -589,13 +624,13 @@ function afficherPronostics() {
             }
         )
 
-        .then(function(resultat) {
+        .then(function(resultatPronostics) {
 
-            if (resultat.error) {
+            if (resultatPronostics.error) {
 
                 console.error(
                     "❌ Erreur chargement des pronostics :",
-                    resultat.error
+                    resultatPronostics.error
                 );
 
                 return;
@@ -604,7 +639,7 @@ function afficherPronostics() {
 
 
             let pronostics =
-                resultat.data || [];
+                resultatPronostics.data || [];
 
 
             console.log(
@@ -613,30 +648,162 @@ function afficherPronostics() {
             );
 
 
-            pronostics.forEach(
-                function(p) {
+            // ==========================================
+            // CHARGER LES MATCHS
+            // ==========================================
 
-                    table.innerHTML +=
+            return supabaseClient
+                .from("matchs")
+                .select("*")
 
-                        "<tr>" +
+                .then(function(resultatMatchs) {
 
-                        "<td>" +
-                        (p.joueur || "") +
-                        "</td>" +
+                    if (resultatMatchs.error) {
 
-                        "<td>" +
-                        (p.match || "") +
-                        "</td>" +
+                        console.error(
+                            "❌ Erreur chargement des matchs :",
+                            resultatMatchs.error
+                        );
 
-                        "<td>" +
-                        "🎯 " +
-                        (p.partition || "-") +
-                        "</td>" +
+                        return;
 
-                        "</tr>";
+                    }
 
-                }
-            );
+
+                    let matchs =
+                        resultatMatchs.data || [];
+
+
+                    // ==========================================
+                    // FILTRER LES PRONOSTICS
+                    // ==========================================
+
+                    let pronosticsFiltres =
+                        pronostics.filter(function(p) {
+
+                            // Hors page compétition :
+                            // afficher tous les pronostics
+
+                            if (!competitionPage) {
+
+                                return true;
+
+                            }
+
+
+                            // Rechercher le match
+
+                            let matchCorrespondant =
+                                matchs.find(function(match) {
+
+                                    let nomMatch =
+                                        (
+                                            match.equipe1 +
+                                            " - " +
+                                            match.equipe2
+                                        )
+                                        .trim()
+                                        .toLowerCase();
+
+                                    return (
+                                        nomMatch ===
+                                        (
+                                            p.match || ""
+                                        )
+                                        .trim()
+                                        .toLowerCase()
+                                    );
+
+                                });
+
+
+                            // Match introuvable
+
+                            if (!matchCorrespondant) {
+
+                                console.warn(
+                                    "⚠️ Match introuvable :",
+                                    p.match
+                                );
+
+                                return false;
+
+                            }
+
+
+                            // Vérifier la compétition
+
+                            return (
+                                matchCorrespondant.competition ===
+                                competitionPage
+                            );
+
+                        });
+
+
+                    console.log(
+                        "📋 Pronostics affichés pour",
+                        competitionPage || "toutes les compétitions",
+                        ":",
+                        pronosticsFiltres.length
+                    );
+
+
+                    // ==========================================
+                    // AFFICHER
+                    // ==========================================
+
+                    pronosticsFiltres.forEach(
+                        function(p) {
+
+                            table.innerHTML +=
+
+                                "<tr>" +
+
+                                "<td>" +
+                                (p.joueur || "") +
+                                "</td>" +
+
+                                "<td>" +
+                                (p.match || "") +
+                                "</td>" +
+
+                                "<td>" +
+                                "🎯 " +
+                                (p.partition || "-") +
+                                "</td>" +
+
+                                "</tr>";
+
+                        }
+                    );
+
+
+                    // ==========================================
+                    // AUCUN PRONOSTIC
+                    // ==========================================
+
+                    if (
+                        pronosticsFiltres.length === 0
+                    ) {
+
+                        table.innerHTML +=
+
+                            "<tr>" +
+
+                            "<td colspan='3'>" +
+
+                            "ℹ️ Aucun pronostic enregistré pour cette compétition."
+
+                            +
+
+                            "</td>" +
+
+                            "</tr>";
+
+                    }
+
+                });
 
         })
 
