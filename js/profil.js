@@ -75,7 +75,7 @@ async function afficherProfil() {
         .from("pronostics")
         .select("*")
 
-        .then(function(resultat) {
+       .then(async function(resultat) {
 
             if (resultat.error) {
 
