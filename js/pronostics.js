@@ -573,42 +573,66 @@ function afficherPronostics() {
         "</tr>";
 
 
-    // ==========================================
-    // DÉTECTER LA COMPÉTITION DE LA PAGE
-    // ==========================================
+   // ==========================================
+   // DÉTECTER LA COMPÉTITION DE LA PAGE
+   // ==========================================
 
-    let pageActuelle =
-        window.location.pathname.toLowerCase();
+let pageActuelle =
+    window.location.pathname.toLowerCase();
 
-    let competitionPage = null;
-
-
-    if (
-        pageActuelle.includes("nations-league")
-    ) {
-
-        competitionPage =
-            "Ligue des Nations";
-
-    }
-
-    else if (
-        pageActuelle.includes(
-            "championnats-europeens"
-        )
-    ) {
-
-        competitionPage =
-            "Jupiler Pro League";
-
-    }
+let competitionPage = null;
 
 
-    console.log(
-        "🏆 Compétition de la page :",
-        competitionPage || "Toutes"
-    );
+// ==========================================
+// LIGUE DES NATIONS
+// ==========================================
 
+if (
+    pageActuelle.includes("nations-league")
+) {
+
+    competitionPage =
+        "Ligue des Nations";
+
+}
+
+
+// ==========================================
+// JUPILER PRO LEAGUE
+// ==========================================
+
+else if (
+    pageActuelle.includes(
+        "championnats-europeens"
+    )
+) {
+
+    competitionPage =
+        "Jupiler Pro League";
+
+}
+
+
+// ==========================================
+// COUPE DU MONDE 2030
+// ==========================================
+
+else if (
+    pageActuelle.includes(
+        "coupe-du-monde-2030"
+    )
+) {
+
+    competitionPage =
+        "Coupe du Monde 2030";
+
+}
+
+
+console.log(
+    "🏆 Compétition de la page :",
+    competitionPage || "Toutes"
+);
 
     // ==========================================
     // CHARGER LES PRONOSTICS
