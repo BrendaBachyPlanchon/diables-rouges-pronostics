@@ -654,6 +654,19 @@ else if (
 
 }
 
+// ==========================================
+// EUROPA LEAGUE
+// ==========================================
+
+else if (
+    pageActuelle.includes("europa-league")
+) {
+
+    competitionPage =
+        "Europa League";
+
+}
+
 
 console.log(
     "🏆 Compétition de la page :",
