@@ -162,102 +162,75 @@ async function afficherProfil() {
 
 
             // ==========================================
-            // CONSTRUIRE LE CLASSEMENT
-            // ==========================================
+// RÉCUPÉRER MA POSITION DEPUIS LE CLASSEMENT PUBLIC
+// ==========================================
 
-            let joueurs = [];
+let position = "À venir";
 
+try {
 
-            pronostics.forEach(function(p) {
+    const resultatClassement =
+        await supabaseClient
+            .rpc("classement_public");
 
-                if (
-                    p.joueur &&
-                    !joueurs.includes(p.joueur)
-                ) {
+    if (resultatClassement.error) {
 
-                    joueurs.push(p.joueur);
+        console.error(
+            "❌ Erreur récupération classement du profil :",
+            resultatClassement.error
+        );
 
-                }
+    } else {
 
-            });
-
-
-            let classementJoueurs = [];
-
-
-            joueurs.forEach(function(joueur) {
-
-                let totalPoints = 0;
+        const classement =
+            resultatClassement.data || [];
 
 
-                pronostics.forEach(function(p) {
+        // ==========================================
+        // RECHERCHER LE SUPPORTER CONNECTÉ
+        // ==========================================
 
-                    if (p.joueur === joueur) {
+        let maPosition =
+            classement.findIndex(function(joueur) {
 
-                        let score =
-                            Number(p.score);
-
-                        if (Number.isNaN(score)) {
-                            score = 0;
-                        }
-
-                        totalPoints += score;
-
-                    }
-
-                });
-
-
-                classementJoueurs.push({
-
-                    nom: joueur,
-
-                    points: totalPoints
-
-                });
-
-            });
-
-
-            // ==========================================
-            // TRI DU CLASSEMENT
-            // ==========================================
-
-            classementJoueurs.sort(
-                function(a, b) {
-
-                    return b.points - a.points;
-
-                }
-            );
-
-
-            // ==========================================
-            // POSITION
-            // ==========================================
-
-            let position = "À venir";
-
-
-            let maPosition =
-                classementJoueurs.findIndex(
-                    function(joueur) {
-
-                        return (
-                            joueur.nom.toLowerCase() ===
-                            pseudo.toLowerCase()
-                        );
-
-                    }
+                return (
+                    joueur.pseudo &&
+                    joueur.pseudo.toLowerCase() ===
+                    pseudo.toLowerCase()
                 );
 
+            });
 
-            if (maPosition !== -1) {
 
-                position =
-                    (maPosition + 1) + "e";
+        // ==========================================
+        // AFFICHER LA POSITION
+        // ==========================================
 
-            }
+        if (maPosition !== -1) {
+
+            position =
+                (maPosition + 1) +
+                "e sur " +
+                classement.length;
+
+        }
+
+
+        console.log(
+            "🏆 Position du supporter :",
+            position
+        );
+
+    }
+
+} catch (erreurClassement) {
+
+    console.error(
+        "❌ Impossible de récupérer la position :",
+        erreurClassement
+    );
+
+}
 
 
             // ==========================================
