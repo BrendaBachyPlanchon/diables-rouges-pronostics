@@ -628,6 +628,19 @@ else if (
 
 }
 
+// ==========================================
+// EURO
+// ==========================================
+
+else if (
+    pageActuelle.includes("euro")
+) {
+
+    competitionPage =
+        "Euro";
+
+}
+
 
 console.log(
     "🏆 Compétition de la page :",
