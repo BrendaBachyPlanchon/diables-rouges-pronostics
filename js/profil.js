@@ -161,73 +161,51 @@ async function afficherProfil() {
             });
 
 
-            // ==========================================
-// RÉCUPÉRER MA POSITION DEPUIS LE CLASSEMENT PUBLIC
+           // ==========================================
+// POSITION DU SUPPORTER
 // ==========================================
 
 let position = "À venir";
 
-try {
+const resultatClassement =
+    await supabaseClient
+        .rpc("classement_public");
 
-    const resultatClassement =
-        await supabaseClient
-            .rpc("classement_public");
+if (resultatClassement.error) {
 
-    if (resultatClassement.error) {
+    console.error(
+        "❌ Erreur récupération classement du profil :",
+        resultatClassement.error
+    );
 
-        console.error(
-            "❌ Erreur récupération classement du profil :",
-            resultatClassement.error
-        );
+} else {
 
-    } else {
+    const classement =
+        resultatClassement.data || [];
 
-        const classement =
-            resultatClassement.data || [];
+    let maPosition =
+        classement.findIndex(function(joueur) {
 
+            return (
+                joueur.pseudo &&
+                joueur.pseudo.toLowerCase() ===
+                pseudo.toLowerCase()
+            );
 
-        // ==========================================
-        // RECHERCHER LE SUPPORTER CONNECTÉ
-        // ==========================================
+        });
 
-        let maPosition =
-            classement.findIndex(function(joueur) {
+    if (maPosition !== -1) {
 
-                return (
-                    joueur.pseudo &&
-                    joueur.pseudo.toLowerCase() ===
-                    pseudo.toLowerCase()
-                );
-
-            });
-
-
-        // ==========================================
-        // AFFICHER LA POSITION
-        // ==========================================
-
-        if (maPosition !== -1) {
-
-            position =
-                (maPosition + 1) +
-                "e sur " +
-                classement.length;
-
-        }
-
-
-        console.log(
-            "🏆 Position du supporter :",
-            position
-        );
+        position =
+            (maPosition + 1) +
+            "e sur " +
+            classement.length;
 
     }
 
-} catch (erreurClassement) {
-
-    console.error(
-        "❌ Impossible de récupérer la position :",
-        erreurClassement
+    console.log(
+        "🏆 Position du supporter :",
+        position
     );
 
 }
