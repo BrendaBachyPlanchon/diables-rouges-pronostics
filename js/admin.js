@@ -395,6 +395,113 @@ if (bouton) {
                 "✅ Match modifié directement dans Supabase"
             );
 
+            // ==========================================
+            // CALCULER LES POINTS DES PRONOSTICS
+           // ==========================================
+
+if (
+    nouveauMatch.statut === "Terminé" &&
+    nouveauMatch.score1 !== null &&
+    nouveauMatch.score2 !== null
+) {
+
+    const nomMatch =
+        nouveauMatch.equipe1.trim() +
+        " - " +
+        nouveauMatch.equipe2.trim();
+
+    console.log(
+        "🎯 Calcul des points pour :",
+        nomMatch
+    );
+
+    return supabaseClient
+        .from("pronostics")
+        .select("id, partition")
+        .eq("match", nomMatch)
+
+        .then(function(resultatPronostics) {
+
+            if (resultatPronostics.error) {
+
+                console.error(
+                    "❌ Erreur récupération pronostics :",
+                    resultatPronostics.error
+                );
+
+                throw resultatPronostics.error;
+
+            }
+
+            let pronostics =
+                resultatPronostics.data || [];
+
+            console.log(
+                "🎯 Pronostics trouvés :",
+                pronostics.length
+            );
+
+
+            let misesAJour = pronostics.map(function(p) {
+
+                if (!p.partition) {
+                    return null;
+                }
+
+                let scores =
+                    p.partition.split("-");
+
+                if (scores.length !== 2) {
+                    return null;
+                }
+
+                let pronostic1 =
+                    Number(scores[0]);
+
+                let pronostic2 =
+                    Number(scores[1]);
+
+                let points =
+                    calculerPoints(
+                        pronostic1,
+                        pronostic2,
+                        Number(nouveauMatch.score1),
+                        Number(nouveauMatch.score2)
+                    );
+
+                return supabaseClient
+                    .from("pronostics")
+                    .update({
+                        score: points
+                    })
+                    .eq("id", p.id);
+
+            }).filter(Boolean);
+
+
+            return Promise.all(misesAJour);
+
+        })
+
+        .then(function() {
+
+            console.log(
+                "✅ Points des pronostics mis à jour"
+            );
+
+            localStorage.removeItem(
+                "matchModification"
+            );
+
+            return {
+                success: true,
+                message: "Match modifié et points calculés"
+            };
+
+        });
+
+}
+
             localStorage.removeItem("matchModification");
 
             return {
