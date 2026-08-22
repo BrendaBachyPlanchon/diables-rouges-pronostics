@@ -23,3 +23,38 @@ boutonCommentaire.addEventListener("click", function() {
     console.log("📝 Commentaire saisi :", texte);
 
 });
+
+async function verifierSupporterConnecte() {
+
+    const {
+        data: { user },
+        error
+    } = await supabaseClient.auth.getUser();
+
+    if (error) {
+
+        console.error(
+            "❌ Erreur récupération utilisateur :",
+            error
+        );
+
+        return;
+    }
+
+    if (!user) {
+
+        console.log(
+            "ℹ️ Aucun supporter connecté."
+        );
+
+        return;
+    }
+
+    console.log(
+        "🆔 Supporter connecté :",
+        user.id
+    );
+
+}
+
+verifierSupporterConnecte();
