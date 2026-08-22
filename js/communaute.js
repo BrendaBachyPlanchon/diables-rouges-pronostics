@@ -197,7 +197,7 @@ new Date(commentaire.created_at).toLocaleString("fr-BE") +
 
 chargerCommentaires();
 
-document.addEventListener("click", function(e) {
+document.addEventListener("click", async function(e) {
 
     if (
         e.target.classList.contains(
@@ -205,10 +205,40 @@ document.addEventListener("click", function(e) {
         )
     ) {
 
+        const commentaireId =
+            e.target.dataset.id;
+
+        const confirmation =
+            confirm(
+                "🗑️ Veux-tu vraiment supprimer ce commentaire ?"
+            );
+
+        if (!confirmation) {
+
+            return;
+        }
+
+        const resultat =
+            await supabaseClient
+                .from("commentaires")
+                .delete()
+                .eq("id", commentaireId);
+
+        if (resultat.error) {
+
+            console.error(
+                "❌ Erreur suppression commentaire :",
+                resultat.error
+            );
+
+            return;
+        }
+
         console.log(
-            "🗑️ Bouton supprimer cliqué :",
-            e.target.dataset.id
+            "✅ Commentaire supprimé !"
         );
+
+        chargerCommentaires();
 
     }
 
