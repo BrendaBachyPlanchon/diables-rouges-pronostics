@@ -15,3 +15,9 @@ let messageCommentaire =
 console.log("📝 Zone commentaire :", zoneEcriture);
 console.log("✏️ Champ commentaire :", champCommentaire);
 console.log("🔘 Bouton commentaire :", boutonCommentaire);
+
+boutonCommentaire.addEventListener("click", function() {
+
+    console.log("🖱️ Bouton commentaire cliqué");
+
+});
