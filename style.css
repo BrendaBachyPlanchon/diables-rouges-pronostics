@@ -792,18 +792,29 @@ nav a:hover {
 }
 
 
-/* =========================================================
-   ACTUALITES - STYLE JOURNAL
-   ========================================================= */
+/* ==========================================
+   ACTUALITÉS BELGIQUE - JOURNAL
+========================================== */
 
-.actualites {
-    overflow: hidden;
+.carte-journal {
+    background: transparent;
+    border: 2px solid #222;
+    border-top: 6px solid #e30613;
+    color: #111;
+}
+
+.carte-journal h2 {
+    color: #111;
+    text-align: center;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 30px;
+    border-bottom: 2px solid #222;
+    padding-bottom: 12px;
 }
 
 .carte-journal .actu {
     width: 90%;
     max-width: 750px;
-
     margin: 20px auto;
     padding: 20px;
 
@@ -819,11 +830,12 @@ nav a:hover {
 
 .carte-journal .actu h3 {
     color: #e30613;
+    font-family: Georgia, "Times New Roman", serif;
     font-size: 23px;
 }
 
 .carte-journal .actu p {
-    color: #222222;
+    color: #111111;
 }
 
 .carte-journal .actu a {
@@ -836,15 +848,15 @@ nav a:hover {
     border: 2px solid #ffcc00;
     border-radius: 10px;
 
-    color: white;
+    color: #111111;
     font-weight: bold;
 
-    transition: 0.3s ease;
+    text-decoration: none;
 }
 
 .carte-journal .actu a:hover {
     background: #ffcc00;
-    color: black;
+    color: #111111;
 }
 
 /* =========================================================
@@ -1816,23 +1828,3 @@ td button {
     font-weight: bold;
 }
 
-/* ==========================================
-   LISIBILITÉ DES ACTUALITÉS
-========================================== */
-
-.carte-journal .actu h3 {
-    color: #e30613;
-}
-
-.carte-journal .actu p {
-    color: #222;
-}
-
-.carte-journal .actu a {
-    color: #e30613;
-    text-decoration: none;
-}
-
-.carte-journal .actu a:hover {
-    color: #111;
-}
