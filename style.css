@@ -1698,12 +1698,12 @@ td button {
 
 .carte-compte-rebours {
     width: 90%;
-    max-width: 900px;
+    max-width: 1000px;
     margin: 30px auto;
     padding: 30px;
     box-sizing: border-box;
 
-    background-image:
+    background:
         linear-gradient(
             rgba(0, 0, 0, 0.55),
             rgba(0, 0, 0, 0.55)
@@ -1714,6 +1714,6 @@ td button {
     background-position: center;
     background-repeat: no-repeat;
 
-    border-radius: 15px;
+    border-radius: 22px;
     overflow: hidden;
 }
