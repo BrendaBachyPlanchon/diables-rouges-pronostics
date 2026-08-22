@@ -150,6 +150,15 @@ if (!zoneCommentaires) {
 
 zoneCommentaires.innerHTML = "";
 
+const {
+    data: { user }
+} = await supabaseClient.auth.getUser();
+
+console.log(
+    "🆔 Utilisateur connecté pour modération :",
+    user ? user.id : "aucun"
+);
+
 resultat.data.forEach(function(commentaire) {
 
     zoneCommentaires.innerHTML +=
