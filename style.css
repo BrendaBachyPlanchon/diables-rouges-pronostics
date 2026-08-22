@@ -2104,3 +2104,85 @@ td button {
     font-size: 24px;
 }
 
+/* ==========================================
+   CLASSEMENTS DES COMPÉTITIONS
+========================================== */
+
+#zone-classements table {
+    width: 100%;
+    max-width: 1000px;
+
+    margin: 25px auto;
+
+    border-collapse: separate;
+    border-spacing: 0;
+
+    background: #181818;
+
+    border: 2px solid #ffcc00;
+    border-radius: 15px;
+
+    overflow: hidden;
+
+    color: white;
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+#zone-classements th {
+    background: #e30613;
+    color: #ffcc00;
+
+    padding: 12px 8px;
+
+    font-size: 15px;
+
+    border-bottom: 2px solid #ffcc00;
+}
+
+#zone-classements td {
+    padding: 10px 8px;
+
+    text-align: center;
+
+    border-bottom: 1px solid #444;
+
+    color: white;
+}
+
+#zone-classements tr:last-child td {
+    border-bottom: none;
+}
+
+#zone-classements tr:hover td {
+    background: #292929;
+}
+
+/* 🥇 1er */
+
+#zone-classements tr:nth-child(2) td {
+    background: rgba(255, 204, 0, 0.15);
+}
+
+/* 🥈 2e */
+
+#zone-classements tr:nth-child(3) td {
+    background: rgba(192, 192, 192, 0.12);
+}
+
+/* 🥉 3e */
+
+#zone-classements tr:nth-child(4) td {
+    background: rgba(205, 127, 50, 0.12);
+}
+
+/* Logos des équipes */
+
+#zone-classements td img {
+    width: 35px;
+    height: 35px;
+
+    object-fit: contain;
+}
+
