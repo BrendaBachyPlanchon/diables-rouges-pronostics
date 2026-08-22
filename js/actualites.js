@@ -40,9 +40,112 @@ async function chargerActualites() {
         );
 
 
+        // ==========================================
+        // ZONES D'AFFICHAGE
+        // ==========================================
+
+        const zoneDiables =
+            document.getElementById(
+                "actualites-diables"
+            );
+
+
+        const zoneRedFlames =
+            document.getElementById(
+                "actualites-red-flames"
+            );
+
+
+        const zoneJeunes =
+            document.getElementById(
+                "actualites-jeunes"
+            );
+
+
+        // ==========================================
+        // AFFICHER LES ACTUALITÉS
+        // ==========================================
+
+        actualites.forEach(function(actualite) {
+
+            let carte =
+                document.createElement("div");
+
+            carte.className =
+                "carte actualite";
+
+
+            carte.innerHTML =
+
+                "<h3>" +
+                (
+                    actualite.titre ||
+                    ""
+                ) +
+                "</h3>" +
+
+                "<p>" +
+                (
+                    actualite.contenu ||
+                    ""
+                ) +
+                "</p>";
+
+
+            // ==========================================
+            // CHOISIR LA BONNE CATÉGORIE
+            // ==========================================
+
+            if (
+                actualite.categorie ===
+                "Diables Rouges"
+            ) {
+
+                if (zoneDiables) {
+
+                    zoneDiables.appendChild(
+                        carte
+                    );
+
+                }
+
+            }
+
+            else if (
+                actualite.categorie ===
+                "Red Flames"
+            ) {
+
+                if (zoneRedFlames) {
+
+                    zoneRedFlames.appendChild(
+                        carte
+                    );
+
+                }
+
+            }
+
+            else if (
+                actualite.categorie ===
+                "Équipes nationales jeunes"
+            ) {
+
+                if (zoneJeunes) {
+
+                    zoneJeunes.appendChild(
+                        carte
+                    );
+
+                }
+
+            }
+
+        });
+
+
         console.log(
-            "📰 Actualités :",
-            actualites
+            "✅ Actualités affichées sur la page"
         );
 
     }
