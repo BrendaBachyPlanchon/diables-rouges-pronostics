@@ -1,50 +1,6 @@
 console.log("✅ Participants chargé");
 
 // ==========================================
-// CALCUL DES POINTS
-// ==========================================
-
-function calculerPoints(
-    pronosticEquipe1,
-    pronosticEquipe2,
-    resultatEquipe1,
-    resultatEquipe2
-) {
-
-    // Score exact
-    if (
-        pronosticEquipe1 == resultatEquipe1 &&
-        pronosticEquipe2 == resultatEquipe2
-    ) {
-        return 3;
-    }
-
-    // Résultat du pronostic
-    let pronosticGagnant =
-        pronosticEquipe1 > pronosticEquipe2
-            ? "Equipe1"
-            : pronosticEquipe1 < pronosticEquipe2
-                ? "Equipe2"
-                : "Nul";
-
-    // Résultat réel
-    let resultatGagnant =
-        resultatEquipe1 > resultatEquipe2
-            ? "Equipe1"
-            : resultatEquipe1 < resultatEquipe2
-                ? "Equipe2"
-                : "Nul";
-
-    // Bon résultat
-    if (pronosticGagnant === resultatGagnant) {
-        return 1;
-    }
-
-    return 0;
-}
-
-
-// ==========================================
 // AFFICHER LES PARTICIPANTS
 // ==========================================
 
