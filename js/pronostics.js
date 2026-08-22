@@ -132,30 +132,6 @@ console.log(
 
 
                 // ==========================================
-                // RÉCUPÉRER LE PSEUDO
-                // ==========================================
-
-                let champPseudo =
-                    document.getElementById(
-                        "pseudo-supporter"
-                    );
-
-
-                let pseudo =
-                    champPseudo.value.trim();
-
-
-                if (!pseudo) {
-
-                    alert(
-                        "⚠️ Veuillez indiquer ton prénom ou pseudo."
-                    );
-
-                    return;
-
-                }
-
-                // ==========================================
                 // RÉCUPÉRER LES SCORES
                 // ==========================================
 
@@ -283,6 +259,18 @@ pseudo =
     rechercheSupporter
         .data
         .pseudo;
+
+let champPseudo =
+    document.getElementById(
+        "pseudo-supporter"
+    );
+
+if (champPseudo) {
+
+    champPseudo.value =
+        pseudo;
+
+}
 
 
 localStorage.setItem(
