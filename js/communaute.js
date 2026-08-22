@@ -120,3 +120,32 @@ async function verifierSupporterConnecte() {
 }
 
 verifierSupporterConnecte();
+
+async function chargerCommentaires() {
+
+    const resultat =
+        await supabaseClient
+            .from("commentaires")
+            .select("*")
+            .order("created_at", {
+                ascending: false
+            });
+
+    if (resultat.error) {
+
+        console.error(
+            "❌ Erreur chargement commentaires :",
+            resultat.error
+        );
+
+        return;
+    }
+
+    console.log(
+        "💬 Commentaires chargés depuis Supabase :",
+        resultat.data
+    );
+
+}
+
+chargerCommentaires();
