@@ -1691,3 +1691,20 @@ td button {
     display: block;
     border-radius: 15px;
 }
+
+/* ==========================================
+   ARRIÈRE-PLAN COMPTE À REBOURS
+========================================== */
+
+.carte-compte-rebours {
+    background-image:
+        linear-gradient(
+            rgba(0, 0, 0, 0.55),
+            rgba(0, 0, 0, 0.55)
+        ),
+        url("images/compte-rebours.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
