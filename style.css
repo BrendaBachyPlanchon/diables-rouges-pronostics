@@ -1717,3 +1717,20 @@ td button {
     border-radius: 22px;
     overflow: hidden;
 }
+
+/* ==========================================
+   CARTE NOS COMPÉTITIONS
+========================================== */
+
+.carte-competitions {
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.60),
+            rgba(0, 0, 0, 0.60)
+        ),
+        url("images/trophees-football.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
