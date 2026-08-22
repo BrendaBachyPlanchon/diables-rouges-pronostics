@@ -1693,10 +1693,16 @@ td button {
 }
 
 /* ==========================================
-   ARRIÈRE-PLAN COMPTE À REBOURS
+   CARTE COMPTE À REBOURS
 ========================================== */
 
 .carte-compte-rebours {
+    width: 90%;
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 30px;
+    box-sizing: border-box;
+
     background-image:
         linear-gradient(
             rgba(0, 0, 0, 0.55),
@@ -1707,4 +1713,7 @@ td button {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+
+    border-radius: 15px;
+    overflow: hidden;
 }
