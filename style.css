@@ -1996,3 +1996,39 @@ td button {
     background: rgba(205, 127, 50, 0.12);
 }
 
+/* ==========================================
+   CARTE IDENTITÉ DU SUPPORTER
+========================================== */
+
+.profil-identite {
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 25px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #292929,
+            #0d0d0d
+        );
+
+    border: 2px solid #e30613;
+    border-top: 5px solid #ffcc00;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.profil-identite h2 {
+    color: #ffcc00;
+    font-size: 28px;
+    margin: 10px 0;
+}
+
+.profil-identite p {
+    color: white;
+    font-size: 17px;
+}
+
