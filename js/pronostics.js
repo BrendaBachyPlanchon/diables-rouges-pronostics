@@ -1267,3 +1267,82 @@ if (champPseudo) {
     );
 
 }
+
+// ==========================================
+// AFFICHER AUTOMATIQUEMENT LE PSEUDO CONNECTÉ
+// ==========================================
+
+async function afficherPseudoConnecte() {
+
+    const champPseudo =
+        document.getElementById("pseudo-supporter");
+
+    if (!champPseudo) {
+        return;
+    }
+
+    const {
+        data: { user },
+        error
+    } = await supabaseClient.auth.getUser();
+
+    if (error || !user) {
+
+        console.log(
+            "ℹ️ Aucun utilisateur connecté."
+        );
+
+        champPseudo.value = "";
+        champPseudo.placeholder =
+            "Connexion nécessaire";
+
+        return;
+    }
+
+    console.log(
+        "🆔 Utilisateur connecté :",
+        user.id
+    );
+
+    const rechercheSupporter =
+        await supabaseClient
+            .from("supporters")
+            .select("pseudo")
+            .eq("supporter_id", user.id)
+            .maybeSingle();
+
+    if (
+        rechercheSupporter.error ||
+        !rechercheSupporter.data
+    ) {
+
+        console.error(
+            "❌ Profil supporter introuvable :",
+            rechercheSupporter.error
+        );
+
+        champPseudo.value = "";
+        champPseudo.placeholder =
+            "Profil introuvable";
+
+        return;
+    }
+
+    const pseudo =
+        rechercheSupporter.data.pseudo;
+
+    champPseudo.value =
+        pseudo;
+
+    console.log(
+        "✅ Pseudo affiché automatiquement :",
+        pseudo
+    );
+}
+
+
+// ==========================================
+// DÉMARRAGE PSEUDO
+// ==========================================
+
+afficherPseudoConnecte();
