@@ -1840,3 +1840,84 @@ td button {
     color: #ffcc00;
 }
 
+/* ==========================================
+   PODIUM DU CLASSEMENT
+========================================== */
+
+#podium-classement {
+    width: 90%;
+    max-width: 1000px;
+
+    margin: 30px auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+
+    gap: 20px;
+}
+
+.bloc-podium {
+    flex: 1;
+    max-width: 280px;
+
+    padding: 25px 15px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #292929,
+            #0d0d0d
+        );
+
+    border: 2px solid #444;
+
+    border-radius: 20px;
+
+    text-align: center;
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.5);
+
+    color: white;
+}
+
+.bloc-podium:nth-child(1) {
+    border: 3px solid #ffcc00;
+    padding-top: 35px;
+    padding-bottom: 35px;
+}
+
+.bloc-podium:nth-child(2) {
+    border: 3px solid #c0c0c0;
+}
+
+.bloc-podium:nth-child(3) {
+    border: 3px solid #cd7f32;
+}
+
+.podium-position {
+    font-size: 45px;
+    margin-bottom: 10px;
+}
+
+.bloc-podium img {
+    width: 90px;
+    height: 90px;
+
+    object-fit: cover;
+
+    border: 3px solid #ffcc00;
+
+    margin-bottom: 10px;
+}
+
+.bloc-podium h3 {
+    color: #ffcc00;
+    font-size: 22px;
+}
+
+.bloc-podium p {
+    color: white;
+}
+
