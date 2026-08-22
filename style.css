@@ -1813,3 +1813,24 @@ td button {
     color: #111;
     font-weight: bold;
 }
+
+/* ==========================================
+   LISIBILITÉ DES ACTUALITÉS
+========================================== */
+
+.carte-journal .actu h3 {
+    color: #e30613;
+}
+
+.carte-journal .actu p {
+    color: #222;
+}
+
+.carte-journal .actu a {
+    color: #e30613;
+    text-decoration: none;
+}
+
+.carte-journal .actu a:hover {
+    color: #111;
+}
