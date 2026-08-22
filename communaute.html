@@ -45,9 +45,35 @@
 Bienvenue dans l'espace de discussion des supporters des Diables Rouges.
 </p>
 
+<div class="carte" id="zone-ecriture-commentaire">
+
+    <h2>💬 Laisser un commentaire</h2>
+
+    <textarea
+        id="nouveau-commentaire"
+        placeholder="Écris ton message..."
+        rows="5"
+        maxlength="500"
+    ></textarea>
+
+    <br><br>
+
+    <button id="envoyer-commentaire">
+        💬 Publier mon commentaire
+    </button>
+
+    <p id="message-commentaire"></p>
+
+</div>
+
 <div id="zone-commentaires"></div>
 
 <script src="script.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase.js"></script>
+
+<script src="js/communaute.js"></script>
 
 </body>
 
