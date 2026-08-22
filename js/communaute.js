@@ -161,10 +161,14 @@ resultat.data.forEach(function(commentaire) {
         '</strong>' +
 
         '<p>' +
-        commentaire.commentaire +
-        '</p>' +
+commentaire.commentaire +
+'</p>' +
 
-        '</div>';
+'<small>' +
+new Date(commentaire.created_at).toLocaleString("fr-BE") +
+'</small>' +
+
+'</div>';
 
 });
 
