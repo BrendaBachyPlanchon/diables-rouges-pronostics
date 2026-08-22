@@ -1770,3 +1770,46 @@ td button {
     justify-content: center;
     text-align: center;
 }
+
+/* ==========================================
+   ACTUALITÉS BELGIQUE - STYLE JOURNAL
+========================================== */
+
+.carte-journal {
+    background: #f5f1e8;
+    border: 2px solid #222;
+    border-top: 6px solid #e30613;
+    color: #111;
+}
+
+.carte-journal h2 {
+    color: #111;
+    text-align: center;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 30px;
+    border-bottom: 2px solid #222;
+    padding-bottom: 12px;
+}
+
+.carte-journal h3 {
+    color: #e30613;
+    font-family: Georgia, "Times New Roman", serif;
+}
+
+.carte-journal p {
+    color: #222;
+}
+
+.carte-journal .actu {
+    border-bottom: 1px solid #aaa;
+    padding: 15px 0;
+}
+
+.carte-journal .actu:last-child {
+    border-bottom: none;
+}
+
+.carte-journal a {
+    color: #111;
+    font-weight: bold;
+}
