@@ -141,10 +141,32 @@ async function chargerCommentaires() {
         return;
     }
 
-    console.log(
-        "💬 Commentaires chargés depuis Supabase :",
-        resultat.data
-    );
+   let zoneCommentaires =
+    document.getElementById("zone-commentaires");
+
+if (!zoneCommentaires) {
+    return;
+}
+
+zoneCommentaires.innerHTML = "";
+
+resultat.data.forEach(function(commentaire) {
+
+    zoneCommentaires.innerHTML +=
+
+        '<div class="carte">' +
+
+        '<strong>👤 ' +
+        (commentaire.pseudo || "Supporter") +
+        '</strong>' +
+
+        '<p>' +
+        commentaire.commentaire +
+        '</p>' +
+
+        '</div>';
+
+});
 
 }
 
