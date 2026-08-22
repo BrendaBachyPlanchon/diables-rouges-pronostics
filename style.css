@@ -1655,3 +1655,21 @@ td button {
     }
 
 }
+
+/* ==========================================
+   IMAGE SUPPORTERS - PAGE D'ACCUEIL
+========================================== */
+
+.image-supporters-accueil {
+    width: 100%;
+    max-width: 900px;
+    margin: 25px auto;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+.image-supporters-accueil img {
+    width: 100%;
+    display: block;
+    border-radius: 15px;
+}
