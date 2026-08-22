@@ -190,8 +190,8 @@ new Date(commentaire.created_at).toLocaleString("fr-BE") +
 '</small>' +
 
 (
-    commentaire.supporter_id ===
-    localStorage.getItem("supporterId")
+    commentaire.supporter_id === user.id ||
+    user.id === "5a1d2817-07a0-4eaa-8aec-d6fd3066e2be"
         ? '<br><button class="supprimer-commentaire" data-id="' +
           commentaire.id +
           '">🗑️ Supprimer</button>'
