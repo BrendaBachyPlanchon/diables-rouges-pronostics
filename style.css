@@ -1921,3 +1921,78 @@ td button {
     color: white;
 }
 
+/* ==========================================
+   TABLEAU DU CLASSEMENT
+========================================== */
+
+#classement {
+    width: 90%;
+    max-width: 1000px;
+
+    margin: 30px auto;
+
+    border-collapse: separate;
+    border-spacing: 0;
+
+    background: #181818;
+
+    border: 2px solid #ffcc00;
+    border-radius: 15px;
+
+    overflow: hidden;
+
+    color: white;
+
+    box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+#classement th {
+    background: #e30613;
+
+    color: #ffcc00;
+
+    font-size: 17px;
+
+    padding: 15px;
+
+    border-bottom: 2px solid #ffcc00;
+}
+
+#classement td {
+    padding: 12px;
+
+    text-align: center;
+
+    border-bottom: 1px solid #444;
+
+    color: white;
+}
+
+#classement tr:last-child td {
+    border-bottom: none;
+}
+
+#classement tr:hover td {
+    background: #292929;
+}
+
+/* 🥇 1er */
+
+#classement tr.premier td {
+    background: rgba(255, 204, 0, 0.15);
+    color: #ffcc00;
+}
+
+/* 🥈 2e */
+
+#classement tr.deuxieme td {
+    background: rgba(192, 192, 192, 0.12);
+}
+
+/* 🥉 3e */
+
+#classement tr.troisieme td {
+    background: rgba(205, 127, 50, 0.12);
+}
+
