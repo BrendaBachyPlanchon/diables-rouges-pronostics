@@ -203,6 +203,73 @@ Administration
 
 <div class="carte">
 
+<h2>📰 Gestion des actualités</h2>
+
+<label>Titre de l'actualité :</label><br>
+<input
+    type="text"
+    id="titre-actualite-admin"
+    placeholder="Titre de l'actualité"
+>
+
+<br><br>
+
+<label>Contenu :</label><br>
+<textarea
+    id="contenu-actualite-admin"
+    rows="8"
+    placeholder="Écris ton actualité ici..."
+></textarea>
+
+<br><br>
+
+<label>Catégorie :</label><br>
+
+<select id="categorie-actualite-admin">
+
+    <option value="">📰 Choisir une catégorie</option>
+
+    <option value="Diables Rouges">🇧🇪 Diables Rouges</option>
+
+    <option value="Red Flames">🔥 Red Flames</option>
+
+    <option value="Équipes nationales jeunes">
+        ⭐ Équipes nationales jeunes
+    </option>
+
+</select>
+
+<br><br>
+
+<label>Image :</label><br>
+
+<input
+    type="text"
+    id="image-actualite-admin"
+    placeholder="images/actualites/photo.jpg"
+>
+
+<br><br>
+
+<label>
+    <input
+        type="checkbox"
+        id="publiee-actualite-admin"
+        checked
+    >
+    Publier immédiatement
+</label>
+
+<br><br>
+
+<button id="ajouter-actualite-admin">
+    📰 Publier l'actualité
+</button>
+
+</div>
+
+<div class="carte">
+
 <h2>👥 Participants</h2>
 
 <p>Voir la liste des participants.</p>
@@ -256,6 +323,7 @@ Administration
 <script src="js/protection-admin.js"></script>
 <script src="js/admin.js"></script>
 <script src="js/deconnexion-admin.js"></script>
+<script src="js/admin-actualites.js"></script>
 
 </body>
 </html>
