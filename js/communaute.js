@@ -156,19 +156,31 @@ resultat.data.forEach(function(commentaire) {
 
         '<div class="carte">' +
 
-        '<strong>👤 ' +
-        (commentaire.pseudo || "Supporter") +
-        '</strong>' +
+       '<div>' +
+
+(
+    commentaire.avatar
+        ? '<img src="images/avatars/' +
+          commentaire.avatar +
+          '" width="40" height="40" style="border-radius:50%; object-fit:cover;">'
+        : '👤'
+) +
+
+     '<strong> ' +
+     (commentaire.pseudo || "Supporter") +
+     '</strong>' +
+
+     '</div>' +
 
         '<p>' +
-commentaire.commentaire +
-'</p>' +
+        commentaire.commentaire +
+        '</p>' +
 
-'<small>' +
-new Date(commentaire.created_at).toLocaleString("fr-BE") +
-'</small>' +
+        '<small>' +
+        new Date(commentaire.created_at).toLocaleString("fr-BE") +
+        '</small>' +
 
-'</div>';
+        '</div>';
 
 });
 
