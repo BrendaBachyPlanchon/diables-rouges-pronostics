@@ -793,37 +793,40 @@ nav a:hover {
 
 
 /* =========================================================
-   ACTUALITES
+   ACTUALITES - STYLE JOURNAL
    ========================================================= */
 
 .actualites {
     overflow: hidden;
 }
 
-.actu {
+.carte-journal .actu {
     width: 90%;
     max-width: 750px;
 
     margin: 20px auto;
     padding: 20px;
 
-    background:
-        linear-gradient(145deg, #252525, #0d0d0d);
+    background: #ffffff;
 
     border-left: 5px solid #e30613;
     border-right: 3px solid #ffcc00;
 
     border-radius: 15px;
 
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
 }
 
-.actu h3 {
-    color: #ffcc00;
+.carte-journal .actu h3 {
+    color: #e30613;
     font-size: 23px;
 }
 
-.actu a {
+.carte-journal .actu p {
+    color: #222222;
+}
+
+.carte-journal .actu a {
     display: inline-block;
 
     padding: 10px 20px;
@@ -839,11 +842,10 @@ nav a:hover {
     transition: 0.3s ease;
 }
 
-.actu a:hover {
+.carte-journal .actu a:hover {
     background: #ffcc00;
     color: black;
 }
-
 
 /* =========================================================
    FORMULAIRES
