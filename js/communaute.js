@@ -196,3 +196,20 @@ new Date(commentaire.created_at).toLocaleString("fr-BE") +
 }
 
 chargerCommentaires();
+
+document.addEventListener("click", function(e) {
+
+    if (
+        e.target.classList.contains(
+            "supprimer-commentaire"
+        )
+    ) {
+
+        console.log(
+            "🗑️ Bouton supprimer cliqué :",
+            e.target.dataset.id
+        );
+
+    }
+
+});
