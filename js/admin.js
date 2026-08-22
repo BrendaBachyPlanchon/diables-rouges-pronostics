@@ -441,6 +441,11 @@ if (
                 pronostics.length
             );
 
+            console.log(
+                "📋 Pronostics récupérés :",
+                pronostics
+            );
+
 
             let misesAJour = pronostics.map(function(p) {
 
