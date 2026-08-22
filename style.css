@@ -1828,3 +1828,15 @@ td button {
     font-weight: bold;
 }
 
+/* ==========================================
+   FOND ACTUALITÉS BELGIQUE
+========================================== */
+
+.carte-journal {
+    background: #111111;
+}
+
+.carte-journal h2 {
+    color: #ffcc00;
+}
+
