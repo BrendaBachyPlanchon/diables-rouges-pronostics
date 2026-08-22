@@ -176,11 +176,20 @@ resultat.data.forEach(function(commentaire) {
         commentaire.commentaire +
         '</p>' +
 
-        '<small>' +
-        new Date(commentaire.created_at).toLocaleString("fr-BE") +
-        '</small>' +
+      '<small>' +
+new Date(commentaire.created_at).toLocaleString("fr-BE") +
+'</small>' +
 
-        '</div>';
+(
+    commentaire.supporter_id ===
+    localStorage.getItem("supporterId")
+        ? '<br><button class="supprimer-commentaire" data-id="' +
+          commentaire.id +
+          '">🗑️ Supprimer</button>'
+        : ''
+) +
+
+'</div>';
 
 });
 
