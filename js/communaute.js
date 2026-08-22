@@ -16,11 +16,73 @@ console.log("📝 Zone commentaire :", zoneEcriture);
 console.log("✏️ Champ commentaire :", champCommentaire);
 console.log("🔘 Bouton commentaire :", boutonCommentaire);
 
-boutonCommentaire.addEventListener("click", function() {
+boutonCommentaire.addEventListener("click", async function() {
 
     let texte = champCommentaire.value.trim();
 
-    console.log("📝 Commentaire saisi :", texte);
+    if (!texte) {
+
+        console.log("⚠️ Aucun commentaire saisi");
+
+        return;
+    }
+
+    const {
+        data: { user },
+        error: authError
+    } = await supabaseClient.auth.getUser();
+
+    if (authError || !user) {
+
+        console.error(
+            "❌ Aucun supporter connecté"
+        );
+
+        return;
+    }
+
+    let supporterId = user.id;
+
+    let pseudo =
+        localStorage.getItem("pseudoActuel") ||
+        "Supporter";
+
+    let avatar =
+        localStorage.getItem("avatarSupporter") ||
+        null;
+
+    console.log(
+        "💬 Enregistrement commentaire pour :",
+        pseudo
+    );
+
+    const resultat =
+        await supabaseClient
+            .from("commentaires")
+            .insert({
+
+                supporter_id: supporterId,
+                pseudo: pseudo,
+                avatar: avatar,
+                commentaire: texte
+
+            });
+
+    if (resultat.error) {
+
+        console.error(
+            "❌ Erreur enregistrement commentaire :",
+            resultat.error
+        );
+
+        return;
+    }
+
+    console.log(
+        "✅ Commentaire enregistré dans Supabase !"
+    );
+
+    champCommentaire.value = "";
 
 });
 
