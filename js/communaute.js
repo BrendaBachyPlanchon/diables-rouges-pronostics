@@ -18,6 +18,8 @@ console.log("🔘 Bouton commentaire :", boutonCommentaire);
 
 boutonCommentaire.addEventListener("click", function() {
 
-    console.log("🖱️ Bouton commentaire cliqué");
+    let texte = champCommentaire.value.trim();
+
+    console.log("📝 Commentaire saisi :", texte);
 
 });
