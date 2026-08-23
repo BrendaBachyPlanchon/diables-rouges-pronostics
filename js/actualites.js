@@ -75,21 +75,56 @@ async function chargerActualites() {
                 "carte actualite";
 
 
-            carte.innerHTML =
+           let datePublication = "";
 
-                "<h3>" +
-                (
-                    actualite.titre ||
-                    ""
-                ) +
-                "</h3>" +
+if (actualite.created_at) {
 
-                "<p>" +
-                (
-                    actualite.contenu ||
-                    ""
-                ) +
-                "</p>";
+    let date =
+        new Date(
+            actualite.created_at
+        );
+
+    datePublication =
+        date.toLocaleDateString(
+            "fr-BE",
+            {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric"
+            }
+        ) +
+        " à " +
+        date.toLocaleTimeString(
+            "fr-BE",
+            {
+                hour: "2-digit",
+                minute: "2-digit"
+            }
+        );
+
+}
+
+
+carte.innerHTML =
+
+    "<h3>" +
+    (
+        actualite.titre ||
+        ""
+    ) +
+    "</h3>" +
+
+    "<p class='date-actualite'>" +
+    "📅 Publié le " +
+    datePublication +
+    "</p>" +
+
+    "<div class='contenu-actualite'>" +
+    (
+        actualite.contenu ||
+        ""
+    ) +
+    "</div>";
 
 
             // ==========================================
