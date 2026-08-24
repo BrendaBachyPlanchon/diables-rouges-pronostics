@@ -44,10 +44,25 @@ function afficherStatistiques() {
 
                     }
 
-                    return {
-                        matchs: matchsStatistiques,
-                        pronostics: resultat.data
-                    };
+                  return supabaseClient
+    .from("supporters")
+    .select("supporter_id, pseudo")
+
+    .then(function(resultatSupporters) {
+
+        if (resultatSupporters.error) {
+
+            throw resultatSupporters.error;
+
+        }
+
+        return {
+            matchs: matchsStatistiques,
+            pronostics: resultat.data,
+            supporters: resultatSupporters.data || []
+        };
+
+    });
 
                 });
 
@@ -55,12 +70,14 @@ function afficherStatistiques() {
 
         .then(function(donnees) {
 
-            let matchsStatistiques =
-                donnees.matchs;
+           let matchsStatistiques =
+    donnees.matchs;
 
-            let pronostics =
-                donnees.pronostics;
+let pronostics =
+    donnees.pronostics;
 
+let supporters =
+    donnees.supporters;
 
             console.log(
                 "✅ Statistiques chargées depuis Supabase :",
@@ -115,7 +132,7 @@ pronostics.forEach(function(p) {
 
                 pronostics.forEach(function(p) {
 
-                    if (p.joueur !== joueur) {
+                   if (p.supporter_id !== joueur) {
 
                         return;
 
@@ -246,11 +263,25 @@ pronostics.forEach(function(p) {
                     meilleurScore =
                         points;
 
-                    meilleur =
-                        joueur +
-                        " (" +
-                        points +
-                        " pts)";
+                  let supporter =
+    supporters.find(function(s) {
+
+        return s.supporter_id === joueur;
+
+    });
+
+
+let pseudo =
+    supporter
+        ? supporter.pseudo
+        : "Supporter";
+
+
+meilleur =
+    pseudo +
+    " (" +
+    points +
+    " pts)";
 
                 }
 
