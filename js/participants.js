@@ -61,26 +61,25 @@ function afficherParticipants() {
                 "</tr>";
 
 
-            // ==========================================
-            // RÉCUPÉRER LES JOUEURS
-            // ==========================================
+           // ==========================================
+// RÉCUPÉRER LES SUPPORTERS
+// ==========================================
 
-            let joueurs = [];
+let joueurs = [];
 
 
-            pronostics.forEach(function(p) {
+pronostics.forEach(function(p) {
 
-                if (
-                    p.joueur &&
-                    !joueurs.includes(p.joueur)
-                ) {
+    if (
+        p.supporter_id &&
+        !joueurs.includes(p.supporter_id)
+    ) {
 
-                    joueurs.push(p.joueur);
+        joueurs.push(p.supporter_id);
 
-                }
+    }
 
-            });
-
+});
 
             // ==========================================
             // CHARGER LES MATCHS DEPUIS SUPABASE
@@ -108,6 +107,28 @@ function afficherParticipants() {
                         matchsAdmin.length
                     );
 
+// ==========================================
+// CHARGER LES PSEUDOS DES SUPPORTERS
+// ==========================================
+
+return supabaseClient
+    .from("supporters")
+    .select("supporter_id, pseudo")
+    .then(function(resultatSupporters) {
+
+        if (resultatSupporters.error) {
+
+            throw resultatSupporters.error;
+
+        }
+
+        let supporters =
+            resultatSupporters.data || [];
+
+        console.log(
+            "✅ Supporters chargés depuis Supabase :",
+            supporters.length
+        );
 
                     // ==========================================
                     // CALCULER CHAQUE PARTICIPANT
@@ -121,11 +142,28 @@ function afficherParticipants() {
 
                         let scoresExacts = 0;
 
+                        // ==========================================
+// RÉCUPÉRER LE PSEUDO DU SUPPORTER
+// ==========================================
+
+let supporter =
+    supporters.find(function(s) {
+
+        return s.supporter_id === joueur;
+
+    });
+
+
+let pseudo =
+    supporter
+        ? supporter.pseudo
+        : "Supporter";
+
 
                         pronostics.forEach(function(p) {
 
-                            if (p.joueur !== joueur) {
-                                return;
+                           if (p.supporter_id !== joueur) {
+                             return;
                             }
 
 
@@ -276,9 +314,9 @@ function afficherParticipants() {
 
                             "<tr>" +
 
-                            "<td>" +
-                            joueur +
-                            "</td>" +
+                           "<td>" +
+                           pseudo +
+                           "</td>" +
 
                             "<td>" +
                             nombrePronostics +
@@ -306,9 +344,11 @@ function afficherParticipants() {
 
                             "</tr>";
 
-                    });
+                                      });
 
                 });
+
+            });
 
         })
 
@@ -347,7 +387,7 @@ function supprimerParticipant(joueur) {
     supabaseClient
         .from("pronostics")
         .delete()
-        .eq("joueur", joueur)
+        .eq("supporter_id", joueur)
 
         .then(function(resultat) {
 
