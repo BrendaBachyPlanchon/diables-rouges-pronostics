@@ -238,42 +238,83 @@ if (boutonVoirMotDePasse) {
         }
 
 
-        if (!recherche.data) {
+       if (!recherche.data) {
 
-            const insertion =
-                await supabaseClient
-                    .from("supporters")
-                    .insert({
+    const insertion =
+        await supabaseClient
+            .from("supporters")
+            .insert({
 
-                        supporter_id:
-                            supporterId,
+                supporter_id:
+                    supporterId,
 
-                        pseudo:
-                            pseudo,
+                pseudo:
+                    pseudo,
 
-                        avatar:
-                            avatar
+                avatar:
+                    avatar
 
-                    });
-
-
-            if (insertion.error) {
-
-                console.error(
-                    "❌ Erreur création profil supporter :",
-                    insertion.error
-                );
-
-                return false;
-
-            }
+            });
 
 
-            console.log(
-                "✅ Profil supporter créé !"
+    if (insertion.error) {
+
+        console.error(
+            "❌ Erreur création profil supporter :",
+            insertion.error
+        );
+
+        return false;
+
+    }
+
+
+    console.log(
+        "✅ Profil supporter créé !"
+    );
+
+} else {
+
+    // ==========================================
+    // SUPPORTER EXISTANT → METTRE À JOUR LE PSEUDO
+    // ==========================================
+
+    const miseAJour =
+        await supabaseClient
+            .from("supporters")
+            .update({
+
+                pseudo:
+                    pseudo,
+
+                avatar:
+                    avatar
+
+            })
+            .eq(
+                "supporter_id",
+                supporterId
             );
 
-        }
+
+    if (miseAJour.error) {
+
+        console.error(
+            "❌ Erreur mise à jour profil supporter :",
+            miseAJour.error
+        );
+
+        return false;
+
+    }
+
+
+    console.log(
+        "✅ Profil supporter mis à jour :",
+        pseudo
+    );
+
+}
 
 
         localStorage.setItem(
