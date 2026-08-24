@@ -11,11 +11,17 @@ async function afficherStatutConnexion() {
         return;
     }
 
+
+    // ==========================================
+    // RÉCUPÉRER L'UTILISATEUR CONNECTÉ
+    // ==========================================
+
     const {
         data: { user },
         error
     } =
         await supabaseClient.auth.getUser();
+
 
     if (error) {
 
@@ -30,6 +36,7 @@ async function afficherStatutConnexion() {
         return;
     }
 
+
     if (!user) {
 
         zone.innerHTML =
@@ -38,17 +45,80 @@ async function afficherStatutConnexion() {
         return;
     }
 
+
+    // ==========================================
+    // RÉCUPÉRER LE PSEUDO DEPUIS SUPABASE
+    // ==========================================
+
+    const resultat =
+        await supabaseClient
+            .from("supporters")
+            .select("pseudo")
+            .eq(
+                "supporter_id",
+                user.id
+            )
+            .maybeSingle();
+
+
+    if (resultat.error) {
+
+        console.error(
+            "❌ Erreur récupération pseudo :",
+            resultat.error
+        );
+
+        zone.innerHTML =
+            "🟢 Connecté : Supporter";
+
+        return;
+    }
+
+
+    // ==========================================
+    // RÉCUPÉRER LE PSEUDO
+    // ==========================================
+
     let pseudo =
-        localStorage.getItem("pseudoActuel") ||
         "Supporter";
+
+
+    if (
+        resultat.data &&
+        resultat.data.pseudo
+    ) {
+
+        pseudo =
+            resultat.data.pseudo;
+
+
+        // Sauvegarder le pseudo localement
+        localStorage.setItem(
+            "pseudoActuel",
+            pseudo
+        );
+
+    }
+
+
+    // ==========================================
+    // AFFICHER LE STATUT
+    // ==========================================
 
     zone.innerHTML =
         "🟢 Connecté : " + pseudo;
+
 
     console.log(
         "✅ Utilisateur connecté :",
         pseudo
     );
+
 }
+
+
+// ==========================================
+// LANCER LE STATUT DE CONNEXION
+// ==========================================
 
 afficherStatutConnexion();
