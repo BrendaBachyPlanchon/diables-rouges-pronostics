@@ -68,25 +68,25 @@ function afficherStatistiques() {
             );
 
 
-            // ==========================================
-            // RÉCUPÉRER LES JOUEURS
-            // ==========================================
+           // ==========================================
+// RÉCUPÉRER LES SUPPORTERS
+// ==========================================
 
-            let joueurs = [];
+let joueurs = [];
 
 
-            pronostics.forEach(function(p) {
+pronostics.forEach(function(p) {
 
-                if (
-                    p.joueur &&
-                    !joueurs.includes(p.joueur)
-                ) {
+    if (
+        p.supporter_id &&
+        !joueurs.includes(p.supporter_id)
+    ) {
 
-                    joueurs.push(p.joueur);
+        joueurs.push(p.supporter_id);
 
-                }
+    }
 
-            });
+});
 
 
             let participants =
