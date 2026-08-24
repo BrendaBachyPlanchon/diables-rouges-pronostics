@@ -195,16 +195,18 @@ if (boutonVoirMotDePasse) {
     // CRÉER LE PROFIL SUPPORTER
     // ==========================================
 
-    async function creerProfilSupporter(user) {
+    async function creerProfilSupporter(user, pseudoChoisi) {
 
         const supporterId =
             user.id;
 
 
-        let pseudo =
-            localStorage.getItem(
-                "pseudoActuel"
-            ) || "Supporter";
+       let pseudo =
+    pseudoChoisi ||
+    localStorage.getItem(
+        "pseudoActuel"
+    ) ||
+    "Supporter";
 
 
         let avatar =
@@ -404,34 +406,66 @@ if (boutonVoirMotDePasse) {
         "click",
         async function () {
 
-            const email =
-                emailInput.value.trim();
+             const pseudoInput =
+                 document.getElementById("pseudo-supporter");
 
-            const password =
-                motDePasseInput.value;
+             const pseudo =
+                  pseudoInput
+                      ? pseudoInput.value.trim()
+                      : "";
 
+           const email =
+    emailInput.value.trim();
 
-            if (!email || !password) {
-
-                alert(
-                    "⚠️ Veuillez indiquer une adresse e-mail et un mot de passe."
-                );
-
-                return;
-
-            }
+const password =
+    motDePasseInput.value;
 
 
-            if (password.length < 6) {
+// ==========================================
+// VÉRIFIER LES INFORMATIONS
+// ==========================================
 
-                alert(
-                    "⚠️ Le mot de passe doit contenir au moins 6 caractères."
-                );
+if (!pseudo || !email || !password) {
 
-                return;
+    alert(
+        "⚠️ Veuillez indiquer ton pseudo, ton adresse e-mail et ton mot de passe."
+    );
 
-            }
+    return;
 
+}
+
+
+if (pseudo.length < 2) {
+
+    alert(
+        "⚠️ Ton pseudo doit contenir au moins 2 caractères."
+    );
+
+    return;
+
+}
+
+
+if (password.length < 6) {
+
+    alert(
+        "⚠️ Le mot de passe doit contenir au moins 6 caractères."
+    );
+
+    return;
+
+}
+
+
+// ==========================================
+// MÉMORISER LE PSEUDO
+// ==========================================
+
+localStorage.setItem(
+    "pseudoActuel",
+    pseudo
+);
 
             boutonInscription.disabled =
                 true;
@@ -512,10 +546,11 @@ if (boutonVoirMotDePasse) {
                 resultat.data.user;
 
 
-            const profilOK =
-                await creerProfilSupporter(
-                    user
-                );
+           const profilOK =
+    await creerProfilSupporter(
+        user,
+        pseudo
+    );
 
 
             if (!profilOK) {
