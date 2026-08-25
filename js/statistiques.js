@@ -417,6 +417,35 @@ window.addEventListener(
     "load",
     function() {
 
+        let choixCompetition =
+            document.getElementById(
+                "choix-competition-statistiques"
+            );
+
+        if (choixCompetition) {
+
+            window.competitionPage =
+                choixCompetition.value;
+
+            choixCompetition.addEventListener(
+                "change",
+                function() {
+
+                    window.competitionPage =
+                        this.value;
+
+                    afficherStatistiques();
+
+                }
+            );
+
+        } else {
+
+            window.competitionPage =
+                "Ligue des Nations";
+
+        }
+
         afficherStatistiques();
 
     }
