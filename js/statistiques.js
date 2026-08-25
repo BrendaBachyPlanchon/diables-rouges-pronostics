@@ -91,6 +91,14 @@ let supporters =
 
 let joueurs = [];
 
+console.log("👥 SUPPORTERS DISPONIBLES :", supporters);
+console.log(
+    "🆔 SUPPORTER_ID DES PRONOSTICS :",
+    pronostics.map(function(p) {
+        return p.supporter_id;
+    })
+);
+
 
 pronostics.forEach(function(p) {
 
