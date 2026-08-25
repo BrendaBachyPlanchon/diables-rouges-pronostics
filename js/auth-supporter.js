@@ -145,7 +145,7 @@ async function afficherConnecte(user) {
         await supabaseClient
             .from("supporters")
             .select("pseudo")
-            .eq("supporter_id", user.id)
+           .eq("id", user.id)
             .maybeSingle();
 
 
