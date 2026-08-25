@@ -73,6 +73,9 @@ function afficherStatistiques() {
            let matchsStatistiques =
     donnees.matchs;
 
+let competition =
+    window.competitionPage || "Ligue des Nations";
+
 let pronostics =
     donnees.pronostics;
 
