@@ -319,9 +319,32 @@ function chargerClassement() {
 
 }
 
-
 // ==========================================
 // DÉMARRAGE
 // ==========================================
+
+let choixCompetition =
+    document.getElementById("choix-competition");
+
+if (choixCompetition) {
+
+    choixCompetition.addEventListener(
+        "change",
+        function() {
+
+            window.competitionPage =
+                this.value;
+
+            chargerClassement();
+
+        }
+    );
+
+}
+
+window.competitionPage =
+    choixCompetition
+        ? choixCompetition.value
+        : "Ligue des Nations";
 
 chargerClassement();
