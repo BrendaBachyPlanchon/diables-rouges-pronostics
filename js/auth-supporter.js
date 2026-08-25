@@ -297,6 +297,14 @@ async function afficherConnecte(user) {
 
 } else {
 
+        pseudo =
+        recherche.data.pseudo ||
+        pseudo;
+
+    avatar =
+        recherche.data.avatar ||
+        avatar;
+
     // ==========================================
     // SUPPORTER EXISTANT → METTRE À JOUR LE PSEUDO
     // ==========================================
