@@ -76,6 +76,13 @@ function afficherStatistiques() {
 let competition =
     window.competitionPage || "Ligue des Nations";
 
+    matchsStatistiques =
+    matchsStatistiques.filter(function(match) {
+
+        return match.competition === competition;
+
+    });
+
 let pronostics =
     donnees.pronostics;
 
