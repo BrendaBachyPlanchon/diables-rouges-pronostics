@@ -263,10 +263,10 @@ pronostics.forEach(function(p) {
                     meilleurScore =
                         points;
 
-                  let supporter =
+                 let supporter =
     supporters.find(function(s) {
 
-        return s.supporter_id === joueur;
+        return String(s.supporter_id) === String(joueur);
 
     });
 
