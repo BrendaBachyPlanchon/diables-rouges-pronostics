@@ -240,7 +240,7 @@ async function afficherConnecte(user) {
         const recherche =
             await supabaseClient
                 .from("supporters")
-                .select("supporter_id")
+                .select("supporter_id, pseudo, avatar")
                 .eq(
                     "supporter_id",
                     supporterId
