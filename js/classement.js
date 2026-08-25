@@ -276,7 +276,9 @@ function chargerClassement() {
     window.competitionPage || "Ligue des Nations";
 
     supabaseClient
-        .rpc("classement_public")
+        .rpc("classement_public", {
+    p_competition: competition
+})
 
         .then(function(resultat) {
 
