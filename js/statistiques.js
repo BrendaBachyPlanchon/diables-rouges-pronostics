@@ -79,10 +79,12 @@ let pronostics =
 let supporters =
     donnees.supporters;
 
-            console.log(
-                "✅ Statistiques chargées depuis Supabase :",
-                pronostics.length
-            );
+console.log("👥 SUPPORTERS :", supporters);
+
+console.log(
+    "✅ Statistiques chargées depuis Supabase :",
+    pronostics.length
+);
 
 
            // ==========================================
