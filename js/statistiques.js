@@ -126,12 +126,48 @@ pronostics.forEach(function(p) {
 });
 
 
-            let participants =
-                joueurs.length;
+           let pronosticsCompetition =
+    pronostics.filter(function(p) {
+
+        return matchsStatistiques.some(function(match) {
+
+            let nomMatch =
+                match.equipe1.trim() +
+                " - " +
+                match.equipe2.trim();
+
+            return (
+                nomMatch.toLowerCase() ===
+                p.match.trim().toLowerCase()
+            );
+
+        });
+
+    });
 
 
-            let nbPronostics =
-                pronostics.length;
+let joueursCompetition = [];
+
+pronosticsCompetition.forEach(function(p) {
+
+    if (
+        p.supporter_id &&
+        !joueursCompetition.includes(p.supporter_id)
+    ) {
+
+        joueursCompetition.push(p.supporter_id);
+
+    }
+
+});
+
+
+let participants =
+    joueursCompetition.length;
+
+
+let nbPronostics =
+    pronosticsCompetition.length;
 
 
             // ==========================================
