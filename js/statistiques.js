@@ -181,12 +181,12 @@ let nbPronostics =
                 -1;
 
 
-            joueurs.forEach(function(joueur) {
+           joueursCompetition.forEach(function(joueur) {
 
                 let points = 0;
 
 
-                pronostics.forEach(function(p) {
+                pronosticsCompetition.forEach(function(p) {
 
                    if (p.supporter_id !== joueur) {
 
