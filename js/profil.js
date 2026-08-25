@@ -881,3 +881,104 @@ window.addEventListener(
 
     }
 );
+
+// ==========================================
+// ENREGISTRER LE PSEUDO DU SUPPORTER
+// ==========================================
+
+const boutonModifierPseudo =
+    document.getElementById("modifier-pseudo");
+
+if (boutonModifierPseudo) {
+
+    boutonModifierPseudo.addEventListener(
+        "click",
+        async function() {
+
+            const pseudoInput =
+                document.getElementById("pseudo-supporter");
+
+            const pseudo =
+                pseudoInput
+                    ? pseudoInput.value.trim()
+                    : "";
+
+            const supporterId =
+                localStorage.getItem("supporterId");
+
+            if (!pseudo) {
+
+                alert(
+                    "⚠️ Veuillez entrer un pseudo."
+                );
+
+                return;
+
+            }
+
+            if (!supporterId) {
+
+                alert(
+                    "⚠️ Vous devez être connecté pour enregistrer votre pseudo."
+                );
+
+                return;
+
+            }
+
+            const resultat =
+                await supabaseClient
+                    .from("supporters")
+                    .update({
+                        pseudo: pseudo
+                    })
+                    .eq(
+                        "supporter_id",
+                        supporterId
+                    );
+
+            if (resultat.error) {
+
+                console.error(
+                    "❌ Erreur enregistrement pseudo :",
+                    resultat.error
+                );
+
+                alert(
+                    "❌ Impossible d'enregistrer le pseudo."
+                );
+
+                return;
+
+            }
+
+            localStorage.setItem(
+                "pseudoActuel",
+                pseudo
+            );
+
+            const pseudoProfil =
+                document.getElementById(
+                    "pseudo-profil"
+                );
+
+            if (pseudoProfil) {
+
+                pseudoProfil.innerText =
+                    "👤 " + pseudo;
+
+            }
+
+            alert(
+                "✅ Ton pseudo a bien été enregistré !"
+            );
+
+            console.log(
+                "✅ Pseudo sauvegardé dans Supabase :",
+                pseudo
+            );
+
+        }
+    );
+
+}
