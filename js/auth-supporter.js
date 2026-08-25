@@ -134,33 +134,55 @@ if (boutonVoirMotDePasse) {
 
 
     // ==========================================
-    // AFFICHER CONNECTÉ
-    // ==========================================
+// AFFICHER CONNECTÉ
+// ==========================================
 
-    function afficherConnecte(user) {
+async function afficherConnecte(user) {
 
-        messageAuth.innerHTML =
-            "✅ <b>Tu es connecté !</b><br>" +
-            "Compte : " +
-            user.email;
+    let pseudo = "Supporter";
+
+    const resultat =
+        await supabaseClient
+            .from("supporters")
+            .select("pseudo")
+            .eq("supporter_id", user.id)
+            .maybeSingle();
 
 
-        emailInput.style.display =
-            "none";
+    if (
+        !resultat.error &&
+        resultat.data &&
+        resultat.data.pseudo
+    ) {
 
-        motDePasseInput.style.display =
-            "none";
-
-        boutonConnexion.style.display =
-            "none";
-
-        boutonInscription.style.display =
-            "none";
-
-        boutonDeconnexion.style.display =
-            "inline-block";
+        pseudo =
+            resultat.data.pseudo;
 
     }
+
+
+    messageAuth.innerHTML =
+        "✅ <b>Tu es connecté !</b><br>" +
+        "Supporter : " +
+        pseudo;
+
+
+    emailInput.style.display =
+        "none";
+
+    motDePasseInput.style.display =
+        "none";
+
+    boutonConnexion.style.display =
+        "none";
+
+    boutonInscription.style.display =
+        "none";
+
+    boutonDeconnexion.style.display =
+        "inline-block";
+
+}
 
 
     // ==========================================
