@@ -320,6 +320,7 @@ let logosChampionsLeague = {
                 if (drapeauDomicile) {
 
                     drapeauDomicile.src =
+                        logosChampionsLeague[nomEquipe1] ||
                         logosJupilerProLeague[nomEquipe1] ||
                         drapeaux[nomEquipe1] ||
                         "images/pays/belgique.png";
@@ -340,6 +341,7 @@ let logosChampionsLeague = {
                 if (drapeauExterieur) {
 
                     drapeauExterieur.src =
+                        logosChampionsLeague[nomEquipe2] ||
                         logosJupilerProLeague[nomEquipe2] ||
                         drapeaux[nomEquipe2] ||
                         "images/pays/france.png";
