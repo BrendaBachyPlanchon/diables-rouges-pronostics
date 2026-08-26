@@ -247,6 +247,47 @@ if (choixMatch) {
 
                 };
 
+                // ==========================================
+// LOGOS LIGUE DES CHAMPIONS
+// ==========================================
+
+let logosChampionsLeague = {
+
+    "Arsenal": "images/clubs/champions-league/arsenal.png",
+    "Manchester City": "images/clubs/champions-league/manchester-city.png",
+    "Liverpool": "images/clubs/champions-league/liverpool.png",
+    "Manchester United": "images/clubs/champions-league/manchester-united.png",
+    "Real Madrid": "images/clubs/champions-league/real-madrid.png",
+    "Barcelona": "images/clubs/champions-league/barcelone.png",
+    "Bayern Munich": "images/clubs/champions-league/bayern-munich.png",
+    "Borussia Dortmund": "images/clubs/champions-league/dortmund.png",
+    "Atlético de Madrid": "images/clubs/champions-league/atletico-madrid.png",
+    "Aston Villa": "images/clubs/champions-league/aston-villa.png",
+    "Inter Milan": "images/clubs/champions-league/inter-milan.png",
+    "Napoli": "images/clubs/champions-league/napoli.png",
+    "Paris Saint-Germain": "images/clubs/champions-league/paris-saint-germain.png",
+    "Porto": "images/clubs/champions-league/porto.png",
+    "PSV Eindhoven": "images/clubs/champions-league/psv-eindhoven.png",
+    "Feyenoord": "images/clubs/champions-league/feyenoord.png",
+    "Galatasaray": "images/clubs/champions-league/galatasaray.png",
+    "Como": "images/clubs/champions-league/como.png",
+    "Lille": "images/clubs/champions-league/lille.png",
+    "Lens": "images/clubs/champions-league/lens.png",
+    "RB Leipzig": "images/clubs/champions-league/leipzig.png",
+    "Real Betis": "images/clubs/champions-league/real-betis.png",
+    "Roma": "images/clubs/champions-league/roma.png",
+    "Sporting CP": "images/clubs/champions-league/sporting.png",
+    "VfB Stuttgart": "images/clubs/champions-league/stuttgart.png",
+    "Villarreal": "images/clubs/champions-league/villarreal.png",
+    "Bodø/Glimt": "images/clubs/champions-league/bodo-glimt.png",
+    "LASK": "images/clubs/champions-league/lask.png",
+    "Sabah": "images/clubs/champions-league/sabah.png",
+    "Shakhtar Donetsk": "images/clubs/champions-league/shakhtar-donetsk.png",
+    "Slavia Prague": "images/clubs/champions-league/slavia-prague.png",
+    "Club Brugge": "images/clubs/champions-league/club-brugge.png"
+
+};
+
 
                 // ==========================================
                 // NETTOYAGE DU NOM DES ÉQUIPES
