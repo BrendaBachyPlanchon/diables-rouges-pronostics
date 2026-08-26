@@ -945,7 +945,27 @@ function chargerMatchsAdmin() {
             // AFFICHER LES MATCHS
             // ==========================================
 
-            matchsAdmin.forEach(function(match) {
+          let matchsFiltres =
+    matchsAdmin;
+
+if (
+    choixCompetition &&
+    choixCompetition.value
+) {
+
+    matchsFiltres =
+        matchsAdmin.filter(function(match) {
+
+            return (
+                match.competition ===
+                choixCompetition.value
+            );
+
+        });
+
+}
+          
+           matchsFiltres.forEach(function(match) {
 
                 let option =
                     document.createElement("option");
