@@ -882,6 +882,9 @@ function chargerMatchsAdmin() {
     let selectMatch =
         document.getElementById("choix-match");
 
+    let choixCompetition =
+        document.getElementById("choix-competition-pronostic");
+
     if (!selectMatch) {
         return;
     }
