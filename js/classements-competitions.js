@@ -166,6 +166,88 @@ const groupesLigueD = {
 
 };
 
+// ==========================================
+// ÉQUIPES LIGUE DES CHAMPIONS 2026-2027
+// ==========================================
+
+const equipesLigueDesChampions = [
+
+    "Arsenal",
+    "Manchester City",
+    "Liverpool",
+    "Manchester United",
+    "Real Madrid",
+    "Barcelona",
+    "Bayern Munich",
+    "Borussia Dortmund",
+    "Atlético de Madrid",
+    "Aston Villa",
+    "Inter Milan",
+    "Napoli",
+    "Paris Saint-Germain",
+    "Porto",
+    "PSV Eindhoven",
+    "Feyenoord",
+    "Galatasaray",
+    "Como",
+    "Lille",
+    "Lens",
+    "RB Leipzig",
+    "Real Betis",
+    "Roma",
+    "Sporting CP",
+    "VfB Stuttgart",
+    "Villarreal",
+    "Bodø/Glimt",
+    "LASK",
+    "Sabah",
+    "Shakhtar Donetsk",
+    "Slavia Prague",
+    "Club Brugge"
+
+];
+
+// ==========================================
+// LOGOS LIGUE DES CHAMPIONS
+// ==========================================
+
+const logosClassementLigueDesChampions = {
+
+    "Arsenal": "images/clubs/champions-league/arsenal.png",
+    "Manchester City": "images/clubs/champions-league/manchester-city.png",
+    "Liverpool": "images/clubs/champions-league/liverpool.png",
+    "Manchester United": "images/clubs/champions-league/manchester-united.png",
+    "Real Madrid": "images/clubs/champions-league/real-madrid.png",
+    "Barcelona": "images/clubs/champions-league/barcelone.png",
+    "Bayern Munich": "images/clubs/champions-league/bayern-munich.png",
+    "Borussia Dortmund": "images/clubs/champions-league/dortmund.png",
+    "Atlético de Madrid": "images/clubs/champions-league/atletico-madrid.png",
+    "Aston Villa": "images/clubs/champions-league/aston-villa.png",
+    "Inter Milan": "images/clubs/champions-league/inter-milan.png",
+    "Napoli": "images/clubs/champions-league/napoli.png",
+    "Paris Saint-Germain": "images/clubs/champions-league/paris-saint-germain.png",
+    "Porto": "images/clubs/champions-league/porto.png",
+    "PSV Eindhoven": "images/clubs/champions-league/psv-eindhoven.png",
+    "Feyenoord": "images/clubs/champions-league/feyenoord.png",
+    "Galatasaray": "images/clubs/champions-league/galatasaray.png",
+    "Como": "images/clubs/champions-league/como.png",
+    "Lille": "images/clubs/champions-league/lille.png",
+    "Lens": "images/clubs/champions-league/lens.png",
+    "RB Leipzig": "images/clubs/champions-league/leipzig.png",
+    "Real Betis": "images/clubs/champions-league/real-betis.png",
+    "Roma": "images/clubs/champions-league/roma.png",
+    "Sporting CP": "images/clubs/champions-league/sporting.png",
+    "VfB Stuttgart": "images/clubs/champions-league/stuttgart.png",
+    "Villarreal": "images/clubs/champions-league/villarreal.png",
+    "Bodø/Glimt": "images/clubs/champions-league/bodo-glimt.png",
+    "LASK": "images/clubs/champions-league/lask.png",
+    "Sabah": "images/clubs/champions-league/sabah.png",
+    "Shakhtar Donetsk": "images/clubs/champions-league/shakhtar-donetsk.png",
+    "Slavia Prague": "images/clubs/champions-league/slavia-prague.png",
+    "Club Brugge": "images/clubs/champions-league/club-brugge.png"
+
+};
+
 
 if (choixCompetition) {
 
@@ -240,6 +322,26 @@ if (choixCompetition) {
     `;
 
     afficherClassementJupiler();
+
+}
+
+if (competition === "Ligue des Champions") {
+
+    zoneClassements.innerHTML = `
+
+        <div class="carte">
+
+            <h2>⭐ Ligue des Champions 2026-2027</h2>
+
+            <div id="classement-champions"
+                 style="width:100%; overflow-x:auto;">
+            </div>
+
+        </div>
+
+    `;
+
+    afficherClassementLigueDesChampions();
 
 }
 
@@ -686,4 +788,367 @@ function afficherClassementJupiler() {
    classementGroupe.innerHTML = html;
 
 });
+
+}
+
+// ==========================================
+// CLASSEMENT LIGUE DES CHAMPIONS 2026-2027
+// ==========================================
+
+function afficherClassementLigueDesChampions() {
+
+    let classementChampions =
+        document.getElementById("classement-champions");
+
+    if (!classementChampions) {
+        return;
+    }
+
+    let equipes = {};
+
+    // ==========================================
+    // INITIALISER LES 32 CLUBS
+    // ==========================================
+
+    equipesLigueDesChampions.forEach(function(equipe) {
+
+        equipes[equipe] = {
+
+            mj: 0,
+            v: 0,
+            n: 0,
+            d: 0,
+            bp: 0,
+            bc: 0,
+            pts: 0
+
+        };
+
+    });
+
+
+    // ==========================================
+    // CHARGER LES MATCHS
+    // ==========================================
+
+    supabaseClient
+        .from("matchs")
+        .select("*")
+
+        .then(function(resultat) {
+
+            if (resultat.error) {
+
+                console.error(
+                    "❌ Erreur chargement matchs Ligue des Champions :",
+                    resultat.error
+                );
+
+                return;
+
+            }
+
+
+            let matchs =
+                resultat.data || [];
+
+
+            console.log(
+                "✅ Matchs Ligue des Champions chargés :",
+                matchs.length
+            );
+
+
+            // ==========================================
+            // CALCULER LES RÉSULTATS
+            // ==========================================
+
+            matchs.forEach(function(match) {
+
+                if (
+                    match.competition !==
+                    "Ligue des Champions"
+                ) {
+                    return;
+                }
+
+
+                if (
+                    match.statut !==
+                    "Terminé"
+                ) {
+                    return;
+                }
+
+
+                let equipe1 =
+                    (match.equipe1 || "").trim();
+
+                let equipe2 =
+                    (match.equipe2 || "").trim();
+
+
+                if (
+                    !equipes[equipe1] ||
+                    !equipes[equipe2]
+                ) {
+                    return;
+                }
+
+
+                let score1 =
+                    Number(match.score1);
+
+                let score2 =
+                    Number(match.score2);
+
+
+                if (
+                    isNaN(score1) ||
+                    isNaN(score2)
+                ) {
+                    return;
+                }
+
+
+                equipes[equipe1].mj++;
+                equipes[equipe2].mj++;
+
+
+                equipes[equipe1].bp += score1;
+                equipes[equipe1].bc += score2;
+
+                equipes[equipe2].bp += score2;
+                equipes[equipe2].bc += score1;
+
+
+                if (score1 > score2) {
+
+                    equipes[equipe1].v++;
+                    equipes[equipe1].pts += 3;
+
+                    equipes[equipe2].d++;
+
+                }
+
+                else if (score1 < score2) {
+
+                    equipes[equipe2].v++;
+                    equipes[equipe2].pts += 3;
+
+                    equipes[equipe1].d++;
+
+                }
+
+                else {
+
+                    equipes[equipe1].n++;
+                    equipes[equipe2].n++;
+
+                    equipes[equipe1].pts++;
+                    equipes[equipe2].pts++;
+
+                }
+
+            });
+
+
+            // ==========================================
+            // TRIER LE CLASSEMENT
+            // ==========================================
+
+            let listeEquipes =
+                Object.keys(equipes);
+
+
+            listeEquipes.sort(function(a, b) {
+
+                let diffA =
+                    equipes[a].bp -
+                    equipes[a].bc;
+
+                let diffB =
+                    equipes[b].bp -
+                    equipes[b].bc;
+
+
+                if (
+                    equipes[b].pts !==
+                    equipes[a].pts
+                ) {
+
+                    return (
+                        equipes[b].pts -
+                        equipes[a].pts
+                    );
+
+                }
+
+
+                if (diffB !== diffA) {
+
+                    return (
+                        diffB -
+                        diffA
+                    );
+
+                }
+
+
+                return (
+                    equipes[b].bp -
+                    equipes[a].bp
+                );
+
+            });
+
+
+            // ==========================================
+            // AFFICHER LE TABLEAU
+            // ==========================================
+
+            let html = `
+
+                <h2>
+                    ⭐ Ligue des Champions 2026-2027
+                </h2>
+
+                <p>
+                    Classement de la phase de ligue
+                </p>
+
+                <table border="1"
+                       align="center"
+                       cellpadding="8"
+                       style="width:100%;">
+
+                    <tr>
+
+                        <th>#</th>
+                        <th>Équipe</th>
+                        <th>MJ</th>
+                        <th>V</th>
+                        <th>N</th>
+                        <th>D</th>
+                        <th>BP</th>
+                        <th>BC</th>
+                        <th>Diff</th>
+                        <th>Pts</th>
+
+                    </tr>
+
+            `;
+
+
+            listeEquipes.forEach(
+                function(equipe, index) {
+
+                    let diff =
+                        equipes[equipe].bp -
+                        equipes[equipe].bc;
+
+
+                    let logo =
+                        logosClassementLigueDesChampions[
+                            equipe
+                        ];
+
+
+                    html += `
+
+                        <tr>
+
+                            <td>
+                                ${index + 1}
+                            </td>
+
+                            <td>
+
+                                <div style="
+                                    display:flex;
+                                    align-items:center;
+                                    gap:10px;
+                                ">
+
+                                    ${
+                                        logo
+                                        ?
+                                        `<img
+                                            src="${logo}"
+                                            alt="${equipe}"
+                                            style="
+                                                width:35px;
+                                                height:35px;
+                                                object-fit:contain;
+                                            "
+                                        >`
+                                        :
+                                        ""
+                                    }
+
+                                    <span>
+                                        ${equipe}
+                                    </span>
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                ${equipes[equipe].mj}
+                            </td>
+
+                            <td>
+                                ${equipes[equipe].v}
+                            </td>
+
+                            <td>
+                                ${equipes[equipe].n}
+                            </td>
+
+                            <td>
+                                ${equipes[equipe].d}
+                            </td>
+
+                            <td>
+                                ${equipes[equipe].bp}
+                            </td>
+
+                            <td>
+                                ${equipes[equipe].bc}
+                            </td>
+
+                            <td>
+                                ${diff}
+                            </td>
+
+                            <td>
+                                ${equipes[equipe].pts}
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                }
+            );
+
+
+            html += `</table>`;
+
+
+            classementChampions.innerHTML =
+                html;
+
+        })
+
+        .catch(function(erreur) {
+
+            console.error(
+                "❌ Impossible de charger le classement Ligue des Champions :",
+                erreur
+            );
+
+        });
+
 }
