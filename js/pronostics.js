@@ -984,6 +984,56 @@ if (
 
             });
 
+            if (choixCompetition) {
+
+    choixCompetition.addEventListener(
+        "change",
+        function() {
+
+            selectMatch.innerHTML =
+                '<option value="">⚽ Sélectionner un match</option>';
+
+            let matchsFiltres =
+                matchsAdmin.filter(function(match) {
+
+                    return (
+                        match.competition ===
+                        choixCompetition.value
+                    );
+
+                });
+
+            matchsFiltres.forEach(function(match) {
+
+                let option =
+                    document.createElement("option");
+
+                option.value =
+                    match.equipe1.trim() +
+                    " - " +
+                    match.equipe2.trim();
+
+                option.textContent =
+                    match.equipe1 +
+                    " 🆚 " +
+                    match.equipe2;
+
+                selectMatch.appendChild(option);
+
+            });
+
+        }
+    );
+
+}
+
+if (choixCompetition) {
+
+    choixCompetition.value =
+        "Ligue des Nations";
+
+}
+
 
             // ==========================================
             // CHERCHER LE PROCHAIN MATCH
