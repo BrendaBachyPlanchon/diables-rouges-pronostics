@@ -339,7 +339,6 @@ if (competition === "Ligue des Champions") {
 
         <div class="carte">
 
-            <h2>⭐ Ligue des Champions 2026-2027</h2>
 
             <div id="classement-champions"
                  style="width:100%; overflow-x:auto;">
