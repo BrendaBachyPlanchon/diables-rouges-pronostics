@@ -203,7 +203,11 @@ const equipesLigueDesChampions = [
     "Sabah",
     "Shakhtar Donetsk",
     "Slavia Prague",
-    "Club Brugge"
+    "Club Brugge",
+    "Fenerbahçe",
+    "AEK Athens",
+    "Viking",
+    "Slovan Bratislava"
 
 ];
 
@@ -244,7 +248,11 @@ const logosClassementLigueDesChampions = {
     "Sabah": "images/clubs/champions-league/sabah.png",
     "Shakhtar Donetsk": "images/clubs/champions-league/shakhtar-donetsk.png",
     "Slavia Prague": "images/clubs/champions-league/slavia-prague.png",
-    "Club Brugge": "images/clubs/champions-league/club-brugge.png"
+    "Club Brugge": "images/clubs/champions-league/club-brugge.png",
+    "Fenerbahçe": "images/clubs/champions-league/fenerbahce.png",
+    "AEK Athens": "images/clubs/champions-league/aek-athens.png",
+    "Viking": "images/clubs/champions-league/viking.png",
+    "Slovan Bratislava": "images/clubs/champions-league/slovan-bratislava.png"
 
 };
 
