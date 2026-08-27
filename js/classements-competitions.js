@@ -256,6 +256,50 @@ const logosClassementLigueDesChampions = {
 
 };
 
+// ==========================================
+// LOGOS EUROPA LEAGUE 2026-2027
+// ==========================================
+
+const logosClassementEuropaLeague = {
+
+    "AZ Alkmaar": "images/clubs/europa-league/az-alkmaar.png",
+    "Bournemouth": "images/clubs/europa-league/bournemouth.png",
+    "Celta Vigo": "images/clubs/europa-league/celta.png",
+    "Crystal Palace": "images/clubs/europa-league/crystal-palace.png",
+    "Hoffenheim": "images/clubs/europa-league/hoffenheim.png",
+    "Juventus": "images/clubs/europa-league/juventus.png",
+    "Bayer Leverkusen": "images/clubs/europa-league/bayer-leverkusen.png",
+    "Marseille": "images/clubs/europa-league/marseille.png",
+    "AC Milan": "images/clubs/europa-league/milan.png",
+    "Real Sociedad": "images/clubs/europa-league/real-sociedad.png",
+    "Rennes": "images/clubs/europa-league/rennes.png",
+    "Sunderland": "images/clubs/europa-league/sunderland.png",
+    "Torreense": "images/clubs/europa-league/torreense.png"
+
+};
+
+// ==========================================
+// ÉQUIPES EUROPA LEAGUE 2026-2027
+// ==========================================
+
+const equipesEuropaLeague = [
+
+    "AZ Alkmaar",
+    "Bournemouth",
+    "Celta Vigo",
+    "Crystal Palace",
+    "Hoffenheim",
+    "Juventus",
+    "Bayer Leverkusen",
+    "Marseille",
+    "AC Milan",
+    "Real Sociedad",
+    "Rennes",
+    "Sunderland",
+    "Torreense"
+
+];
+
 
 if (choixCompetition) {
 
@@ -349,6 +393,24 @@ if (competition === "Ligue des Champions") {
     `;
 
     afficherClassementLigueDesChampions();
+
+}
+
+if (competition === "Europa League") {
+
+    zoneClassements.innerHTML = `
+
+        <div class="carte">
+
+            <div id="classement-europa"
+                 style="width:100%; overflow-x:auto;">
+            </div>
+
+        </div>
+
+    `;
+
+    afficherClassementEuropaLeague();
 
 }
 
@@ -1153,6 +1215,341 @@ function afficherClassementLigueDesChampions() {
 
             console.error(
                 "❌ Impossible de charger le classement Ligue des Champions :",
+                erreur
+            );
+
+        });
+
+}
+
+// ==========================================
+// CLASSEMENT EUROPA LEAGUE 2026-2027
+// ==========================================
+
+function afficherClassementEuropaLeague() {
+
+    let classementEuropa =
+        document.getElementById("classement-europa");
+
+    if (!classementEuropa) {
+        return;
+    }
+
+    let equipes = {};
+
+    // ==========================================
+    // INITIALISER LES ÉQUIPES
+    // ==========================================
+
+    equipesEuropaLeague.forEach(function(equipe) {
+
+        equipes[equipe] = {
+
+            mj: 0,
+            v: 0,
+            n: 0,
+            d: 0,
+            bp: 0,
+            bc: 0,
+            pts: 0
+
+        };
+
+    });
+
+    // ==========================================
+    // CHARGER LES MATCHS
+    // ==========================================
+
+    supabaseClient
+        .from("matchs")
+        .select("*")
+
+        .then(function(resultat) {
+
+            if (resultat.error) {
+
+                console.error(
+                    "❌ Erreur chargement matchs Europa League :",
+                    resultat.error
+                );
+
+                return;
+            }
+
+            let matchs =
+                resultat.data || [];
+
+            console.log(
+                "✅ Matchs Europa League chargés :",
+                matchs.length
+            );
+
+            // ==========================================
+            // CALCULER LES RÉSULTATS
+            // ==========================================
+
+            matchs.forEach(function(match) {
+
+                if (
+                    match.competition !==
+                    "Europa League"
+                ) {
+                    return;
+                }
+
+                if (
+                    match.statut !==
+                    "Terminé"
+                ) {
+                    return;
+                }
+
+                let equipe1 =
+                    (match.equipe1 || "").trim();
+
+                let equipe2 =
+                    (match.equipe2 || "").trim();
+
+                if (
+                    !equipes[equipe1] ||
+                    !equipes[equipe2]
+                ) {
+                    return;
+                }
+
+                let score1 =
+                    Number(match.score1);
+
+                let score2 =
+                    Number(match.score2);
+
+                if (
+                    isNaN(score1) ||
+                    isNaN(score2)
+                ) {
+                    return;
+                }
+
+                equipes[equipe1].mj++;
+                equipes[equipe2].mj++;
+
+                equipes[equipe1].bp += score1;
+                equipes[equipe1].bc += score2;
+
+                equipes[equipe2].bp += score2;
+                equipes[equipe2].bc += score1;
+
+                if (score1 > score2) {
+
+                    equipes[equipe1].v++;
+                    equipes[equipe1].pts += 3;
+
+                    equipes[equipe2].d++;
+
+                }
+
+                else if (score1 < score2) {
+
+                    equipes[equipe2].v++;
+                    equipes[equipe2].pts += 3;
+
+                    equipes[equipe1].d++;
+
+                }
+
+                else {
+
+                    equipes[equipe1].n++;
+                    equipes[equipe2].n++;
+
+                    equipes[equipe1].pts++;
+                    equipes[equipe2].pts++;
+
+                }
+
+            });
+
+            // ==========================================
+            // TRIER LE CLASSEMENT
+            // ==========================================
+
+            let listeEquipes =
+                Object.keys(equipes);
+
+            listeEquipes.sort(function(a, b) {
+
+                let diffA =
+                    equipes[a].bp -
+                    equipes[a].bc;
+
+                let diffB =
+                    equipes[b].bp -
+                    equipes[b].bc;
+
+                if (
+                    equipes[b].pts !==
+                    equipes[a].pts
+                ) {
+
+                    return (
+                        equipes[b].pts -
+                        equipes[a].pts
+                    );
+
+                }
+
+                if (diffB !== diffA) {
+
+                    return diffB - diffA;
+
+                }
+
+                return (
+                    equipes[b].bp -
+                    equipes[a].bp
+                );
+
+            });
+
+            // ==========================================
+            // AFFICHER LE TABLEAU
+            // ==========================================
+
+            let html = `
+
+                <h2>
+                    🟠 Europa League 2026-2027
+                </h2>
+
+                <p>
+                    Classement de la phase de ligue
+                </p>
+
+                <table border="1"
+                       align="center"
+                       cellpadding="8"
+                       style="width:100%;">
+
+                    <tr>
+
+                        <th>#</th>
+                        <th>Équipe</th>
+                        <th>MJ</th>
+                        <th>V</th>
+                        <th>N</th>
+                        <th>D</th>
+                        <th>BP</th>
+                        <th>BC</th>
+                        <th>Diff</th>
+                        <th>Pts</th>
+
+                    </tr>
+
+            `;
+
+            listeEquipes.forEach(
+                function(equipe, index) {
+
+                    let diff =
+                        equipes[equipe].bp -
+                        equipes[equipe].bc;
+
+                    let logo =
+                        logosClassementEuropaLeague[
+                            equipe
+                        ];
+
+                    html += `
+
+                        <tr>
+
+                            <td>
+                                ${index + 1}
+                            </td>
+
+                            <td>
+
+                                <div style="
+                                    display:flex;
+                                    align-items:center;
+                                    gap:10px;
+                                ">
+
+                                    ${
+                                        logo
+                                        ?
+                                        `<img
+                                            src="${logo}"
+                                            alt="${equipe}"
+                                            style="
+                                                width:35px;
+                                                height:35px;
+                                                object-fit:contain;
+                                            "
+                                        >`
+                                        :
+                                        ""
+                                    }
+
+                                    <span>
+                                        ${equipe}
+                                    </span>
+
+                                </div>
+
+                            </td>
+
+                            <td>
+                                ${equipes[equipe].mj}
+                            </td>
+
+                            <td>
+                                ${equipes[equipe].v}
+                            </td>
+
+                            <td>
+                                ${equipes[equipe].n}
+                            </td>
+
+                            <td>
+                                ${equipes[equipe].d}
+                            </td>
+
+                            <td>
+                                ${equipes[equipe].bp}
+                            </td>
+
+                            <td>
+                                ${equipes[equipe].bc}
+                            </td>
+
+                            <td>
+                                ${diff}
+                            </td>
+
+                            <td>
+                                ${equipes[equipe].pts}
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                }
+            );
+
+            html += `</table>`;
+
+            classementEuropa.innerHTML =
+                html;
+
+        })
+
+        .catch(function(erreur) {
+
+            console.error(
+                "❌ Impossible de charger le classement Europa League :",
                 erreur
             );
 
