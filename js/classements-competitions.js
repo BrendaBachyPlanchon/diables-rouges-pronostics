@@ -274,9 +274,33 @@ const logosClassementEuropaLeague = {
     "Real Sociedad": "images/clubs/europa-league/real-sociedad.png",
     "Rennes": "images/clubs/europa-league/rennes.png",
     "Sunderland": "images/clubs/europa-league/sunderland.png",
-    "Torreense": "images/clubs/europa-league/torreense.png"
+    "Torreense": "images/clubs/europa-league/torreense.png",
+    "Anderlecht": "images/clubs/europa-league/anderlecht.png",
+    "Ararat-Armenia": "images/clubs/europa-league/ararat-armenia.png",
+    "Benfica": "images/clubs/europa-league/benfica.png",
+    "Beşiktaş": "images/clubs/europa-league/besiktas.png",
+    "Celje": "images/clubs/europa-league/celje.png",
+    "Celtic": "images/clubs/europa-league/celtic.png",
+    "Dinamo Zagreb": "images/clubs/europa-league/dynamo-zagreb.png",
+    "Ferencváros": "images/clubs/europa-league/ferencvaros.png",
+    "Hapoel Beer-Sheva": "images/clubs/europa-league/hapoel-beer-sheva.png",
+    "Jagiellonia Białystok": "images/clubs/europa-league/jagiellonia-bialystok.png",
+    "Lech Poznań": "images/clubs/europa-league/lech-poznan.png",
+    "Levski Sofia": "images/clubs/europa-league/levski-sofia.png",
+    "Lillestrøm": "images/clubs/europa-league/lillestrom.png",
+    "Lyon": "images/clubs/europa-league/lyon.png",
+    "NEC Nijmegen": "images/clubs/europa-league/nec-nijmegen.png",
+    "OFI Crète": "images/clubs/europa-league/ofi-crete.png",
+    "Olympiacos": "images/clubs/europa-league/olympiacos.png",
+    "Omonia Nicosie": "images/clubs/europa-league/omonia-nicosie.png",
+    "Salzburg": "images/clubs/europa-league/salzburg.png",
+    "Sparta Prague": "images/clubs/europa-league/sparta-prague.png",
+    "Sturm Graz": "images/clubs/europa-league/sturm-graz.png",
+    "Union Saint-Gilloise": "images/clubs/europa-league/union.png",
+    "Viktoria Plzeň": "images/clubs/europa-league/viktoria-plzen.png"
 
 };
+
 
 // ==========================================
 // ÉQUIPES EUROPA LEAGUE 2026-2027
@@ -296,7 +320,30 @@ const equipesEuropaLeague = [
     "Real Sociedad",
     "Rennes",
     "Sunderland",
-    "Torreense"
+    "Torreense",
+    "Anderlecht",
+    "Ararat-Armenia",
+    "Benfica",
+    "Beşiktaş",
+    "Celje",
+    "Celtic",
+    "Dinamo Zagreb",
+    "Ferencváros",
+    "Hapoel Beer-Sheva",
+    "Jagiellonia Białystok",
+    "Lech Poznań",
+    "Levski Sofia",
+    "Lillestrøm",
+    "Lyon",
+    "NEC Nijmegen",
+    "OFI Crète",
+    "Olympiacos",
+    "Omonia Nicosie",
+    "Salzburg",
+    "Sparta Prague",
+    "Sturm Graz",
+    "Union Saint-Gilloise",
+    "Viktoria Plzeň"
 
 ];
 
