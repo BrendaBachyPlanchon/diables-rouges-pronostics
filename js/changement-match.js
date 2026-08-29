@@ -284,12 +284,14 @@ let logosChampionsLeague = {
     "Sabah": "images/clubs/champions-league/sabah.png",
     "Shakhtar Donetsk": "images/clubs/champions-league/shakhtar-donetsk.png",
     "Slavia Prague": "images/clubs/champions-league/slavia-prague.png",
-    "Club Brugge": "images/clubs/champions-league/club-brugge.png"
+    "Club Brugge": "images/clubs/champions-league/club-brugge.png",
+    "AEK Athens": "images/clubs/champions-league/aek-athens.png",
+    "Fenerbahçe": "images/clubs/champions-league/fenerbahce.png",
+    "Slovan Bratislava": "images/clubs/champions-league/slovan-bratislava.png",
+    "Viking": "images/clubs/champions-league/viking.png",
 
 };
-
-
-                // ==========================================
+        // ==========================================
                 // NETTOYAGE DU NOM DES ÉQUIPES
                 // ==========================================
 
