@@ -121,81 +121,136 @@ a:hover {
 
 
 /* =========================================================
-   NAVIGATION
-   ========================================================= */
+NAVIGATION PRINCIPALE
+========================================================= */
 
 nav {
-    display: none;
-    width: 90%;
-    max-width: 1100px;
-    margin: 10px auto 25px;
-    padding: 15px;
+display: none;
+width: 94%;
+max-width: 1200px;
+margin: 10px auto 25px;
+padding: 18px;
 
-    background: rgba(10, 10, 10, 0.94);
-    border: 2px solid #ffcc00;
-    border-radius: 16px;
+background: rgba(10, 10, 10, 0.96);
+border: 2px solid #ffcc00;
+border-radius: 16px;
 
-    box-shadow:
-        0 0 25px rgba(0, 0, 0, 0.7),
-        0 0 15px rgba(255, 204, 0, 0.15);
+box-shadow:
+    0 0 25px rgba(0, 0, 0, 0.7),
+    0 0 15px rgba(255, 204, 0, 0.15);
+
+
 }
 
 nav.menu-ouvert {
-    display: block;
+display: block;
 }
-
-nav a {
-    display: inline-block;
-
-    background: linear-gradient(145deg, #e30613, #a8000b);
-    color: white;
-
-    padding: 11px 18px;
-    margin: 5px;
-
-    border-radius: 10px;
-    border: 2px solid #ffcc00;
-
-    font-size: 17px;
-    font-weight: bold;
-
-    transition: 0.3s ease;
-}
-
-nav a:hover {
-    background: #ffcc00;
-    color: black;
-    transform: translateY(-3px);
-}
-
 
 /* =========================================================
-   SOUS-MENU PLUS
-   ========================================================= */
+LIENS PRINCIPAUX
+========================================================= */
+
+nav > a {
+display: inline-block;
+
+background: linear-gradient(145deg, #e30613, #a8000b);
+color: white;
+
+padding: 12px 18px;
+margin: 5px;
+
+border-radius: 10px;
+border: 2px solid #ffcc00;
+
+font-size: 17px;
+font-weight: bold;
+
+transition: 0.3s ease;
+
+}
+
+nav > a:hover {
+background: #ffcc00;
+color: black;
+transform: translateY(-3px);
+}
+
+/* =========================================================
+BOUTON PLUS
+========================================================= */
+
+.plus-mobile {
+display: block;
+width: 85%;
+max-width: 400px;
+margin: 15px auto 10px;
+
+padding: 12px;
+
+background: #333;
+color: white;
+
+border: 2px solid #ffcc00;
+border-radius: 10px;
+
+font-size: 18px;
+font-weight: bold;
+
+transition: 0.3s ease;
+
+}
+
+.plus-mobile:hover {
+background: #ffcc00;
+color: black;
+transform: translateY(-2px);
+}
+
+/* =========================================================
+SOUS-MENU PLUS
+========================================================= */
 
 #menu-plus {
-    display: none;
+display: none;
+
+margin: 10px auto 5px;
+padding: 10px;
+
+border-top: 1px solid rgba(255, 204, 0, 0.35);
+
 }
 
 #menu-plus.ouvert {
-    display: block;
+display: block;
 }
 
-.plus-mobile {
-    display: block;
-    width: 85%;
-    max-width: 400px;
-    margin: 12px auto;
+/* =========================================================
+LIENS DU SOUS-MENU
+========================================================= */
 
-    padding: 12px;
+#menu-plus a {
+display: inline-block;
 
-    background: #333;
-    color: white;
+background: rgba(50, 50, 50, 0.95);
+color: #ffcc00;
 
-    border: 2px solid #ffcc00;
-    border-radius: 10px;
+padding: 10px 16px;
+margin: 4px;
 
-    font-size: 18px;
+border-radius: 9px;
+border: 1px solid #ffcc00;
+
+font-size: 16px;
+font-weight: bold;
+
+transition: 0.3s ease;
+
+}
+
+#menu-plus a:hover {
+background: #ffcc00;
+color: black;
+transform: translateY(-2px);
 }
 
 
