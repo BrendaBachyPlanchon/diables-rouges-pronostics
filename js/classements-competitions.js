@@ -264,7 +264,7 @@ const logosClassementEuropaLeague = {
 
     "AZ Alkmaar": "images/clubs/europa-league/az-alkmaar.png",
     "Bournemouth": "images/clubs/europa-league/bournemouth.png",
-    "Celta Vigo": "images/clubs/europa-league/celta.png",
+    "Celta": "images/clubs/europa-league/celta.png",
     "Crystal Palace": "images/clubs/europa-league/crystal-palace.png",
     "Hoffenheim": "images/clubs/europa-league/hoffenheim.png",
     "Juventus": "images/clubs/europa-league/juventus.png",
@@ -403,7 +403,7 @@ const equipesEuropaLeague = [
 
     "AZ Alkmaar",
     "Bournemouth",
-    "Celta Vigo",
+    "Celta",
     "Crystal Palace",
     "Hoffenheim",
     "Juventus",
