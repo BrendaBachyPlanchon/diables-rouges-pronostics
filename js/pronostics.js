@@ -1220,20 +1220,56 @@ if (choixCompetition) {
     }
 
 
-    // ==========================================
+   // ==========================================
 // LOGOS DES CLUBS
 // ==========================================
 
+let logosCompetition = {};
+
+
+// ==========================================
+// CHOISIR LA BONNE LISTE DE LOGOS
+// ==========================================
+
+if (
+    prochainMatch.competition ===
+    "Jupiler Pro League"
+) {
+
+    logosCompetition =
+        logosJupilerProLeague;
+
+}
+
+else if (
+    prochainMatch.competition ===
+    "Europa League"
+) {
+
+    logosCompetition =
+        logosClassementEuropaLeague;
+
+}
+
+
+// ==========================================
+// RECHERCHER LES LOGOS
+// ==========================================
+
 let logoDomicile =
-    logosJupilerProLeague[
+    logosCompetition[
         prochainMatch.equipe1.trim()
     ];
 
 let logoExterieur =
-    logosJupilerProLeague[
+    logosCompetition[
         prochainMatch.equipe2.trim()
     ];
 
+
+// ==========================================
+// AFFICHER LOGO DOMICILE
+// ==========================================
 
 if (
     drapeauDomicile &&
@@ -1246,6 +1282,10 @@ if (
 }
 
 
+// ==========================================
+// AFFICHER LOGO EXTÉRIEUR
+// ==========================================
+
 if (
     drapeauExterieur &&
     logoExterieur
@@ -1255,6 +1295,28 @@ if (
         logoExterieur;
 
 }
+
+
+// ==========================================
+// DEBUG LOGOS
+// ==========================================
+
+console.log(
+    "🏆 Compétition :",
+    prochainMatch.competition
+);
+
+console.log(
+    "🛡️ Logo domicile :",
+    prochainMatch.equipe1,
+    logoDomicile || "❌ INTROUVABLE"
+);
+
+console.log(
+    "🛡️ Logo extérieur :",
+    prochainMatch.equipe2,
+    logoExterieur || "❌ INTROUVABLE"
+);
 
 
     console.log(
