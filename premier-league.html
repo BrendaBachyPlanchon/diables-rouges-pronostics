@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Premier League - Diables Rouges Pronostics</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<button id="bouton-menu" class="menu-mobile">
+    ☰ Menu
+</button>
+
+<nav>
+
+```
+<a href="index.html">🏠 Accueil</a>
+<a href="pronostic.html">⚽ Pronostics</a>
+<a href="classement.html">🏆 Classement</a>
+<a href="resultats.html">📋 Résultats</a>
+<a href="profil.html">👤 Mon profil</a>
+
+<button class="plus-mobile">
+    ☰ Plus
+</button>
+
+<div id="menu-plus">
+
+    <a href="competitions.html">🌍 Compétitions</a>
+    <a href="communaute.html">💬 Communauté</a>
+    <a href="actualites.html">📰 Actualités</a>
+    <a href="classements-competitions.html">🏆 Classements équipes</a>
+    <a href="regles.html">📖 Règles</a>
+    <a href="admin.html">⚙️ Administration</a>
+    <a href="a-propos.html">ℹ️ À propos</a>
+
+</div>
+```
+
+</nav>
+
+<br>
+
+<div class="titre-site">
+
+```
+<h1>🏴 Premier League</h1>
+
+<p>
+    Le championnat anglais de football
+</p>
+```
+
+</div>
+
+<div class="carte">
+
+```
+<h2>⚽ Prochains matchs</h2>
+
+<div id="liste-matchs"></div>
+```
+
+</div>
+
+<div class="carte">
+
+```
+<h2>📋 Pronostics enregistrés</h2>
+
+<table id="table-pronostics">
+
+    <tr>
+        <th>👤 Joueur</th>
+        <th>⚽ Match</th>
+        <th>🎯 Pronostic</th>
+    </tr>
+
+</table>
+```
+
+</div>
+
+<div class="carte">
+
+```
+<h2>🏴 Les clubs anglais</h2>
+
+<p>
+    Retrouvez les matchs des clubs engagés en Premier League.
+</p>
+```
+
+</div>
+
+<br>
+
+<a href="championnats-europeens.html">
+    ⬅ Retour aux championnats européens
+</a>
+
+<script src="script.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="supabase.js"></script>
+
+<script>
+    window.competitionPage = "Premier League";
+</script>
+
+<script src="js/pronostics.js"></script>
+
+<script src="js/affichage-matchs.js"></script>
+
+</body>
+</html>
