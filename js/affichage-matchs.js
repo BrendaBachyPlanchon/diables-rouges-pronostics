@@ -6,7 +6,7 @@ console.log("✅ affichage-matchs.js Supabase actif");
 
 
 // ==========================================
-// LOGOS DES CLUBS
+// LOGOS JUPILER PRO LEAGUE
 // ==========================================
 
 var logosJupilerProLeague = {
@@ -81,6 +81,17 @@ var logosJupilerProLeague = {
 
 
 // ==========================================
+// AUTRES CHAMPIONNATS
+// ==========================================
+
+var logosPremierLeague = {};
+var logosSerieA = {};
+var logosLiga = {};
+var logosBundesliga = {};
+var logosLigue1 = {};
+
+
+// ==========================================
 // ZONE DES MATCHS
 // ==========================================
 
@@ -90,28 +101,19 @@ let zoneMatchs =
 
 if (zoneMatchs) {
 
-    // ==========================================
-    // VÉRIFIER SUPABASE
-    // ==========================================
-
     if (
         typeof supabaseClient === "undefined" ||
         !supabaseClient
     ) {
 
         console.error(
-            "❌ Supabase Client indisponible pour affichage-matchs.js"
+            "❌ Supabase Client indisponible"
         );
 
         zoneMatchs.innerHTML =
             "<p>❌ Impossible de charger les matchs.</p>";
 
     } else {
-
-
-        // ==========================================
-        // CHARGER LES MATCHS DEPUIS SUPABASE
-        // ==========================================
 
         supabaseClient
             .from("matchs")
@@ -121,7 +123,6 @@ if (zoneMatchs) {
 
                 let matchs = resultat.data;
                 let erreur = resultat.error;
-
 
                 if (erreur) {
 
@@ -134,19 +135,69 @@ if (zoneMatchs) {
                         "<p>❌ Impossible de charger les matchs.</p>";
 
                     return;
-
                 }
 
 
                 if (!matchs) {
-
                     matchs = [];
+                }
+
+
+                console.log(
+                    "✅ Matchs chargés depuis Supabase :",
+                    matchs.length
+                );
+
+
+                // ==========================================
+                // COMPÉTITION DE LA PAGE
+                // ==========================================
+
+                let competitionPage =
+                    window.competitionPage || "";
+
+
+                console.log(
+                    "🏆 Compétition de la page :",
+                    competitionPage
+                );
+
+
+                // ==========================================
+                // SI AUCUNE COMPÉTITION N'EST DÉFINIE
+                // ==========================================
+
+                if (!competitionPage) {
+
+                    console.warn(
+                        "⚠️ Aucune compétition définie pour cette page"
+                    );
+
+                }
+
+
+                // ==========================================
+                // FILTRER LA COMPÉTITION
+                // ==========================================
+
+                if (competitionPage) {
+
+                    matchs =
+                        matchs.filter(function(match) {
+
+                            return (
+                                (match.competition || "").trim()
+                                ===
+                                competitionPage.trim()
+                            );
+
+                        });
 
                 }
 
 
                 console.log(
-                    "✅ Matchs affichage chargés depuis Supabase :",
+                    "📋 Matchs affichés après filtrage :",
                     matchs.length
                 );
 
@@ -180,58 +231,6 @@ if (zoneMatchs) {
 
 
                 // ==========================================
-                // FILTRER LA COMPÉTITION
-                // ==========================================
-
-                let pageActuelle =
-                    window.location.pathname;
-
-
-                if (
-                    pageActuelle.includes(
-                        "nations-league"
-                    )
-                ) {
-
-                    matchs =
-                        matchs.filter(function(match) {
-
-                            return (
-                                match.competition ===
-                                "Ligue des Nations"
-                            );
-
-                        });
-
-                }
-
-
-                if (
-                    pageActuelle.includes(
-                        "championnats-europeens"
-                    )
-                ) {
-
-                    matchs =
-                        matchs.filter(function(match) {
-
-                            return (
-                                match.competition ===
-                                "Jupiler Pro League"
-                            );
-
-                        });
-
-                }
-
-
-                console.log(
-                    "📋 Matchs affichés après filtrage :",
-                    matchs.length
-                );
-
-
-                // ==========================================
                 // AFFICHER LES MATCHS
                 // ==========================================
 
@@ -244,16 +243,26 @@ if (zoneMatchs) {
                         (match.equipe2 || "").trim();
 
 
+                    // ==========================================
+                    // LOGOS
+                    // ==========================================
+
                     let logo1 =
-                        logosJupilerProLeague[
-                            equipe1
-                        ];
+                        logosJupilerProLeague[equipe1] ||
+                        logosPremierLeague[equipe1] ||
+                        logosSerieA[equipe1] ||
+                        logosLiga[equipe1] ||
+                        logosBundesliga[equipe1] ||
+                        logosLigue1[equipe1];
 
 
                     let logo2 =
-                        logosJupilerProLeague[
-                            equipe2
-                        ];
+                        logosJupilerProLeague[equipe2] ||
+                        logosPremierLeague[equipe2] ||
+                        logosSerieA[equipe2] ||
+                        logosLiga[equipe2] ||
+                        logosBundesliga[equipe2] ||
+                        logosLigue1[equipe2];
 
 
                     let urlMatch =
@@ -384,15 +393,29 @@ if (zoneMatchs) {
 
                 });
 
+
+                // ==========================================
+                // AUCUN MATCH
+                // ==========================================
+
+                if (matchs.length === 0) {
+
+                    zoneMatchs.innerHTML = `
+                        <p>
+                            🕘 Aucun match disponible pour cette compétition pour le moment.
+                        </p>
+                    `;
+
+                }
+
             })
 
             .catch(function(erreur) {
 
                 console.error(
-                    "❌ Impossible de charger les matchs depuis Supabase :",
+                    "❌ Impossible de charger les matchs :",
                     erreur
                 );
-
 
                 zoneMatchs.innerHTML =
                     "<p>❌ Impossible de charger les matchs.</p>";
