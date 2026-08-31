@@ -135,6 +135,51 @@ var logosLigueDesChampions = {
 
 };
 
+// ==========================================
+// LOGOS EUROPA LEAGUE
+// ==========================================
+
+var logosEuropaLeague = {
+
+    "AZ Alkmaar": "images/clubs/europa-league/az-alkmaar.png",
+    "Bournemouth": "images/clubs/europa-league/bournemouth.png",
+    "Celta": "images/clubs/europa-league/celta.png",
+    "Crystal Palace": "images/clubs/europa-league/crystal-palace.png",
+    "Hoffenheim": "images/clubs/europa-league/hoffenheim.png",
+    "Juventus": "images/clubs/europa-league/juventus.png",
+    "Bayer Leverkusen": "images/clubs/europa-league/bayer-leverkusen.png",
+    "Marseille": "images/clubs/europa-league/marseille.png",
+    "AC Milan": "images/clubs/europa-league/milan.png",
+    "Real Sociedad": "images/clubs/europa-league/real-sociedad.png",
+    "Rennes": "images/clubs/europa-league/rennes.png",
+    "Sunderland": "images/clubs/europa-league/sunderland.png",
+    "Torreense": "images/clubs/europa-league/torreense.png",
+    "Anderlecht": "images/clubs/europa-league/anderlecht.png",
+    "Ararat-Armenia": "images/clubs/europa-league/ararat-armenia.png",
+    "Benfica": "images/clubs/europa-league/benfica.png",
+    "Beşiktaş": "images/clubs/europa-league/besiktas.png",
+    "Celje": "images/clubs/europa-league/celje.png",
+    "Celtic": "images/clubs/europa-league/celtic.png",
+    "Dinamo Zagreb": "images/clubs/europa-league/dynamo-zagreb.png",
+    "Ferencváros": "images/clubs/europa-league/ferencvaros.png",
+    "Hapoel Beer-Sheva": "images/clubs/europa-league/hapoel-beer-sheva.png",
+    "Jagiellonia Białystok": "images/clubs/europa-league/jagiellonia-bialystok.png",
+    "Lech Poznań": "images/clubs/europa-league/lech-poznan.png",
+    "Levski Sofia": "images/clubs/europa-league/levski-sofia.png",
+    "Lillestrøm": "images/clubs/europa-league/lillestrom.png",
+    "Lyon": "images/clubs/europa-league/lyon.png",
+    "NEC Nijmegen": "images/clubs/europa-league/nec-nijmegen.png",
+    "OFI Crète": "images/clubs/europa-league/ofi-crete.png",
+    "Olympiacos": "images/clubs/europa-league/olympiacos.png",
+    "Omonia Nicosie": "images/clubs/europa-league/omonia-nicosie.png",
+    "Salzburg": "images/clubs/europa-league/salzburg.png",
+    "Sparta Prague": "images/clubs/europa-league/sparta-prague.png",
+    "Sturm Graz": "images/clubs/europa-league/sturm-graz.png",
+    "Union Saint-Gilloise": "images/clubs/europa-league/union.png",
+    "Viktoria Plzeň": "images/clubs/europa-league/viktoria-plzen.png"
+
+};
+
 
 // ==========================================
 // ZONE DES MATCHS
@@ -292,24 +337,26 @@ if (zoneMatchs) {
                     // LOGOS
                     // ==========================================
 
-                    let logo1 =
-                        logosJupilerProLeague[equipe1] ||
-                        logosPremierLeague[equipe1] ||
-                        logosSerieA[equipe1] ||
-                        logosLiga[equipe1] ||
-                        logosBundesliga[equipe1] ||
-                        logosLigue1[equipe1] ||
-                        logosLigueDesChampions[equipe1];
+                   let logo1 =
+    logosJupilerProLeague[equipe1] ||
+    logosPremierLeague[equipe1] ||
+    logosSerieA[equipe1] ||
+    logosLiga[equipe1] ||
+    logosBundesliga[equipe1] ||
+    logosLigue1[equipe1] ||
+    logosLigueDesChampions[equipe1] ||
+    logosEuropaLeague[equipe1];
 
 
-                   let logo2 =
-                   logosJupilerProLeague[equipe2] ||
-                   logosPremierLeague[equipe2] ||
-                   logosSerieA[equipe2] ||
-                   logosLiga[equipe2] ||
-                   logosBundesliga[equipe2] ||
-                   logosLigue1[equipe2] ||
-                   logosLigueDesChampions[equipe2];
+                  let logo2 =
+    logosJupilerProLeague[equipe2] ||
+    logosPremierLeague[equipe2] ||
+    logosSerieA[equipe2] ||
+    logosLiga[equipe2] ||
+    logosBundesliga[equipe2] ||
+    logosLigue1[equipe2] ||
+    logosLigueDesChampions[equipe2] ||
+    logosEuropaLeague[equipe2];
 
 
                     let urlMatch =
