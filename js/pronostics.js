@@ -551,112 +551,12 @@ function afficherPronostics() {
         "</tr>";
 
 
-   // ==========================================
-   // DÉTECTER LA COMPÉTITION DE LA PAGE
-   // ==========================================
-
-let pageActuelle =
-    window.location.pathname.toLowerCase();
-
-let competitionPage = null;
-
-
-// ==========================================
-// LIGUE DES NATIONS
+  // ==========================================
+// RÉCUPÉRER LA COMPÉTITION DE LA PAGE
 // ==========================================
 
-if (
-    pageActuelle.includes("nations-league")
-) {
-
-    competitionPage =
-        "Ligue des Nations";
-
-}
-
-
-// ==========================================
-// JUPILER PRO LEAGUE
-// ==========================================
-
-else if (
-    pageActuelle.includes(
-        "championnats-europeens"
-    )
-) {
-
-    competitionPage =
-        "Jupiler Pro League";
-
-}
-
-
-// ==========================================
-// COUPE DU MONDE 2030
-// ==========================================
-
-else if (
-    pageActuelle.includes(
-        "coupe-du-monde-2030"
-    )
-) {
-
-    competitionPage =
-        "Coupe du Monde 2030";
-
-}
-
-// ==========================================
-// LIGUE DES CHAMPIONS
-// ==========================================
-
-else if (
-    pageActuelle.includes("ligue-des-champions")
-) {
-
-    competitionPage =
-        "Ligue des Champions";
-
-}
-
-// ==========================================
-// EUROPA LEAGUE
-// ==========================================
-
-else if (
-    pageActuelle.includes("europa-league")
-) {
-
-    competitionPage =
-        "Europa League";
-
-}
-
-// ==========================================
-// CONFERENCE LEAGUE
-// ==========================================
-
-else if (
-    pageActuelle.includes("conference-league")
-) {
-
-    competitionPage =
-        "Conference League";
-
-}
-
-// ==========================================
-// EURO
-// ==========================================
-
-else if (
-    pageActuelle.includes("euro")
-) {
-
-    competitionPage =
-        "Euro";
-
-}
+let competitionPage =
+    window.competitionPage || null;
 
 
 console.log(
