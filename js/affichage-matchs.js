@@ -337,8 +337,9 @@ if (zoneMatchs) {
                     // LOGOS
                     // ==========================================
 
-                   let logo1 =
+                  let logo1 =
     logosJupilerProLeague[equipe1] ||
+    logosClassementPays[equipe1] ||
     logosPremierLeague[equipe1] ||
     logosSerieA[equipe1] ||
     logosLiga[equipe1] ||
@@ -348,8 +349,9 @@ if (zoneMatchs) {
     logosEuropaLeague[equipe1];
 
 
-                  let logo2 =
+let logo2 =
     logosJupilerProLeague[equipe2] ||
+    logosClassementPays[equipe2] ||
     logosPremierLeague[equipe2] ||
     logosSerieA[equipe2] ||
     logosLiga[equipe2] ||
@@ -357,7 +359,6 @@ if (zoneMatchs) {
     logosLigue1[equipe2] ||
     logosLigueDesChampions[equipe2] ||
     logosEuropaLeague[equipe2];
-
 
                     let urlMatch =
                         equipe1 +
