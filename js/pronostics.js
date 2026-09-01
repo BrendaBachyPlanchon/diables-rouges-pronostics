@@ -785,6 +785,20 @@ function chargerMatchsAdmin() {
     let choixCompetition =
         document.getElementById("choix-competition-pronostic");
 
+        let competitionPage =
+    window.competitionPage || "Ligue des Nations";
+
+    // ==========================================
+// COMPÉTITION DE LA PAGE
+// ==========================================
+
+if (choixCompetition) {
+
+    choixCompetition.value =
+        competitionPage;
+
+}
+
     if (!selectMatch) {
         return;
     }
@@ -841,29 +855,19 @@ function chargerMatchsAdmin() {
                 '<option value="">⚽ Sélectionner un match</option>';
 
 
-            // ==========================================
-            // AFFICHER LES MATCHS
-            // ==========================================
+         // ==========================================
+// FILTRER LES MATCHS DE LA COMPÉTITION
+// ==========================================
 
-          let matchsFiltres =
-    matchsAdmin;
+let matchsFiltres =
+    matchsAdmin.filter(function(match) {
 
-if (
-    choixCompetition &&
-    choixCompetition.value
-) {
+        return (
+            (match.competition || "").trim() ===
+            competitionPage.trim()
+        );
 
-    matchsFiltres =
-        matchsAdmin.filter(function(match) {
-
-            return (
-                match.competition ===
-                choixCompetition.value
-            );
-
-        });
-
-}
+    });
           
            matchsFiltres.forEach(function(match) {
 
@@ -927,34 +931,39 @@ if (
 
 }
 
-if (choixCompetition) {
-
-    choixCompetition.value =
-        "Ligue des Nations";
-
-}
 
 
-            // ==========================================
-            // CHERCHER LE PROCHAIN MATCH
-            // ==========================================
+           // ==========================================
+// CHERCHER LE PROCHAIN MATCH
+// DE LA COMPÉTITION DE LA PAGE
+// ==========================================
 
-            let maintenant = new Date();
+let maintenant = new Date();
 
-            let matchsFuturs =
-                matchsAdmin.filter(function(match) {
+let matchsFuturs =
+    matchsAdmin.filter(function(match) {
 
-                    let dateMatch =
-                        new Date(
-                            match.date +
-                            "T" +
-                            match.heure
-                        );
+        // Vérifier la compétition
+        if (
+            competitionPage &&
+            (match.competition || "").trim() !==
+            competitionPage.trim()
+        ) {
 
-                    return dateMatch > maintenant;
+            return false;
 
-                });
+        }
 
+        let dateMatch =
+            new Date(
+                match.date +
+                "T" +
+                match.heure
+            );
+
+        return dateMatch > maintenant;
+
+    });
 
             // ==========================================
             // TRIER LES MATCHS FUTURS
