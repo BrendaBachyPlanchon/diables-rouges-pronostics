@@ -2278,3 +2278,69 @@ td button {
     object-fit: contain;
 }
 
+/* ==========================================
+   PROCHAINS MATCHS - ACCUEIL
+   ========================================== */
+
+.match-accueil-ligne {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    margin: 20px auto;
+    padding: 15px;
+    max-width: 700px;
+}
+
+.equipe-accueil {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-width: 200px;
+}
+
+.equipe-accueil img {
+    width: 65px;
+    height: 65px;
+    object-fit: contain;
+}
+
+.equipe-accueil strong {
+    font-size: 20px;
+}
+
+.versus-accueil {
+    font-size: 25px;
+    white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+
+    .match-accueil-ligne {
+        gap: 8px;
+        padding: 10px;
+    }
+
+    .equipe-accueil {
+        min-width: 0;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .equipe-accueil img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .equipe-accueil strong {
+        font-size: 15px;
+        text-align: center;
+    }
+
+    .versus-accueil {
+        font-size: 20px;
+    }
+
+}
+
