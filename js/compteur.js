@@ -1,10 +1,10 @@
 // ==========================================
-// COMPTE À REBOURS DU PROCHAIN MATCH
+// COMPTE À REBOURS DES PROCHAINS MATCHS
 // VERSION SUPABASE
 // ==========================================
 
 let dateProchainMatch = null;
-let prochainMatch = null;
+let prochainsMatchs = [];
 
 
 // ==========================================
@@ -21,6 +21,10 @@ const drapeaux = {
 
 };
 
+
+// ==========================================
+// LOGOS JUPILER PRO LEAGUE
+// ==========================================
 
 const logosCompteurJupilerProLeague = {
 
@@ -94,7 +98,7 @@ const logosCompteurJupilerProLeague = {
 
 
 // ==========================================
-// TROUVER LE PROCHAIN MATCH DEPUIS SUPABASE
+// TROUVER LES PROCHAINS MATCHS
 // ==========================================
 
 function trouverProchainMatch() {
@@ -108,7 +112,7 @@ function trouverProchainMatch() {
             if (resultat.error) {
 
                 console.error(
-                    "❌ Erreur chargement prochain match depuis Supabase :",
+                    "❌ Erreur chargement prochains matchs depuis Supabase :",
                     resultat.error
                 );
 
@@ -131,6 +135,10 @@ function trouverProchainMatch() {
                 new Date().getTime();
 
 
+            // ==========================================
+            // GARDER UNIQUEMENT LES MATCHS À VENIR
+            // ==========================================
+
             let prochains =
                 matchs.filter(function(match) {
 
@@ -151,8 +159,10 @@ function trouverProchainMatch() {
 
             if (prochains.length === 0) {
 
-                prochainMatch = null;
+                prochainsMatchs = [];
                 dateProchainMatch = null;
+
+                afficherProchainsMatchs();
 
                 console.log(
                     "⚠️ Aucun match à venir pour le compteur"
@@ -189,39 +199,58 @@ function trouverProchainMatch() {
 
 
             // ==========================================
-            // PRENDRE LE PROCHAIN MATCH
+            // DATE DU PROCHAIN COUP D'ENVOI
             // ==========================================
 
-            prochainMatch =
+            let premierMatch =
                 prochains[0];
 
 
             dateProchainMatch =
                 new Date(
-                    prochainMatch.date +
+                    premierMatch.date +
                     "T" +
-                    prochainMatch.heure
+                    premierMatch.heure
                 ).getTime();
 
 
+            // ==========================================
+            // PRENDRE TOUS LES MATCHS
+            // AYANT LE MÊME COUP D'ENVOI
+            // ==========================================
+
+            prochainsMatchs =
+                prochains.filter(function(match) {
+
+                    let dateMatch =
+                        new Date(
+                            match.date +
+                            "T" +
+                            match.heure
+                        ).getTime();
+
+                    return (
+                        dateMatch ===
+                        dateProchainMatch
+                    );
+
+                });
+
+
             console.log(
-                "🎯 Prochain match du compteur depuis Supabase :",
-                prochainMatch.equipe1,
-                "-",
-                prochainMatch.equipe2,
-                prochainMatch.date,
-                prochainMatch.heure
+                "🎯 Matchs au prochain coup d'envoi :",
+                prochainsMatchs
             );
 
 
-            afficherNomProchainMatch();
+            afficherProchainsMatchs();
 
         })
 
         .catch(function(erreur) {
 
             console.error(
-                "❌ Impossible de charger le prochain match du compteur :",
+                "❌ Impossible de charger les prochains matchs du compteur :",
                 erreur
             );
 
@@ -231,86 +260,105 @@ function trouverProchainMatch() {
 
 
 // ==========================================
-// AFFICHER LE MATCH
+// AFFICHER LES PROCHAINS MATCHS
 // ==========================================
 
-function afficherNomProchainMatch() {
+function afficherProchainsMatchs() {
 
-    if (!prochainMatch) {
+    let zone =
+        document.getElementById(
+            "liste-prochains-matchs"
+        );
+
+
+    if (!zone) {
         return;
     }
 
 
-    let equipe1 =
-        document.getElementById(
-            "compteur-equipe1"
-        );
+    // ==========================================
+    // AUCUN MATCH
+    // ==========================================
 
+    if (prochainsMatchs.length === 0) {
 
-    let equipe2 =
-        document.getElementById(
-            "compteur-equipe2"
-        );
+        zone.innerHTML =
+            "⚽ Aucun match à venir.";
 
-
-    if (equipe1) {
-
-        equipe1.innerText =
-            prochainMatch.equipe1.trim();
-
-    }
-
-
-    if (equipe2) {
-
-        equipe2.innerText =
-            prochainMatch.equipe2.trim();
+        return;
 
     }
 
 
     // ==========================================
-    // LOGOS
+    // CONSTRUIRE LA LISTE
     // ==========================================
 
-    let drapeau1 =
-        document.getElementById(
-            "compteur-drapeau1"
-        );
+    zone.innerHTML = "";
 
 
-    let drapeau2 =
-        document.getElementById(
-            "compteur-drapeau2"
-        );
+    prochainsMatchs.forEach(function(match) {
+
+        let equipe1 =
+            (match.equipe1 || "").trim();
 
 
-    let equipe1Nom =
-        prochainMatch.equipe1.trim();
+        let equipe2 =
+            (match.equipe2 || "").trim();
 
 
-    let equipe2Nom =
-        prochainMatch.equipe2.trim();
-
-
-    if (drapeau1) {
-
-        drapeau1.src =
-            logosCompteurJupilerProLeague[equipe1Nom] ||
-            drapeaux[equipe1Nom] ||
+        let logo1 =
+            logosCompteurJupilerProLeague[equipe1] ||
+            drapeaux[equipe1] ||
             "images/pays/belgique.png";
 
-    }
 
-
-    if (drapeau2) {
-
-        drapeau2.src =
-            logosCompteurJupilerProLeague[equipe2Nom] ||
-            drapeaux[equipe2Nom] ||
+        let logo2 =
+            logosCompteurJupilerProLeague[equipe2] ||
+            drapeaux[equipe2] ||
             "images/pays/belgique.png";
 
-    }
+
+        let ligne =
+            document.createElement("div");
+
+
+        ligne.className =
+            "match-compteur-ligne";
+
+
+        ligne.innerHTML = `
+
+            <img
+                src="${logo1}"
+                alt="${equipe1}"
+                width="45"
+            >
+
+            <strong>
+                ${equipe1}
+            </strong>
+
+            <span>
+                🆚
+            </span>
+
+            <strong>
+                ${equipe2}
+            </strong>
+
+            <img
+                src="${logo2}"
+                alt="${equipe2}"
+                width="45"
+            >
+
+        `;
+
+
+        zone.appendChild(ligne);
+
+    });
 
 }
 
@@ -321,14 +369,9 @@ function afficherNomProchainMatch() {
 
 function lancerCompteARebours() {
 
-    if (prochainMatch === null) {
+    if (dateProchainMatch === null) {
 
         trouverProchainMatch();
-
-    }
-
-
-    if (dateProchainMatch === null) {
 
         return;
 
@@ -351,7 +394,7 @@ function lancerCompteARebours() {
 
 
     // ==========================================
-    // MATCH COMMENCÉ
+    // COUP D'ENVOI ATTEINT
     // ==========================================
 
     if (distance <= 0) {
@@ -359,12 +402,12 @@ function lancerCompteARebours() {
         if (compteur) {
 
             compteur.innerHTML =
-                "⚽ Match commencé !";
+                "⚽ Coup d'envoi !";
 
         }
 
 
-        prochainMatch = null;
+        prochainsMatchs = [];
         dateProchainMatch = null;
 
 
