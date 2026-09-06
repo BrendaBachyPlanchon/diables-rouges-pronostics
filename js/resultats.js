@@ -82,6 +82,97 @@ const logosJupilerProLeagueResultats = {
 
 };
 
+// ==========================================
+// LOGOS LIGUE DES CHAMPIONS - RÉSULTATS
+// ==========================================
+
+const logosChampionsLeagueResultats = {
+
+    "Arsenal": "images/clubs/champions-league/arsenal.png",
+    "Manchester City": "images/clubs/champions-league/manchester-city.png",
+    "Liverpool": "images/clubs/champions-league/liverpool.png",
+    "Manchester United": "images/clubs/champions-league/manchester-united.png",
+    "Real Madrid": "images/clubs/champions-league/real-madrid.png",
+    "Barcelona": "images/clubs/champions-league/barcelone.png",
+    "Bayern Munich": "images/clubs/champions-league/bayern-munich.png",
+    "Borussia Dortmund": "images/clubs/champions-league/dortmund.png",
+    "Atlético de Madrid": "images/clubs/champions-league/atletico-madrid.png",
+    "Aston Villa": "images/clubs/champions-league/aston-villa.png",
+    "Inter Milan": "images/clubs/champions-league/inter-milan.png",
+    "Napoli": "images/clubs/champions-league/napoli.png",
+    "Paris Saint-Germain": "images/clubs/champions-league/paris-saint-germain.png",
+    "Porto": "images/clubs/champions-league/porto.png",
+    "PSV Eindhoven": "images/clubs/champions-league/psv-eindhoven.png",
+    "Feyenoord": "images/clubs/champions-league/feyenoord.png",
+    "Galatasaray": "images/clubs/champions-league/galatasaray.png",
+    "Como": "images/clubs/champions-league/como.png",
+    "Lille": "images/clubs/champions-league/lille.png",
+    "Lens": "images/clubs/champions-league/lens.png",
+    "RB Leipzig": "images/clubs/champions-league/leipzig.png",
+    "Real Betis": "images/clubs/champions-league/real-betis.png",
+    "Roma": "images/clubs/champions-league/roma.png",
+    "Sporting CP": "images/clubs/champions-league/sporting.png",
+    "VfB Stuttgart": "images/clubs/champions-league/stuttgart.png",
+    "Villarreal": "images/clubs/champions-league/villarreal.png",
+    "Bodø/Glimt": "images/clubs/champions-league/bodo-glimt.png",
+    "LASK": "images/clubs/champions-league/lask.png",
+    "Sabah": "images/clubs/champions-league/sabah.png",
+    "Shakhtar Donetsk": "images/clubs/champions-league/shakhtar-donetsk.png",
+    "Slavia Prague": "images/clubs/champions-league/slavia-prague.png",
+    "Club Brugge": "images/clubs/champions-league/club-brugge.png",
+    "AEK Athens": "images/clubs/champions-league/aek-athens.png",
+    "Fenerbahçe": "images/clubs/champions-league/fenerbahce.png",
+    "Slovan Bratislava": "images/clubs/champions-league/slovan-bratislava.png",
+    "Viking": "images/clubs/champions-league/viking.png"
+
+};
+
+// ==========================================
+// LOGOS EUROPA LEAGUE - RÉSULTATS
+// ==========================================
+
+const logosEuropaLeagueResultats = {
+
+    "AZ Alkmaar": "images/clubs/europa-league/az-alkmaar.png",
+    "Bournemouth": "images/clubs/europa-league/bournemouth.png",
+    "Celta": "images/clubs/europa-league/celta.png",
+    "Crystal Palace": "images/clubs/europa-league/crystal-palace.png",
+    "Hoffenheim": "images/clubs/europa-league/hoffenheim.png",
+    "Juventus": "images/clubs/europa-league/juventus.png",
+    "Bayer Leverkusen": "images/clubs/europa-league/bayer-leverkusen.png",
+    "Marseille": "images/clubs/europa-league/marseille.png",
+    "AC Milan": "images/clubs/europa-league/milan.png",
+    "Real Sociedad": "images/clubs/europa-league/real-sociedad.png",
+    "Rennes": "images/clubs/europa-league/rennes.png",
+    "Sunderland": "images/clubs/europa-league/sunderland.png",
+    "Torreense": "images/clubs/europa-league/torreense.png",
+    "Anderlecht": "images/clubs/europa-league/anderlecht.png",
+    "Ararat-Armenia": "images/clubs/europa-league/ararat-armenia.png",
+    "Benfica": "images/clubs/europa-league/benfica.png",
+    "Beşiktaş": "images/clubs/europa-league/besiktas.png",
+    "Celje": "images/clubs/europa-league/celje.png",
+    "Celtic": "images/clubs/europa-league/celtic.png",
+    "Dinamo Zagreb": "images/clubs/europa-league/dynamo-zagreb.png",
+    "Ferencváros": "images/clubs/europa-league/ferencvaros.png",
+    "Hapoel Beer-Sheva": "images/clubs/europa-league/hapoel-beer-sheva.png",
+    "Jagiellonia Białystok": "images/clubs/europa-league/jagiellonia-bialystok.png",
+    "Lech Poznań": "images/clubs/europa-league/lech-poznan.png",
+    "Levski Sofia": "images/clubs/europa-league/levski-sofia.png",
+    "Lillestrøm": "images/clubs/europa-league/lillestrom.png",
+    "Lyon": "images/clubs/europa-league/lyon.png",
+    "NEC Nijmegen": "images/clubs/europa-league/nec-nijmegen.png",
+    "OFI Crète": "images/clubs/europa-league/ofi-crete.png",
+    "Olympiacos": "images/clubs/europa-league/olympiacos.png",
+    "Omonia Nicosie": "images/clubs/europa-league/omonia-nicosie.png",
+    "Salzburg": "images/clubs/europa-league/salzburg.png",
+    "Sparta Prague": "images/clubs/europa-league/sparta-prague.png",
+    "Sturm Graz": "images/clubs/europa-league/sturm-graz.png",
+    "Union Saint-Gilloise": "images/clubs/europa-league/union.png",
+    "Viktoria Plzeň": "images/clubs/europa-league/viktoria-plzen.png"
+
+};
+
+
 const drapeauxPaysResultats = {
 
     "Belgique": "images/pays/belgique.png",
@@ -231,10 +322,11 @@ matchsAdmin.sort(function(a, b) {
                 // LOGO / DRAPEAU ÉQUIPE 1
                 // ==========================================
 
-                let imageEquipe1 =
-                    logosJupilerProLeagueResultats[equipe1] ||
-                    drapeauxPaysResultats[equipe1];
-
+               let imageEquipe1 =
+                   logosJupilerProLeagueResultats[equipe1] ||
+                   logosChampionsLeagueResultats[equipe1] ||
+                   logosEuropaLeagueResultats[equipe1] ||
+                   drapeauxPaysResultats[equipe1];
 
                 let affichageEquipe1 =
                     imageEquipe1
@@ -252,6 +344,8 @@ matchsAdmin.sort(function(a, b) {
 
                 let imageEquipe2 =
                     logosJupilerProLeagueResultats[equipe2] ||
+                    logosChampionsLeagueResultats[equipe2] ||
+                    logosEuropaLeagueResultats[equipe2] ||
                     drapeauxPaysResultats[equipe2];
 
 
