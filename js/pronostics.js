@@ -869,24 +869,69 @@ let matchsFiltres =
 
     });
           
-           matchsFiltres.forEach(function(match) {
+          matchsFiltres.forEach(function(match) {
 
-                let option =
-                    document.createElement("option");
+    let option =
+        document.createElement("option");
 
-                option.value =
-                    match.equipe1.trim() +
-                    " - " +
-                    match.equipe2.trim();
+    option.value =
+        match.equipe1.trim() +
+        " - " +
+        match.equipe2.trim();
 
-                option.textContent =
-                    match.equipe1 +
-                    " 🆚 " +
-                    match.equipe2;
 
-                selectMatch.appendChild(option);
+    // ==========================================
+    // VÉRIFIER SI LE MATCH EST DÉJÀ JOUÉ
+    // ==========================================
 
-            });
+    let dateMatch =
+        new Date(
+            match.date +
+            "T" +
+            match.heure
+        );
+
+    let maintenant =
+        new Date();
+
+
+    let matchTermine =
+        match.statut === "Terminé" ||
+        dateMatch <= maintenant;
+
+
+    // ==========================================
+    // AFFICHAGE DU MATCH
+    // ==========================================
+
+    if (matchTermine) {
+
+        option.textContent =
+            "🔒 " +
+            match.equipe1 +
+            " 🆚 " +
+            match.equipe2 +
+            " — Terminé";
+
+        option.classList.add(
+            "match-termine"
+        );
+
+    }
+
+    else {
+
+        option.textContent =
+            match.equipe1 +
+            " 🆚 " +
+            match.equipe2;
+
+    }
+
+
+    selectMatch.appendChild(option);
+
+});
 
             if (choixCompetition) {
 
@@ -907,24 +952,69 @@ let matchsFiltres =
 
                 });
 
-            matchsFiltres.forEach(function(match) {
+           matchsFiltres.forEach(function(match) {
 
-                let option =
-                    document.createElement("option");
+    let option =
+        document.createElement("option");
 
-                option.value =
-                    match.equipe1.trim() +
-                    " - " +
-                    match.equipe2.trim();
+    option.value =
+        match.equipe1.trim() +
+        " - " +
+        match.equipe2.trim();
 
-                option.textContent =
-                    match.equipe1 +
-                    " 🆚 " +
-                    match.equipe2;
 
-                selectMatch.appendChild(option);
+    // ==========================================
+    // VÉRIFIER SI LE MATCH EST DÉJÀ JOUÉ
+    // ==========================================
 
-            });
+    let dateMatch =
+        new Date(
+            match.date +
+            "T" +
+            match.heure
+        );
+
+    let maintenant =
+        new Date();
+
+
+    let matchTermine =
+        match.statut === "Terminé" ||
+        dateMatch <= maintenant;
+
+
+    // ==========================================
+    // AFFICHAGE
+    // ==========================================
+
+    if (matchTermine) {
+
+        option.textContent =
+            "🔒 " +
+            match.equipe1 +
+            " 🆚 " +
+            match.equipe2 +
+            " — Terminé";
+
+        option.classList.add(
+            "match-termine"
+        );
+
+    }
+
+    else {
+
+        option.textContent =
+            match.equipe1 +
+            " 🆚 " +
+            match.equipe2;
+
+    }
+
+
+    selectMatch.appendChild(option);
+
+});
 
         }
     );

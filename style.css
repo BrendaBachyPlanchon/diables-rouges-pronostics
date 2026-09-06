@@ -2344,3 +2344,12 @@ td button {
 
 }
 
+/* ==========================================
+   MATCHS DÉJÀ JOUÉS DANS LE MENU PRONOSTICS
+   ========================================== */
+
+#choix-match option.match-termine {
+    color: #888888;
+    background-color: #eeeeee;
+}
+
