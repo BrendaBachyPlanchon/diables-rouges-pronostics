@@ -178,7 +178,7 @@ supabaseClient
                 (match.equipe2 || "").trim();
 
 
-           // ==========================================
+          // ==========================================
 // LOGOS / DRAPEAUX
 // ==========================================
 
@@ -223,20 +223,20 @@ if (
 if (
     match.competition ===
     "Ligue des Champions" &&
-    typeof logosClassementLigueDesChampions !== "undefined"
+    typeof logosLigueDesChampions !== "undefined"
 ) {
 
-    if (logosClassementLigueDesChampions[equipe1]) {
+    if (logosLigueDesChampions[equipe1]) {
 
         logo1 =
-            logosClassementLigueDesChampions[equipe1];
+            logosLigueDesChampions[equipe1];
 
     }
 
-    if (logosClassementLigueDesChampions[equipe2]) {
+    if (logosLigueDesChampions[equipe2]) {
 
         logo2 =
-            logosClassementLigueDesChampions[equipe2];
+            logosLigueDesChampions[equipe2];
 
     }
 
@@ -250,20 +250,47 @@ if (
 if (
     match.competition ===
     "Europa League" &&
-    typeof logosClassementEuropaLeague !== "undefined"
+    typeof logosEuropaLeague !== "undefined"
 ) {
 
-    if (logosClassementEuropaLeague[equipe1]) {
+    if (logosEuropaLeague[equipe1]) {
 
         logo1 =
-            logosClassementEuropaLeague[equipe1];
+            logosEuropaLeague[equipe1];
 
     }
 
-    if (logosClassementEuropaLeague[equipe2]) {
+    if (logosEuropaLeague[equipe2]) {
 
         logo2 =
-            logosClassementEuropaLeague[equipe2];
+            logosEuropaLeague[equipe2];
+
+    }
+
+}
+
+
+// ==========================================
+// LIGUE DES NATIONS
+// ==========================================
+
+if (
+    match.competition ===
+    "Ligue des Nations" &&
+    typeof drapeaux !== "undefined"
+) {
+
+    if (drapeaux[equipe1]) {
+
+        logo1 =
+            drapeaux[equipe1];
+
+    }
+
+    if (drapeaux[equipe2]) {
+
+        logo2 =
+            drapeaux[equipe2];
 
     }
 
