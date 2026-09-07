@@ -1230,9 +1230,11 @@ let logosCompetition = {};
 // CHOISIR LA BONNE LISTE DE LOGOS
 // ==========================================
 
+// JUPILER PRO LEAGUE
 if (
     prochainMatch.competition ===
-    "Jupiler Pro League"
+    "Jupiler Pro League" &&
+    typeof logosJupilerProLeague !== "undefined"
 ) {
 
     logosCompetition =
@@ -1240,23 +1242,29 @@ if (
 
 }
 
+
+// LIGUE DES CHAMPIONS
 else if (
     prochainMatch.competition ===
-    "Ligue des Champions"
+    "Ligue des Champions" &&
+    typeof logosLigueDesChampions !== "undefined"
 ) {
 
     logosCompetition =
-        logosClassementLigueDesChampions;
+        logosLigueDesChampions;
 
 }
 
+
+// EUROPA LEAGUE
 else if (
     prochainMatch.competition ===
-    "Europa League"
+    "Europa League" &&
+    typeof logosEuropaLeague !== "undefined"
 ) {
 
     logosCompetition =
-        logosClassementEuropaLeague;
+        logosEuropaLeague;
 
 }
 
