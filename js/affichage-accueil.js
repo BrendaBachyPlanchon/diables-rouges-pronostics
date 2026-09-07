@@ -178,70 +178,131 @@ supabaseClient
                 (match.equipe2 || "").trim();
 
 
-            // ==========================================
-            // LOGOS
-            // ==========================================
+           // ==========================================
+// LOGOS / DRAPEAUX
+// ==========================================
 
-            let logo1 =
-                "images/pays/belgique.png";
+let logo1 =
+    "images/pays/belgique.png";
 
-
-            let logo2 =
-                "images/pays/belgique.png";
-
-
-            if (
-                typeof logosJupilerProLeague !==
-                "undefined"
-            ) {
-
-                if (
-                    logosJupilerProLeague[equipe1]
-                ) {
-
-                    logo1 =
-                        logosJupilerProLeague[equipe1];
-
-                }
+let logo2 =
+    "images/pays/belgique.png";
 
 
-                if (
-                    logosJupilerProLeague[equipe2]
-                ) {
+// ==========================================
+// JUPILER PRO LEAGUE
+// ==========================================
 
-                    logo2 =
-                        logosJupilerProLeague[equipe2];
+if (
+    match.competition ===
+    "Jupiler Pro League" &&
+    typeof logosJupilerProLeague !== "undefined"
+) {
 
-                }
+    if (logosJupilerProLeague[equipe1]) {
 
-            }
+        logo1 =
+            logosJupilerProLeague[equipe1];
 
+    }
 
-            // ==========================================
-            // DRAPEAUX
-            // ==========================================
+    if (logosJupilerProLeague[equipe2]) {
 
-            if (
-                typeof drapeaux !==
-                "undefined"
-            ) {
+        logo2 =
+            logosJupilerProLeague[equipe2];
 
-                if (drapeaux[equipe1]) {
+    }
 
-                    logo1 =
-                        drapeaux[equipe1];
-
-                }
+}
 
 
-                if (drapeaux[equipe2]) {
+// ==========================================
+// LIGUE DES CHAMPIONS
+// ==========================================
 
-                    logo2 =
-                        drapeaux[equipe2];
+if (
+    match.competition ===
+    "Ligue des Champions" &&
+    typeof logosClassementLigueDesChampions !== "undefined"
+) {
 
-                }
+    if (logosClassementLigueDesChampions[equipe1]) {
 
-            }
+        logo1 =
+            logosClassementLigueDesChampions[equipe1];
+
+    }
+
+    if (logosClassementLigueDesChampions[equipe2]) {
+
+        logo2 =
+            logosClassementLigueDesChampions[equipe2];
+
+    }
+
+}
+
+
+// ==========================================
+// EUROPA LEAGUE
+// ==========================================
+
+if (
+    match.competition ===
+    "Europa League" &&
+    typeof logosClassementEuropaLeague !== "undefined"
+) {
+
+    if (logosClassementEuropaLeague[equipe1]) {
+
+        logo1 =
+            logosClassementEuropaLeague[equipe1];
+
+    }
+
+    if (logosClassementEuropaLeague[equipe2]) {
+
+        logo2 =
+            logosClassementEuropaLeague[equipe2];
+
+    }
+
+}
+
+
+// ==========================================
+// CONFERENCE LEAGUE
+// ==========================================
+
+// À ajouter lorsque la liste des logos Conference League
+// est disponible sur la page.
+
+
+/* ==========================================
+   DRAPEAUX
+   UNIQUEMENT POUR LES COMPÉTITIONS INTERNATIONALES
+   ========================================== */
+
+if (
+    match.competition === "Ligue des Nations" &&
+    typeof drapeaux !== "undefined"
+) {
+
+    if (drapeaux[equipe1]) {
+
+        logo1 =
+            drapeaux[equipe1];
+
+    }
+
+    if (drapeaux[equipe2]) {
+
+        logo2 =
+            drapeaux[equipe2];
+
+    }
+
+}
 
 
             // ==========================================
