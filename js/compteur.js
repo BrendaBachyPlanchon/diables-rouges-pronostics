@@ -307,16 +307,71 @@ function afficherProchainsMatchs() {
             (match.equipe2 || "").trim();
 
 
-        let logo1 =
-            logosCompteurJupilerProLeague[equipe1] ||
-            drapeaux[equipe1] ||
-            "images/pays/belgique.png";
+      // ==========================================
+// CHOISIR LES LOGOS SELON LA COMPÉTITION
+// ==========================================
+
+let logosCompetition = {};
 
 
-        let logo2 =
-            logosCompteurJupilerProLeague[equipe2] ||
-            drapeaux[equipe2] ||
-            "images/pays/belgique.png";
+// ==========================================
+// JUPILER PRO LEAGUE
+// ==========================================
+
+if (
+    match.competition === "Jupiler Pro League"
+) {
+
+    logosCompetition =
+        logosCompteurJupilerProLeague;
+
+}
+
+
+// ==========================================
+// LIGUE DES CHAMPIONS
+// ==========================================
+
+else if (
+    match.competition === "Ligue des Champions" &&
+    typeof logosLigueDesChampions !== "undefined"
+) {
+
+    logosCompetition =
+        logosLigueDesChampions;
+
+}
+
+
+// ==========================================
+// EUROPA LEAGUE
+// ==========================================
+
+else if (
+    match.competition === "Europa League" &&
+    typeof logosEuropaLeague !== "undefined"
+) {
+
+    logosCompetition =
+        logosEuropaLeague;
+
+}
+
+
+// ==========================================
+// RECHERCHER LES LOGOS
+// ==========================================
+
+let logo1 =
+    logosCompetition[equipe1] ||
+    drapeaux[equipe1] ||
+    "images/pays/belgique.png";
+
+
+let logo2 =
+    logosCompetition[equipe2] ||
+    drapeaux[equipe2] ||
+    "images/pays/belgique.png";
 
 
         let ligne =
