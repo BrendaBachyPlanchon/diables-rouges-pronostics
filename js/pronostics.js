@@ -1242,6 +1242,16 @@ if (
 
 else if (
     prochainMatch.competition ===
+    "Ligue des Champions"
+) {
+
+    logosCompetition =
+        logosClassementLigueDesChampions;
+
+}
+
+else if (
+    prochainMatch.competition ===
     "Europa League"
 ) {
 
