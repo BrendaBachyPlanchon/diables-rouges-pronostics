@@ -440,16 +440,12 @@ else if (
 
 let logo1 =
     logosCompetition[equipe1] ||
-    (typeof logosClassementPays !== "undefined"
-        ? logosClassementPays[equipe1]
-        : null) ||
+    drapeaux[equipe1] ||
     "images/pays/belgique.png";
 
 let logo2 =
     logosCompetition[equipe2] ||
-    (typeof logosClassementPays !== "undefined"
-        ? logosClassementPays[equipe2]
-        : null) ||
+    drapeaux[equipe2] ||
     "images/pays/belgique.png";
 
 
