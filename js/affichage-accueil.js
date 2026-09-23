@@ -9,7 +9,7 @@ console.log("✅ affichage-accueil.js serveur actif");
 // DRAPEAUX DES ÉQUIPES NATIONALES
 // ==========================================
 
-let drapeaux = {
+const drapeauxAccueil = {
 
     "Italie": "images/pays/italie.png",
     "Belgique": "images/pays/belgique.png",
@@ -240,16 +240,19 @@ supabaseClient
             let equipe2 =
                 (match.equipe2 || "").trim();
 
+             let competition =
+                 (match.competition || "").trim();   
+
 
           // ==========================================
 // LOGOS / DRAPEAUX
 // ==========================================
 
 let logo1 =
-    drapeaux[equipe1] || "images/pays/belgique.png";
+  drapeauxAccueil[equipe1]  || "images/pays/belgique.png";
 
 let logo2 =
-    drapeaux[equipe2] || "images/pays/belgique.png";
+  drapeauxAccueil[equipe2]   || "images/pays/belgique.png";
 
 
 // ==========================================
@@ -257,7 +260,7 @@ let logo2 =
 // ==========================================
 
 if (
-    match.competition ===
+    competition ===
     "Jupiler Pro League" &&
     typeof logosJupilerProLeague !== "undefined"
 ) {
@@ -284,7 +287,7 @@ if (
 // ==========================================
 
 if (
-    match.competition ===
+    competition ===
     "Ligue des Champions" &&
     typeof logosLigueDesChampions !== "undefined"
 ) {
@@ -311,7 +314,7 @@ if (
 // ==========================================
 
 if (
-    match.competition ===
+    competition ===
     "Europa League" &&
     typeof logosEuropaLeague !== "undefined"
 ) {
@@ -338,22 +341,22 @@ if (
 // ==========================================
 
 if (
-    match.competition ===
+    competition ===
     "Ligue des Nations" &&
-    typeof drapeaux !== "undefined"
+   typeof drapeauxAccueil !== "undefined"
 ) {
 
-    if (drapeaux[equipe1]) {
+    if (drapeauxAccueil[equipe1]) {
 
         logo1 =
-            drapeaux[equipe1];
+            drapeauxAccueil[equipe1];
 
     }
 
-    if (drapeaux[equipe2]) {
+    if (drapeauxAccueil[equipe2]) {
 
         logo2 =
-            drapeaux[equipe2];
+            drapeauxAccueil[equipe2];
 
     }
 
