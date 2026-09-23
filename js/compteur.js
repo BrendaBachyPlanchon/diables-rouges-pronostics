@@ -433,6 +433,20 @@ else if (
 
 }
 
+// ==========================================
+// LIGUE DES NATIONS
+// ==========================================
+
+else if (
+    match.competition === "Ligue des Nations" &&
+    typeof logosClassementPays !== "undefined"
+) {
+
+    logosCompetition =
+        logosClassementPays;
+
+}
+
 
 // ==========================================
 // RECHERCHER LES LOGOS
