@@ -183,10 +183,10 @@ supabaseClient
 // ==========================================
 
 let logo1 =
-    "images/pays/belgique.png";
+    drapeaux[equipe1] || "images/pays/belgique.png";
 
 let logo2 =
-    "images/pays/belgique.png";
+    drapeaux[equipe2] || "images/pays/belgique.png";
 
 
 // ==========================================
