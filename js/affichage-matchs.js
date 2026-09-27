@@ -367,6 +367,16 @@ if (zoneMatchs) {
                     matchs.length
                 );
 
+                console.log(
+    "📅 JOURNÉES RÉCUPÉRÉES DE SUPABASE :",
+    matchs.map(function(match) {
+        return {
+            match: match.equipe1 + " - " + match.equipe2,
+            journee: match.journee
+        };
+    })
+);
+
 
                 zoneMatchs.innerHTML = "";
 
