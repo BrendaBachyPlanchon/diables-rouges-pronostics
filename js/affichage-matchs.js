@@ -237,7 +237,7 @@ var logosClassementPays = {
     "Lettonie": "images/pays/lettonie.png",
 
     "Féroé": "images/pays/feroe.png",
-    "Kazakhstan": "images/pays/kazakhstan.png",
+    "Kazakhstan": "images/pays/Kazakhstan.png",
     "Slovaquie": "images/pays/slovaquie.png",
     "Moldavie": "images/pays/moldavie.png",
 

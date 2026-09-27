@@ -48,7 +48,7 @@ const drapeauxAccueil = {
     "Slovénie": "images/pays/slovenie.png",
     "Écosse": "images/pays/ecosse.png",
     "Féroé": "images/pays/feroe.png",
-    "Kazakhstan": "images/pays/kazakhstan.png",
+    "Kazakhstan": "images/pays/Kazakhstan.png",
     "Bulgarie": "images/pays/bulgarie.png",
     "Luxembourg": "images/pays/luxembourg.png",
     "Islande": "images/pays/islande.png",
