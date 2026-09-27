@@ -403,11 +403,30 @@ matchs.sort(function(a, b) {
 });
 
 
-                // ==========================================
-                // AFFICHER LES MATCHS
-                // ==========================================
 
-                matchs.forEach(function(match) {
+                // ==========================================
+                // AFFICHER LES MATCHS PAR JOURNÉE
+               // ==========================================
+
+let derniereJournee = null;
+
+matchs.forEach(function(match) {
+
+    let journee = Number(match.journee || 0);
+
+    // Afficher le titre lorsqu'on change de journée
+    if (journee !== derniereJournee) {
+
+        if (journee > 0) {
+            zoneMatchs.innerHTML += `
+                <div class="titre-journee">
+                    📅 Journée ${journee}
+                </div>
+            `;
+        }
+
+        derniereJournee = journee;
+    }
 
                     let equipe1 =
                         (match.equipe1 || "").trim();
