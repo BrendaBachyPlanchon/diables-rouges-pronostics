@@ -371,29 +371,36 @@ if (zoneMatchs) {
                 zoneMatchs.innerHTML = "";
 
 
-                // ==========================================
-                // TRI PAR DATE
-                // ==========================================
+               // ==========================================
+// TRI PAR JOURNÉE PUIS PAR DATE
+// ==========================================
 
-                matchs.sort(function(a, b) {
+matchs.sort(function(a, b) {
 
-                    let dateA =
-                        new Date(
-                            a.date +
-                            "T" +
-                            a.heure
-                        );
+    let journeeA = Number(a.journee || 999);
+    let journeeB = Number(b.journee || 999);
 
-                    let dateB =
-                        new Date(
-                            b.date +
-                            "T" +
-                            b.heure
-                        );
+    if (journeeA !== journeeB) {
+        return journeeA - journeeB;
+    }
 
-                    return dateA - dateB;
+    let dateA =
+        new Date(
+            a.date +
+            "T" +
+            a.heure
+        );
 
-                });
+    let dateB =
+        new Date(
+            b.date +
+            "T" +
+            b.heure
+        );
+
+    return dateA - dateB;
+
+});
 
 
                 // ==========================================
