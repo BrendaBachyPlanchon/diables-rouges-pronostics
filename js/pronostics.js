@@ -1268,6 +1268,19 @@ else if (
 
 }
 
+// ==========================================
+// CONFERENCE LEAGUE
+// ==========================================
+
+else if (
+    prochainMatch.competition ===
+    "Conference League"
+) {
+
+    logosCompetition = logosClubs;
+
+}
+
 
 // ==========================================
 // RECHERCHER LES LOGOS
