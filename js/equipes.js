@@ -132,9 +132,48 @@ const logosClubs = {
 
     "Royal Antwerp FC": "images/clubs/antwerp.png",
     "Antwerp": "images/clubs/antwerp.png",
-    "Anvers": "images/clubs/antwerp.png"
-};
+    "Anvers": "images/clubs/antwerp.png",
 
+    // ==========================================
+    // CONFERENCE LEAGUE 2026-2027
+    // ==========================================
+
+    "Aarhus": "images/conference-league/aarhus.png",
+    "Ajax": "images/conference-league/ajax.png",
+    "Atalanta": "images/conference-league/atalanta.png",
+    "Borac": "images/conference-league/borac.png",
+    "Braga": "images/conference-league/braga.png",
+    "Brann": "images/conference-league/brann.png",
+    "Brighton": "images/conference-league/brighton.png",
+    "Copenhagen": "images/conference-league/copenhagen.png",
+    "Crvena Zvezda": "images/conference-league/crvena-zvezda.png",
+    "CSKA Sofia": "images/conference-league/cska-sofia.png",
+    "Egnatia": "images/conference-league/egnatia.png",
+    "Freiburg": "images/conference-league/freiburg.png",
+    "Getafe": "images/conference-league/getafe.png",
+    "Hajduk Split": "images/conference-league/hajduk-split.png",
+    "Hearts": "images/conference-league/hearts.png",
+    "Iberia Tbilisi": "images/conference-league/iberia-tbilisi.png",
+    "Inter Escaldes": "images/conference-league/inter-escaldes.png",
+    "Jablonec": "images/conference-league/jablonec.png",
+    "Kairat Almaty": "images/conference-league/kairat-almaty.png",
+    "Kauno Zalgiris": "images/conference-league/kauno-zalgiris.png",
+    "KuPS": "images/conference-league/kups-kuopio.png",
+    "Lincoln Red Imps": "images/conference-league/lincoln-red-imps.png",
+    "Lugano": "images/conference-league/lugano.png",
+    "Midtjylland": "images/conference-league/midtjylland.png",
+    "Mjallby": "images/conference-league/mjallby.png",
+    "Monaco": "images/conference-league/monaco.png",
+    "Nordsjaelland": "images/conference-league/nordsjaelland.png",
+    "Pafos": "images/conference-league/pafos.png",
+    "Panathinaikos": "images/conference-league/panathinaikos.png",
+    "Riga": "images/conference-league/riga.png",
+    "Thun": "images/conference-league/thun.png",
+    "Trabzonspor": "images/conference-league/trabzonspor.png",
+    "Twente": "images/conference-league/twente.png",
+    "Universitatea Craiova": "images/conference-league/universitatea-craiova.png"
+
+};
 
 // ==========================================
 // NETTOYAGE DU NOM DE L'ÉQUIPE
