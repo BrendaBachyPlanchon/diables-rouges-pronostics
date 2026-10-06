@@ -187,6 +187,7 @@ var logosEuropaLeague = {
 var logosConferenceLeague = {
 
     "AGF Aarhus": "images/clubs/conference-league/aarhus.png",
+    "Aarhus": "images/clubs/conference-league/aarhus.png",
     "Ajax": "images/clubs/conference-league/ajax.png",
     "Atalanta": "images/clubs/conference-league/atalanta.png",
     "Borac": "images/clubs/conference-league/borac.png",
