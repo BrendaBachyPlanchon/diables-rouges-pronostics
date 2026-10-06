@@ -933,11 +933,17 @@ let matchsFiltres =
 
 });
 
-            if (choixCompetition) {
+           if (choixCompetition) {
 
     choixCompetition.addEventListener(
         "change",
         function() {
+
+            competitionPage =
+                choixCompetition.value;
+
+            window.competitionPage =
+                competitionPage;
 
             selectMatch.innerHTML =
                 '<option value="">⚽ Sélectionner un match</option>';
