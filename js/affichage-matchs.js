@@ -480,6 +480,10 @@ matchs.forEach(function(match) {
                     let equipe2 =
                         (match.equipe2 || "").trim();
 
+                        console.log("🔎 Équipe 1 :", equipe1);
+                        console.log("🔎 Équipe 2 :", equipe2);
+                        console.log("🖼️ Logo équipe 2 :", logosConferenceLeague[equipe2]);
+
 
                     // ==========================================
                     // LOGOS
