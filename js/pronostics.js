@@ -1274,13 +1274,14 @@ else if (
 
 else if (
     prochainMatch.competition ===
-    "Conference League"
+    "Conference League" &&
+    typeof logosConferenceLeague !== "undefined"
 ) {
 
-    logosCompetition = logosClubs;
+    logosCompetition =
+        logosConferenceLeague;
 
 }
-
 
 // ==========================================
 // RECHERCHER LES LOGOS
