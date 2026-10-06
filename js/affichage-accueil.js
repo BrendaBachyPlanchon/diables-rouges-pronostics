@@ -362,14 +362,31 @@ if (
 
 }
 
-
 // ==========================================
 // CONFERENCE LEAGUE
 // ==========================================
 
-// À ajouter lorsque la liste des logos Conference League
-// est disponible sur la page.
+if (
+    competition ===
+    "Conference League" &&
+    typeof logosConferenceLeague !== "undefined"
+) {
 
+    if (logosConferenceLeague[equipe1]) {
+
+        logo1 =
+            logosConferenceLeague[equipe1];
+
+    }
+
+    if (logosConferenceLeague[equipe2]) {
+
+        logo2 =
+            logosConferenceLeague[equipe2];
+
+    }
+
+}
 
 /* ==========================================
    DRAPEAUX
