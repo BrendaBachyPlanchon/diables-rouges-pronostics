@@ -337,6 +337,51 @@ let logosEuropaLeague = {
 
 };
 
+// ==========================================
+// LOGOS CONFERENCE LEAGUE
+// ==========================================
+
+const logosConferenceLeague = {
+    "AGF Aarhus": "images/clubs/conference-league/aarhus.png",
+    "Aarhus": "images/clubs/conference-league/aarhus.png",
+    "Ajax": "images/clubs/conference-league/ajax.png",
+    "Atalanta": "images/clubs/conference-league/atalanta.png",
+    "Borac": "images/clubs/conference-league/borac.png",
+    "Braga": "images/clubs/conference-league/braga.png",
+    "Brann": "images/clubs/conference-league/brann.png",
+    "Brighton": "images/clubs/conference-league/brighton.png",
+    "Copenhague": "images/clubs/conference-league/copenhague.png",
+    "Crvena zvezda": "images/clubs/conference-league/crvena-zvezda.png",
+    "CSKA Sofia": "images/clubs/conference-league/cska-sofia.png",
+    "Egnatia": "images/clubs/conference-league/egnatia.png",
+    "Freiburg": "images/clubs/conference-league/freiburg.png",
+    "Gent": "images/clubs/conference-league/gent.png",
+    "Gantoise": "images/clubs/conference-league/gent.png",
+    "Getafe": "images/clubs/conference-league/getafe.png",
+    "Hajduk Split": "images/clubs/conference-league/hajduk-split.png",
+    "Hearts": "images/clubs/conference-league/hearts.png",
+    "Iberia Tbilisi": "images/clubs/conference-league/iberia-tbilisi.png",
+    "Inter Escaldes": "images/clubs/conference-league/inter-escalades.png",
+    "Jablonec": "images/clubs/conference-league/jablonec.png",
+    "Kairat Almaty": "images/clubs/conference-league/kairat-almaty.png",
+    "Kauno Žalgiris": "images/clubs/conference-league/kauno-zalgiris.png",
+    "KuPS Kuopio": "images/clubs/conference-league/kups-kuopio.png",
+    "Lincoln Red Imps": "images/clubs/conference-league/lincoln-red-imps.png",
+    "Lugano": "images/clubs/conference-league/lugano.png",
+    "Midtjylland": "images/clubs/conference-league/midtjylland.png",
+    "Mjällby": "images/clubs/conference-league/mjallby.png",
+    "Monaco": "images/clubs/conference-league/monaco.png",
+    "Nordsjælland": "images/clubs/conference-league/nordsjaelland.png",
+    "Pafos": "images/clubs/conference-league/pafos.png",
+    "Panathinaikos": "images/clubs/conference-league/panathinaikos.png",
+    "Riga": "images/clubs/conference-league/riga.png",
+    "Saint-Trond": "images/clubs/conference-league/stvv.png",
+    "Thun": "images/clubs/conference-league/thun.png",
+    "Trabzonspor": "images/clubs/conference-league/trabzonspor.png",
+    "Twente": "images/clubs/conference-league/twente.png",
+    "Universitatea Craiova": "images/clubs/conference-league/universitatea-craiova.png"
+};
+
 
         // ==========================================
                 // NETTOYAGE DU NOM DES ÉQUIPES
@@ -371,6 +416,7 @@ let logosEuropaLeague = {
                    drapeauDomicile.src =
                    logosChampionsLeague[nomEquipe1] ||
                    logosEuropaLeague[nomEquipe1] ||
+                   logosConferenceLeague[nomEquipe1] ||
                    logosJupilerProLeague[nomEquipe1] ||
                    drapeaux[nomEquipe1] ||
                    "images/pays/belgique.png";
@@ -390,12 +436,13 @@ let logosEuropaLeague = {
 
                 if (drapeauExterieur) {
 
-                    drapeauExterieur.src =
-                    logosChampionsLeague[nomEquipe2] ||
-                    logosEuropaLeague[nomEquipe2] ||
-                    logosJupilerProLeague[nomEquipe2] ||
-                    drapeaux[nomEquipe2] ||
-                    "images/pays/france.png";
+                   drapeauExterieur.src =
+                   logosChampionsLeague[nomEquipe2] ||
+                   logosEuropaLeague[nomEquipe2] ||
+                   logosConferenceLeague[nomEquipe2] ||
+                   logosJupilerProLeague[nomEquipe2] ||
+                   drapeaux[nomEquipe2] ||
+                   "images/pays/france.png";
 
                 }
 
@@ -464,6 +511,16 @@ let logosEuropaLeague = {
                         "⭐ Ligue des Champions";
 
                 }
+
+               if (
+                    competitionAffichee ===
+                    "Conference League"
+                ) {
+
+                     competitionAffichee =
+                          "🟢 Conference League";
+
+}
 
 
                 document.getElementById(

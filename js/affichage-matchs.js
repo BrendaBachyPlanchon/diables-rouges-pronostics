@@ -200,6 +200,7 @@ var logosConferenceLeague = {
     "Egnatia": "images/clubs/conference-league/egnatia.png",
     "Freiburg": "images/clubs/conference-league/freiburg.png",
     "Gantoise": "images/clubs/conference-league/gent.png",
+    "Gent": "images/clubs/conference-league/gent.png",
     "Getafe": "images/clubs/conference-league/getafe.png",
     "Hajduk Split": "images/clubs/conference-league/hajduk-split.png",
     "Hearts": "images/clubs/conference-league/hearts.png",
