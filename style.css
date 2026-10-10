@@ -2353,3 +2353,72 @@ td button {
     background-color: #eeeeee;
 }
 
+
+/* ==========================================
+   RACCOURCIS SIMPLES DE LA PAGE D'ACCUEIL
+========================================== */
+
+.accueil-raccourcis {
+    width: 92%;
+    max-width: 1000px;
+    margin: 20px auto 30px;
+}
+
+.accueil-raccourcis a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 18px 15px;
+    border: 2px solid #ffcc00;
+    border-radius: 14px;
+    transition: background 0.2s ease;
+}
+
+.accueil-raccourcis .raccourci-principal {
+    background: #ffcc00;
+    color: #202020;
+    min-height: 70px;
+    font-size: 23px;
+    margin-bottom: 12px;
+}
+
+.accueil-raccourcis .raccourcis-secondaires {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.accueil-raccourcis .raccourcis-secondaires a {
+    background: #ffffff;
+    color: #202020;
+    min-height: 65px;
+}
+
+.accueil-raccourcis a:hover {
+    background: #e30613;
+    color: #ffffff;
+}
+
+@media screen and (max-width: 600px) {
+    .accueil-raccourcis {
+        width: 96%;
+    }
+
+    .accueil-raccourcis .raccourci-principal {
+        font-size: 20px;
+    }
+
+    .accueil-raccourcis .raccourcis-secondaires {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .accueil-raccourcis .raccourcis-secondaires a {
+        min-height: 55px;
+        font-size: 18px;
+    }
+}
