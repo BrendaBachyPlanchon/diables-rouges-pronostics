@@ -8,6 +8,24 @@ document.addEventListener("DOMContentLoaded", function () {
     const emailInput =
         document.getElementById("email-supporter");
 
+        // ==========================================
+// MÉMORISER L'ADRESSE E-MAIL
+// ==========================================
+
+const emailSauvegarde =
+    localStorage.getItem("emailSupporter");
+
+if (emailSauvegarde) {
+    emailInput.value = emailSauvegarde;
+}
+
+emailInput.addEventListener("change", function () {
+    localStorage.setItem(
+        "emailSupporter",
+        emailInput.value.trim()
+    );
+});
+
     const motDePasseInput =
         document.getElementById("motdepasse-supporter");
 
