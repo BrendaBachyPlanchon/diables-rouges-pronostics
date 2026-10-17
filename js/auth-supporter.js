@@ -266,16 +266,24 @@ async function afficherConnecte(user) {
                 .maybeSingle();
 
 
-        if (recherche.error) {
+      if (recherche.error) {
 
-            console.error(
-                "❌ Erreur recherche profil supporter :",
-                recherche.error
-            );
+    console.error(
+        "❌ Erreur recherche profil supporter :",
+        recherche.error.message,
+        recherche.error.code,
+        recherche.error.details,
+        recherche.error.hint
+    );
 
-            return false;
+    alert(
+        "Erreur Supabase : " +
+        recherche.error.message
+    );
 
-        }
+    return false;
+
+}
 
 
        if (!recherche.data) {
