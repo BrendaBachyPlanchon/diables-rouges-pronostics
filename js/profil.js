@@ -412,38 +412,82 @@ if (resultatClassement.error) {
             // TABLEAU DE MES PRONOSTICS
             // ==========================================
 
-            let tableau =
-                document.getElementById(
-                    "mes-pronostics"
-                );
+           
+let tableau = document.getElementById("mes-pronostics");
 
+if (tableau) {
+    const corpsTableau = tableau.querySelector("tbody") || tableau;
+    corpsTableau.innerHTML = "";
 
-            if (tableau) {
+    // Récupérer les résultats officiels depuis Supabase
+    const resultatMatchs = await supabaseClient
+        .from("matchs")
+        .select("equipe1, equipe2, score1, score2, statut");
 
-                tableau.innerHTML = "";
+    if (resultatMatchs.error) {
+        console.error(
+            "Erreur lors du chargement des résultats officiels :",
+            resultatMatchs.error
+        );
+    }
 
+    const matchsOfficiels = resultatMatchs.data || [];
 
-                mesPronostics.forEach(
-                    function(p) {
+    mesPronostics.forEach(function(p) {
+        const matchOfficiel = matchsOfficiels.find(function(m) {
+            return (
+                (m.equipe1 + " - " + m.equipe2) === p.match
+            );
+        });
 
-                        tableau.innerHTML +=
+        let resultatOfficiel = "⏳ En attente";
 
-                            "<tr>" +
+        if (
+            matchOfficiel &&
+            matchOfficiel.statut === "Terminé" &&
+            matchOfficiel.score1 !== null &&
+            matchOfficiel.score2 !== null
+        ) {
+            resultatOfficiel =
+                matchOfficiel.score1 + " - " + matchOfficiel.score2;
+        }
 
-                            "<td>" +
-                            p.match +
-                            "</td>" +
+        const ligne = document.createElement("tr");
 
-                            "<td>⚽ " +
-                            (p.partition || "-") +
-                            "</td>" +
+        const celluleMatch = document.createElement("td");
+        celluleMatch.textContent = p.match || "-";
 
-                            "</tr>";
+        const cellulePronostic = document.createElement("td");
+        cellulePronostic.textContent = "⚽ " + (p.partition || "-");
 
-                    }
-                );
+        const celluleResultat = document.createElement("td");
+        celluleResultat.textContent = resultatOfficiel;
 
-            }
+        const cellulePoints = document.createElement("td");
+        cellulePoints.textContent = "⭐ " + (p.score ?? 0);
+
+        ligne.append(
+            celluleMatch,
+            cellulePronostic,
+            celluleResultat,
+            cellulePoints
+        );
+
+        corpsTableau.appendChild(ligne);
+    });
+
+    if (mesPronostics.length === 0) {
+        const ligne = document.createElement("tr");
+        const cellule = document.createElement("td");
+
+        cellule.colSpan = 4;
+        cellule.textContent = "Tu n'as pas encore de pronostics.";
+
+        ligne.appendChild(cellule);
+        corpsTableau.appendChild(ligne);
+    }
+}
+
 
 
             console.log(
