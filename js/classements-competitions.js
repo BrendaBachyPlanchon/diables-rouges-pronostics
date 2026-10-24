@@ -375,7 +375,7 @@ const equipesConferenceLeague = [
     "Kairat Almaty",
     "Kauno Žalgiris",
     "KuPS Kuopio",
-    "Lincoln Red Imps",
+    "Lincoln-Red-Imps",
     "Lucano",
     "Midtjylland",
     "Mjällby",
