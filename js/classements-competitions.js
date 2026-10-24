@@ -1816,18 +1816,29 @@ function afficherClassementConferenceLeague() {
                     return;
                 }
 
-                let equipe1 =
-                    (match.equipe1 || "").trim();
+               
+let equipe1 =
+    (match.equipe1 || "").trim();
 
-                let equipe2 =
-                    (match.equipe2 || "").trim();
+let equipe2 =
+    (match.equipe2 || "").trim();
 
-                if (
-                    !equipes[equipe1] ||
-                    !equipes[equipe2]
-                ) {
-                    return;
-                }
+// Uniformiser le nom d'Inter Escaldes
+if (equipe1.toLowerCase() === "inter-escaldes") {
+    equipe1 = "inter-escaldes";
+}
+
+if (equipe2.toLowerCase() === "inter-escaldes") {
+    equipe2 = "inter-escaldes";
+}
+
+if (
+    !equipes[equipe1] ||
+    !equipes[equipe2]
+) {
+    return;
+}
+
 
                 let score1 =
                     Number(match.score1);
