@@ -376,7 +376,7 @@ const equipesConferenceLeague = [
     "Kauno Žalgiris",
     "KuPS Kuopio",
     "Lincoln-Red-Imps",
-     "Lugano",
+    "Lugano",
     "Midtjylland",
     "Mjällby",
     "Monaco",
