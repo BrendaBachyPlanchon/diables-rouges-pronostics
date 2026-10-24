@@ -307,7 +307,7 @@ const logosClassementEuropaLeague = {
 
 const logosClassementConferenceLeague = {
 
-    "AGF Aarhus": "images/clubs/conference-league/aarhus.png",
+    "Aarhus": "images/clubs/conference-league/aarhus.png",
     "Ajax": "images/clubs/conference-league/ajax.png",
     "Atalanta": "images/clubs/conference-league/atalanta.png",
     "Borac": "images/clubs/conference-league/borac.png",
@@ -353,7 +353,7 @@ const logosClassementConferenceLeague = {
 
 const equipesConferenceLeague = [
 
-    "AGF Aarhus",
+   "Aarhus",
     "Ajax",
     "Atalanta",
     "Borac",
@@ -1772,6 +1772,24 @@ function afficherClassementConferenceLeague() {
 
             let matchs =
                 resultat.data || [];
+
+                console.table(
+    matchs
+        .filter(m =>
+            m.competition === "Conference League" &&
+            (
+                /egnatia/i.test(m.equipe1 || "") ||
+                /egnatia/i.test(m.equipe2 || "")
+            )
+        )
+        .map(m => ({
+            equipe1: m.equipe1,
+            equipe2: m.equipe2,
+            score1: m.score1,
+            score2: m.score2,
+            statut: m.statut
+        }))
+);
 
             console.log(
                 "✅ Matchs Conference League chargés :",
