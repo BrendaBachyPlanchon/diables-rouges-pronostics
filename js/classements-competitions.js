@@ -329,7 +329,7 @@ const logosClassementConferenceLeague = {
     "Kairat Almaty": "images/clubs/conference-league/kairat-almaty.png",
     "Kauno Žalgiris": "images/clubs/conference-league/kauno-zalgiris.png",
     "KuPS Kuopio": "images/clubs/conference-league/kups-kuopio.png",
-    "Lincoln Red Imps": "images/clubs/conference-league/lincoln-red-imps.png",
+    "Lincoln-Red-Imps": "images/clubs/conference-league/lincoln-red-imps.png",
     "Lucano": "images/clubs/conference-league/lucano.png",
     "Midtjylland": "images/clubs/conference-league/midtjylland.png",
     "Mjällby": "images/clubs/conference-league/mjallby.png",
