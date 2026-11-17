@@ -660,8 +660,7 @@ if (supporterId) {
                 return supabaseClient
                     .from("supporters")
                     .update({
-                        pseudo: pseudo,
-                        avatar: choix
+                     avatar: choix
                     })
                     .eq(
                         "supporter_id",
