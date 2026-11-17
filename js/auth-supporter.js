@@ -323,50 +323,17 @@ async function afficherConnecte(user) {
 
 } else {
 
-        pseudo =
+    // Le pseudo existant reste inchangé
+    pseudo =
         recherche.data.pseudo ||
-        pseudo;
+        "Supporter";
 
     avatar =
         recherche.data.avatar ||
-        avatar;
-
-    // ==========================================
-    // SUPPORTER EXISTANT → METTRE À JOUR LE PSEUDO
-    // ==========================================
-
-    const miseAJour =
-        await supabaseClient
-            .from("supporters")
-            .update({
-
-                pseudo:
-                    pseudo,
-
-                avatar:
-                    avatar
-
-            })
-            .eq(
-                "supporter_id",
-                supporterId
-            );
-
-
-    if (miseAJour.error) {
-
-        console.error(
-            "❌ Erreur mise à jour profil supporter :",
-            miseAJour.error
-        );
-
-        return false;
-
-    }
-
+        "avatar1.png";
 
     console.log(
-        "✅ Profil supporter mis à jour :",
+        "✅ Profil supporter existant conservé :",
         pseudo
     );
 
