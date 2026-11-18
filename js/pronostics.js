@@ -380,17 +380,11 @@ let pronostic = {
                     let modification =
                         await supabaseClient
                             .from("pronostics")
+                           
                             .update({
+                            partition: scores[0].value + " - " + scores[1].value
+                        })
 
-                                joueur:
-                                    pseudo,
-
-                                partition:
-                                    scores[0].value +
-                                    " - " +
-                                    scores[1].value
-
-                            })
                             .eq(
                                 "id",
                                 recherchePronostic
