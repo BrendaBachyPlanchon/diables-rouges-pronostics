@@ -301,30 +301,28 @@ console.log(
     supporterId
 );
 
-                // ==========================================
-                // CRÉER LE PRONOSTIC
-                // ==========================================
+               
+// ==========================================
+// CRÉER LE PRONOSTIC
+// ==========================================
 
-                let pronostic = {
+let pronostic = {
 
-                    supporter_id:
-                        supporterId,
+    supporter_id:
+        supporterId,
 
-                    joueur:
-                        pseudo,
+    joueur:
+        pseudo,
 
-                    match:
-                        nomMatchChoisi,
+    match:
+        nomMatchChoisi,
 
-                    partition:
-                        scores[0].value +
-                        " - " +
-                        scores[1].value,
+    partition:
+        scores[0].value +
+        " - " +
+        scores[1].value
 
-                    score:
-                        0
-
-                };
+};
 
 
                 console.log(
